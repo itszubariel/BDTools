@@ -649,7 +649,7 @@ Retrieve the stored guild list for your bot. This endpoint is restricted to requ
 
 ## BDScript
 
-Endpoints for working with BDScript, BDFD's scripting language. Includes a bdscript checker/validator and function check/lookup using fuse.js
+Endpoints for working with BDScript, BDFD's scripting language. Includes a code validator and function lookup.
 
 ### POST /bdscript-checker
 
@@ -832,11 +832,18 @@ Validates JSON syntax in `$jsonParse` to catch malformed JSON.
 ```
 
 #### 7. Bracket Matching
-Detects unclosed brackets during function extraction.
+Detects unclosed brackets during function extraction and unexpected closing brackets outside function arguments.
 
 **Important:** Escaped brackets `\]` don't count as closing brackets because they're part of the text content.
 
 **Example Errors:**
+```json
+{
+  "function": "syntax",
+  "line": 1,
+  "message": "Unexpected closing bracket ']'"
+}
+```
 ```json
 {
   "function": "$sendMessage",
@@ -846,6 +853,7 @@ Detects unclosed brackets during function extraction.
 ```
 
 **Examples:**
+- `$sendMessage[hello]]` → Error (extra closing bracket)
 - `$sendMessage[hello\]` → Error (escaped bracket, missing actual closing bracket)
 - `$sendMessage[hello\]]` → Valid (escaped bracket as content, then closing bracket)
 - `$sendMessage[hello` → Error (missing closing bracket)
@@ -876,11 +884,14 @@ Detects unclosed control flow blocks like `$if`, `$try`, and `$async`.
 
 **Scope-aware matching:** Blocks are matched within their nesting scope. A `$if` inside a function argument must be closed inside that same argument — the `$endif` outside won't match it.
 
+**Boundary-aware matching:** `$else`, `$elseif`, and block closers must appear after the opener's argument brackets are closed.
+
 **Examples:**
 ```bdscript
 $description[$if[x==y]ok]$endif   // ❌ $if inside $description is unclosed
 $description[$if[x==y]ok$endif]   // ✅ $if and $endif both inside $description
 $if[x==y]$sendMessage[ok]$endif   // ✅ both at top level
+$if[x==y$elseif[z==1]]$endif      // ❌ $if is missing ] before $elseif
 ```
 
 **Example Error:**
@@ -897,8 +908,13 @@ $if[x==y]$sendMessage[ok]$endif   // ✅ both at top level
 - `$try` ... `$endtry` (note: `$catch` is optional)
 - `$async` ... `$endasync`
 
-#### 9. Multiple $else and $catch Detection
-Detects multiple `$else` statements in the same `$if` block, or multiple `$catch` statements in the same `$try` block (only one of each is allowed).
+#### 9. Multiple $else and $catch Detection, $elseif After $else
+Detects:
+- Multiple `$else` statements in the same `$if` block (only one allowed)
+- Multiple `$catch` statements in the same `$try` block (only one allowed)
+- `$elseif` appearing after `$else` in the same `$if` block (incorrect order)
+
+The correct order for `$if` blocks is: `$if` → `$elseif` (optional) → `$else` (optional)
 
 **Example Errors:**
 ```json
@@ -913,6 +929,13 @@ Detects multiple `$else` statements in the same `$if` block, or multiple `$catch
   "function": "$catch",
   "line": 4,
   "message": "Multiple $catch statements in the same $try block (started on line 1). Only one $catch is allowed per $try block."
+}
+```
+```json
+{
+  "function": "$elseif",
+  "line": 6,
+  "message": "$elseif cannot appear after $else in the same $if block (started on line 1). Use $elseif before $else."
 }
 ```
 
@@ -1202,7 +1225,9 @@ $setUserVar[x;$description[hello]]               // ✅ variable functions can c
 
 ### Variable Bypass System
 
-When arguments contain **variables**, **ID-returning functions**, **number-returning functions**, **boolean-returning functions**, or the **special value `!unchanged`** (in specific functions), the validator automatically skips certain validations because their values are dynamic, unknown at validation time, or have special meaning.
+When arguments contain **known functions from `functions.json`**, **variables**, **ID-returning functions**, **number-returning functions**, **boolean-returning functions**, **URL-returning functions**, or the **special value `!unchanged`** (in specific functions), the validator automatically skips certain validations because their values are dynamic, unknown at validation time, or have special meaning.
+
+For normal argument validation, any real nested function from `functions.json` skips literal enum/type/URL checks for that argument. The nested function itself is still validated separately, so fake functions still produce unknown-function warnings.
 
 **Variable functions that trigger bypass:**
 - `$var[]`
@@ -1233,14 +1258,17 @@ When arguments contain **variables**, **ID-returning functions**, **number-retur
 - **Has functions**: `$hasRole`
 - **Is functions**: `$isAdmin`, `$isBanned`, `$isBoolean`, `$isBooster`, `$isBot`, `$isEmojiAnimated`, `$isHoisted`, `$isInteger`, `$isMentionable`, `$isMentioned`, `$isMessageEdited`, `$isNSFW`, `$isNumber`, `$isSlash`, `$isTicket`, `$isTimedOut`, `$isUserDMEnabled`, `$isValidHex`
 
+**URL-returning functions that skip URL validation:**
+- `$authorAvatar`, `$getAttachments`, `$getBotInvite`, `$getServerInvite`, `$guildBanner`, `$serverIcon`
+- `$userAvatar`, `$userBanner`, `$userServerAvatar`, `$webhookCreate`
+
 **Special values:**
 - `!unchanged` - Works in `$modifyChannel`, `$modifyRole`, and `$editThread` only
 
 **What gets skipped:**
+- **Known functions from `functions.json`**: Literal argument validation for the argument containing the function (enum, permission, type, URL, JSON syntax)
 - **Variable functions**: Enum validation, type validation, JSON syntax validation, parent-child ID validation
-- **ID functions**: Snowflake type validation only (these functions return Discord IDs)
-- **Number functions**: Number type validation only (these functions return numbers)
-- **Boolean functions**: Boolean type validation only (these functions return booleans)
+- **Type-specific helpers**: ID, number, boolean, and URL function lists are still used where special validation logic needs to recognize a known return type
 - **!unchanged**: Type validation in `$modifyChannel`, `$modifyRole`, and `$editThread`
 
 **Examples:**
@@ -1424,6 +1452,8 @@ Looks up a BDFD function by name using fuzzy matching. Useful for finding the co
 - `suggestedFunction` — Same but with empty brackets appended
 - `exact` — `true` if the match was exact, `false` if fuzzy
 - `confidence` — How confident the matcher is (100% = exact match)
+
+**Note:** The matcher uses an internal scoring algorithm (no external dependency). The `confidence` field is returned as a percentage string (for example, `"82%"`).
 
 **Error Response (400) - Missing Input:**
 ```json
