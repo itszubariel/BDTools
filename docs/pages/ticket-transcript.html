@@ -1,0 +1,892 @@
+<!doctype html>
+<html lang="en" class="dark">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0" />
+    <title>Ticket Transcript | Docs</title>
+    <link rel="icon" href="https://bdtools.xyz/images/bdtools_logo.png" />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700;800&family=Geist+Mono:wght@400;500&display=swap"
+      rel="stylesheet"
+    />
+    <script>
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            fontFamily: {
+              sans: ["Geist", "sans-serif"],
+              mono: ["Geist Mono", "monospace"],
+            },
+          },
+        },
+      };
+    </script>
+    <link rel="stylesheet" href="/docs/shared.css" />
+  </head>
+
+  <body class="bg-[#080a10] text-gray-100 min-h-screen flex flex-col">
+    <!-- ── NAV ── -->
+    <nav
+      class="sticky top-0 z-50 border-b"
+      style="border-color: #1e2130; background: #080a10"
+    >
+      <div
+        class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-14 flex items-center justify-between gap-4"
+      >
+        <a href="/" class="flex items-center gap-2.5 group flex-shrink-0">
+          <img
+            src="/images/bdtools_logo.png"
+            alt="BDTools"
+            class="w-7 h-7 rounded-lg"
+            onerror="this.style.display = 'none'"
+          />
+          <span class="font-bold tracking-tight t1">BDTools</span>
+        </a>
+        <div class="flex items-center gap-2 min-w-0">
+          <span
+            id="themeLabel"
+            class="text-xs text-gray-500 hidden sm:block select-none"
+            >Dark Mode</span
+          >
+          <div id="themeToggle" class="tog-track on" onclick="toggleTheme()">
+            <div class="tog-thumb"></div>
+          </div>
+          <button
+            class="hamburger-btn"
+            id="hamburgerBtn"
+            onclick="toggleMobileDrawer()"
+            aria-label="Toggle menu"
+          >
+            <span></span>
+            <span></span>
+            <span></span>
+          </button>
+        </div>
+      </div>
+    </nav>
+
+    <!-- ── LOGOUT MODAL (removed — no auth) ── -->
+
+    <!-- ── MOBILE DRAWER ── -->
+    <div
+      class="mobile-drawer-backdrop"
+      id="mobileDrawerBackdrop"
+      onclick="closeMobileDrawer()"
+    ></div>
+
+    <div class="mobile-drawer" id="mobileDrawer">
+      <div class="mobile-drawer-header">
+        <span class="mobile-drawer-title">Ticket Transcript</span>
+        <button
+          class="mobile-drawer-close"
+          onclick="closeMobileDrawer()"
+          aria-label="Close menu"
+        >
+          <svg
+            width="20"
+            height="20"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+          >
+            <line x1="18" y1="6" x2="6" y2="18" />
+            <line x1="6" y1="6" x2="18" y2="18" />
+          </svg>
+        </button>
+      </div>
+      <nav class="space-y-0.5">
+        <a class="sidebar-link active" onclick="showSection('overview')"
+          >Overview</a
+        >
+        <a class="sidebar-link" onclick="showSection('ep-create')"
+          >POST /ticket-transcript</a
+        >
+        <a class="sidebar-link" onclick="showSection('ep-get')"
+          >GET /t/{hash}</a
+        >
+      </nav>
+    </div>
+
+    <!-- ── PAGE HEADER ── -->
+    <div class="lowerNav border-b border-[#1e2130]">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 fu">
+        <!-- Breadcrumb -->
+        <nav
+          class="flex items-center gap-2 text-xs text-gray-500 mb-4 font-mono"
+        >
+          <a href="/docs" class="hover:text-[#818cf8] transition-colors"
+            >Docs</a
+          >
+          <span class="text-gray-700">/</span>
+          <span class="text-gray-300">Ticket Transcript</span>
+        </nav>
+        <div class="flex items-center gap-3 mb-2">
+          <div
+            class="w-9 h-9 rounded-xl bg-purple-500/10 border border-purple-500/20 flex items-center justify-center flex-shrink-0"
+          >
+            <svg
+              class="w-4.5 h-4.5 text-purple-400"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+              width="18"
+              height="18"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="1.8"
+                d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
+              />
+            </svg>
+          </div>
+          <h1
+            class="text-2xl sm:text-3xl font-black text-white dark-text tracking-tight"
+          >
+            Ticket Transcript
+          </h1>
+        </div>
+        <p class="text-gray-400 dark-text-2 text-sm max-w-xl leading-relaxed">
+          Generate and host ticket transcripts for BDFD bots. Closes tickets and
+          serves a permanent transcript URL.
+        </p>
+      </div>
+    </div>
+
+    <!-- ── MAIN 3-COLUMN LAYOUT ── -->
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 w-full">
+      <div class="docs-layout">
+        <!-- ── LEFT SIDEBAR ── -->
+        <aside class="left-sidebar">
+          <p
+            class="text-[10px] font-mono text-gray-600 uppercase tracking-widest mb-2 px-3"
+          >
+            Ticket Transcript
+          </p>
+          <nav class="space-y-0.5" id="leftNav">
+            <a class="sidebar-link active" onclick="showSection('overview')"
+              >Overview</a
+            >
+            <a class="sidebar-link" onclick="showSection('ep-create')"
+              >POST /ticket-transcript</a
+            >
+            <a class="sidebar-link" onclick="showSection('ep-get')"
+              >GET /t/{hash}</a
+            >
+          </nav>
+        </aside>
+
+        <!-- ── CONTENT ── -->
+        <main class="min-w-0">
+          <!-- Overview -->
+          <section
+            id="overview"
+            class="endpoint-section dark-surface fu scroll-fade"
+          >
+            <h2 class="text-lg font-bold text-white dark-text mb-3">
+              Overview
+            </h2>
+            <p class="text-sm text-gray-400 dark-text-3 leading-relaxed mb-4">
+              Create and retrieve Discord ticket transcripts. Messages are
+              formatted into a .txt transcript with Discord usernames and
+              display names resolved server-side via the Discord API. Stored in
+              MongoDB and served as plain text. The POST endpoint requires
+              authentication, while the GET endpoint is public.
+            </p>
+
+            <div class="flex flex-wrap gap-2 mb-4">
+              <span
+                class="inline-flex items-center gap-1.5 text-xs bg-red-500/10 text-red-400 border border-red-500/20 px-2.5 py-1 rounded-full font-semibold"
+              >
+                <svg class="w-3 h-3" fill="currentColor" viewBox="0 0 20 20">
+                  <path
+                    fill-rule="evenodd"
+                    d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z"
+                    clip-rule="evenodd"
+                  />
+                </svg>
+                Auth required
+              </span>
+              +
+              <span
+                class="inline-flex items-center gap-1.5 text-xs bg-green-500/10 text-green-400 border border-green-500/20 px-2.5 py-1 rounded-full font-semibold"
+              >
+                <svg class="w-3 h-3" fill="currentColor" viewBox="0 0 20 20">
+                  <path
+                    fill-rule="evenodd"
+                    d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
+                    clip-rule="evenodd"
+                  />
+                </svg>
+                No auth required
+              </span>
+            </div>
+
+            <h3
+              class="text-xs font-mono font-bold text-gray-500 uppercase tracking-widest mb-2 mt-5"
+            >
+              Authentication
+            </h3>
+            <p class="text-sm text-gray-400 dark-text-3 leading-relaxed mb-3">
+              Include your API key in the
+              <code
+                class="font-mono text-[#818cf8] bg-[#5865F2]/10 px-1 py-0.5 rounded"
+                >Authorization</code
+              >
+              header as a Bearer token with the
+              <code
+                class="font-mono text-[#818cf8] bg-[#5865F2]/10 px-1 py-0.5 rounded"
+                >BDTools-</code
+              >
+               prefix for authenticated endpoints.
+             </p>
+            <div class="code-block mb-4">
+              <pre><span class="cmt">// Authorization header format</span>
+<span class="key">Authorization</span><span class="kw">:</span> <span class="str">Bearer BDTools-YOUR_API_KEY_HERE</span></pre>
+            </div>
+
+          
+
+            <h3
+              class="text-xs font-mono font-bold text-gray-500 uppercase tracking-widest mb-2 mt-5"
+            >
+              Rate Limits & Restrictions
+            </h3>
+            <ul class="space-y-2 mb-4">
+              <li
+                class="flex items-start gap-2.5 text-sm text-gray-400 dark-text-3"
+              >
+                <span class="text-yellow-400 mt-0.5 flex-shrink-0">▸</span>
+                <span
+                  ><strong class="text-gray-200">POST /ticket-transcript</strong>
+                  is not rate limited.</span
+                >
+              </li>
+              <li
+                class="flex items-start gap-2.5 text-sm text-gray-400 dark-text-3"
+              >
+                <span class="text-blue-400 mt-0.5 flex-shrink-0">▸</span>
+                <span
+                  ><strong class="text-gray-200">GET /t/{hash}</strong> is
+                  public and requires no authentication.</span
+                >
+              </li>
+            </ul>
+            <div class="code-block">
+              <pre><span class="cmt">// Base URL for transcript creation</span>
+<span class="str">https://api.bdtools.xyz</span></pre>
+            </div>
+          </section>
+
+          <!-- POST /ticket-transcript -->
+          <section
+            id="ep-create"
+            class="endpoint-section dark-surface hidden scroll-fade"
+          >
+            <div class="flex items-center gap-3 mb-4 flex-wrap">
+              <span class="method-badge post">POST</span>
+              <code
+                class="font-mono text-sm text-gray-200 dark-text flex-1 min-w-0 break-all"
+                >/ticket-transcript</code
+              >
+              <button
+                onclick="copyUrl('/ticket-transcript')"
+                class="text-xs bg-[#1e2130] hover:bg-[#252840] text-gray-400 border border-[#2e3350] px-3 py-1.5 rounded-lg transition-colors font-semibold flex-shrink-0 flex items-center gap-1.5"
+              >
+                <svg
+                  class="w-3 h-3"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"
+                  />
+                </svg>
+                Copy URL
+              </button>
+            </div>
+
+            <p class="text-sm text-gray-400 dark-text-3 leading-relaxed mb-4">
+              Creates a ticket transcript from raw message data. Accepts a JSON
+              body with
+              <code
+                class="font-mono text-[#818cf8] bg-[#5865F2]/10 px-1 py-0.5 rounded"
+                >channelId</code
+              >,
+              <code
+                class="font-mono text-[#818cf8] bg-[#5865F2]/10 px-1 py-0.5 rounded"
+                >channelName</code
+              >,
+              <code
+                class="font-mono text-[#818cf8] bg-[#5865F2]/10 px-1 py-0.5 rounded"
+                >guildName</code
+              >,
+              <code
+                class="font-mono text-[#818cf8] bg-[#5865F2]/10 px-1 py-0.5 rounded"
+                >authorId</code
+              >,
+              <code
+                class="font-mono text-[#818cf8] bg-[#5865F2]/10 px-1 py-0.5 rounded"
+                >botId</code
+              >, and a
+              <code
+                class="font-mono text-[#818cf8] bg-[#5865F2]/10 px-1 py-0.5 rounded"
+                >messages</code
+              >
+              array. Each message should be formatted as
+              <code
+                class="font-mono text-[#818cf8] bg-[#5865F2]/10 px-1 py-0.5 rounded"
+                >userId | content</code
+              >. The endpoint resolves all user IDs via the Discord API, formats
+              the results into a readable transcript, stores it in MongoDB, and
+              returns a shareable URL.
+            </p>
+
+            <div class="flex flex-wrap gap-2 mb-5">
+              <span
+                class="inline-flex items-center gap-1.5 text-xs bg-red-500/10 text-red-400 border border-red-500/20 px-2.5 py-1 rounded-full font-semibold"
+              >
+                <svg class="w-3 h-3" fill="currentColor" viewBox="0 0 20 20">
+                  <path
+                    fill-rule="evenodd"
+                    d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z"
+                    clip-rule="evenodd"
+                  />
+                </svg>
+                Auth required
+              </span>
+              <span
+                class="inline-flex items-center gap-1.5 text-xs bg-blue-500/10 text-blue-400 border border-blue-500/20 px-2.5 py-1 rounded-full font-semibold"
+              >
+                <svg class="w-3 h-3" fill="currentColor" viewBox="0 0 20 20">
+                  <path
+                    fill-rule="evenodd"
+                    d="M10 18a8 8 0 100-16 8 8 0 000 16zm-1-10h2v5h-2V8zm0 7h2v2h-2v-2z"
+                    clip-rule="evenodd"
+                  />
+                </svg>
+                Rate limit: None
+              </span>
+            </div>
+
+            <!-- Headers -->
+            <h3
+              class="text-xs font-mono font-bold text-gray-500 uppercase tracking-widest mb-3"
+            >
+              Headers
+            </h3>
+            <div class="dark-code bg-[#060810] border border-[#1e2130] rounded-xl overflow-hidden mb-5">
+              <table class="param-table">
+                <thead>
+                  <tr>
+                    <th>Header</th>
+                    <th>Value</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>Authorization</td>
+                    <td class="text-gray-400 dark-text-3">
+                      <code class="font-mono text-[#818cf8]">Bearer BDTools-YOUR_API_KEY</code>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+            <!-- Request body -->
+            <h3
+              class="text-xs font-mono font-bold text-gray-500 uppercase tracking-widest mb-3"
+            >
+              Request Body
+            </h3>
+            <div class="code-block mb-5">
+              <pre><span class="kw">{</span>
+  <span class="key">"channelId"</span><span class="kw">:</span> <span class="str">"123456789012345678"</span><span class="kw">,</span>
+  <span class="key">"channelName"</span><span class="kw">:</span> <span class="str">"ticket-0042"</span><span class="kw">,</span>
+  <span class="key">"guildName"</span><span class="kw">:</span> <span class="str">"My Cool Server"</span><span class="kw">,</span>
+  <span class="key">"authorId"</span><span class="kw">:</span> <span class="str">"111222333444555666"</span><span class="kw">,</span>
+  <span class="key">"botId"</span><span class="kw">:</span> <span class="str">"123456789012345678"</span><span class="kw">,</span>
+  <span class="key">"messages"</span><span class="kw">:</span> <span class="kw">[</span>
+    <span class="str">"111222333444555666 | hey i need help with my purchase"</span><span class="kw">,</span>
+    <span class="str">"999888777666555444 | sure what seems to be the issue"</span><span class="kw">,</span>
+    <span class="str">"111222333444555666 | i got charged twice"</span><span class="kw">,</span>
+    <span class="str">"999888777666555444 | let me look into that for you"</span>
+  <span class="kw">]</span>
+<span class="kw">}</span></pre>
+            </div>
+
+            <!-- Responses -->
+            <h3
+              class="text-xs font-mono font-bold text-gray-500 uppercase tracking-widest mb-3"
+            >
+              Responses
+            </h3>
+
+            <div class="response-block">
+              <span class="status-badge success">200 OK</span>
+              <div class="code-block mt-2">
+                <pre><span class="kw">{</span>
+  <span class="key">"url"</span><span class="kw">:</span> <span class="str">"https://cdn.bdtools.xyz/t/a1b2c3d4e5f6g7h8"</span>
+<span class="kw">}</span></pre>
+              </div>
+            </div>
+
+            <div class="response-block">
+              <span class="status-badge error-client"
+                >400 Bad Request — Missing Fields</span
+              >
+              <div class="code-block mt-2">
+                <pre><span class="kw">{</span> <span class="key">"error"</span><span class="kw">:</span> <span class="str">"Missing required fields: channelId, channelName, guildName, authorId, botId, messages."</span> <span class="kw">}</span></pre>
+              </div>
+            </div>
+
+            <div class="response-block">
+              <span class="status-badge error-client"
+                >400 Bad Request — Invalid JSON</span
+              >
+              <div class="code-block mt-2">
+                <pre><span class="kw">{</span> <span class="key">"error"</span><span class="kw">:</span> <span class="str">"Invalid JSON in request body."</span> <span class="kw">}</span></pre>
+              </div>
+            </div>
+
+            <div class="response-block">
+              <span class="status-badge error-client">401 Unauthorized</span>
+              <div class="code-block mt-2">
+                <pre><span class="kw">{</span> <span class="key">"error"</span><span class="kw">:</span> <span class="str">"Invalid or missing API key."</span> <span class="kw">}</span></pre>
+              </div>
+            </div>
+
+            <div class="response-block">
+              <span class="status-badge error-client"
+                >405 Method Not Allowed</span
+              >
+              <div class="code-block mt-2">
+                <pre><span class="kw">{</span> <span class="key">"error"</span><span class="kw">:</span> <span class="str">"Method not allowed. Use POST."</span> <span class="kw">}</span></pre>
+              </div>
+            </div>
+
+            <div class="response-block">
+              <span class="status-badge error-server"
+                >500 Internal Server Error — Database Connection</span
+              >
+              <div class="code-block mt-2">
+                <pre><span class="kw">{</span> <span class="key">"error"</span><span class="kw">:</span> <span class="str">"Database connection failed."</span> <span class="kw">}</span></pre>
+              </div>
+            </div>
+
+            <!-- Example BDFD Command (Collapsible) -->
+            <div class="mt-6 border-t border-[#1e2130] pt-6">
+              <button
+                onclick="
+                  const c = document.getElementById('bdfd-example-content');
+                  c.classList.toggle('hidden');
+                  this.querySelector('svg').classList.toggle('rotate-180');
+                "
+                class="collapsible-toggle flex items-center justify-between w-full text-left group"
+              >
+                <h3
+                  class="text-sm font-bold text-white dark-text group-hover:text-[#818cf8] transition-colors"
+                >
+                  Example BDFD Command
+                </h3>
+                <svg
+                  class="w-4 h-4 text-gray-500 group-hover:text-[#818cf8] transition-all duration-200"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M19 9l-7 7-7-7"
+                  />
+                </svg>
+              </button>
+              <div id="bdfd-example-content" class="hidden">
+                <p
+                  class="text-sm text-gray-400 dark-text-3 mt-3 mb-3 leading-relaxed"
+                >
+                  Paste this into a BDFD command to automatically generate a
+                  ticket transcript when a ticket is closed. Full credit for the
+                  example code goes to
+                  <strong class="text-white">Catearo</strong>.
+                </p>
+                <div class="flex items-center justify-between mb-2">
+                  <span class="text-xs text-gray-500 font-mono">BDFD Code</span>
+                  <button
+                    onclick="copyBdfdCode()"
+                    class="text-xs bg-[#1e2130] hover:bg-[#252840] text-gray-400 border border-[#2e3350] px-3 py-1.5 rounded-lg transition-colors font-semibold"
+                  >
+                    Copy Code
+                  </button>
+                </div>
+                <div class="code-block">
+                  <pre id="bdfdCode"><span class="fn">$nomention</span>
+<span class="fn">$c</span><span class="kw">[</span><span class="cmt">Replace this or add this variable in the app with the author/person who makes the ticket.</span><span class="kw">]</span>
+<span class="fn">$var</span><span class="kw">[</span><span class="str">aid</span><span class="kw">;</span><span class="fn">$getUserVar</span><span class="kw">[</span><span class="str">ticketAuthorId</span><span class="kw">]]</span>
+<span class="fn">$var</span><span class="kw">[</span><span class="str">key</span><span class="kw">;</span><span class="str">YOUR_API_KEY_HERE</span><span class="kw">]</span>
+
+<span class="fn">$c</span><span class="kw">[</span><span class="cmt">DO NOT CHANGE ANYTHING FROM THIS POINT ONWARDS</span><span class="kw">]</span>
+<span class="fn">$defer</span>
+<span class="fn">$var</span><span class="kw">[</span><span class="str">i</span><span class="kw">;</span><span class="num">0</span><span class="kw">]</span>
+<span class="fn">$jsonParse</span><span class="kw">[</span><span class="str">[\]</span><span class="kw">]</span>
+<span class="fn">$var</span><span class="kw">[</span><span class="str">code</span><span class="kw">;</span><span class="str">.try .var(lastMsgID,.optOff(.lastMessageID)) .jsonArrayAppend(,.getMessage(.channelID,.var(lastMsgID),authorID) | .getMessage(.channelID,.var(lastMsgID),content)) .deleteMessage(.channelID,.var(lastMsgID)) .endtry</span><span class="kw">]</span>
+<span class="fn">$var</span><span class="kw">[</span><span class="str">code</span><span class="kw">;</span><span class="fn">$replaceText</span><span class="kw">[</span><span class="fn">$replaceText</span><span class="kw">[</span><span class="fn">$replaceText</span><span class="kw">[</span><span class="fn">$replaceText</span><span class="kw">[</span><span class="fn">$var</span><span class="kw">[</span><span class="str">code</span><span class="kw">];</span><span class="str">.</span><span class="kw">;</span><span class="str">$</span><span class="kw">];</span><span class="str">,</span><span class="kw">;</span><span class="str">\;</span><span class="kw">];</span><span class="str">(</span><span class="kw">;</span><span class="str">[]</span><span class="kw">);</span><span class="str">)</span><span class="kw">;</span><span class="str">\</span><span class="kw">]]]</span>
+<span class="fn">$eval</span><span class="kw">[</span><span class="fn">$repeatMessage</span><span class="kw">[</span><span class="num">2</span><span class="kw">;</span><span class="fn">$repeatMessage</span><span class="kw">[</span><span class="num">10</span><span class="kw">;</span><span class="fn">$repeatMessage</span><span class="kw">[</span><span class="num">10</span><span class="kw">;</span><span class="fn">$var</span><span class="kw">[</span><span class="str">code</span><span class="kw">]]]]]</span>
+<span class="fn">$httpAddHeader</span><span class="kw">[</span><span class="str">Authorization</span><span class="kw">;</span><span class="str">Bearer $var[key]</span><span class="kw">]</span>
+<span class="fn">$httpPost</span><span class="kw">[</span><span class="str">https://api.bdtools.xyz/ticket-transcript</span><span class="kw">;</span><span class="kw">{</span>
+  <span class="str">"channelId"</span><span class="kw">:</span> <span class="str">"$channelID"</span><span class="kw">,</span>
+  <span class="str">"channelName"</span><span class="kw">:</span> <span class="str">"$channelName[$channelID]"</span><span class="kw">,</span>
+  <span class="str">"guildName"</span><span class="kw">:</span> <span class="str">"$serverName[$guildID]"</span><span class="kw">,</span>
+  <span class="str">"authorId"</span><span class="kw">:</span> <span class="str">"$getUserVar[$var[aid]]"</span><span class="kw">,</span>
+  <span class="str">"botId"</span><span class="kw">:</span> <span class="str">"$botID"</span><span class="kw">,</span>
+  <span class="str">"messages"</span><span class="kw">:</span> $jsonStringify
+<span class="kw">}</span><span class="kw">]</span>
+
+<span class="fn">$c</span><span class="kw">[</span><span class="cmt">You can edit these messages below:</span><span class="kw">]</span>
+
+<span class="fn">$c</span><span class="kw">[</span><span class="cmt">The DM channel ID of the person who made the ticket</span><span class="kw">]</span>
+<span class="fn">$var</span><span class="kw">[</span><span class="str">id</span><span class="kw">;</span><span class="fn">$dmChannelID</span><span class="kw">[</span><span class="fn">$getUserVar</span><span class="kw">[</span><span class="fn">$var</span><span class="kw">[</span><span class="str">aid</span><span class="kw">]]]]</span>
+<span class="fn">$c</span><span class="kw">[</span><span class="cmt">Message to send</span><span class="kw">]</span>
+<span class="fn">$var</span><span class="kw">[</span><span class="str">msg</span><span class="kw">;</span><span class="str">Here is your ticket transcript, thank you for contacting support ❤️</span><span class="kw">]</span>
+<span class="fn">$c</span><span class="kw">[</span><span class="cmt">The output URL</span><span class="kw">]</span>
+<span class="fn">$var</span><span class="kw">[</span><span class="str">url</span><span class="kw">;</span><span class="fn">$httpResult</span><span class="kw">[</span><span class="str">url</span><span class="kw">]]</span>
+
+<span class="fn">$c</span><span class="kw">[</span><span class="cmt">The message that is sent to the person who made the ticket via DM</span><span class="kw">]</span>
+<span class="fn">$channelSendMessage</span><span class="kw">[</span><span class="fn">$var</span><span class="kw">[</span><span class="str">id</span><span class="kw">];</span><span class="fn">$var</span><span class="kw">[</span><span class="str">msg</span><span class="kw">]</span>
+<span class="fn">$var</span><span class="kw">[</span><span class="str">url</span><span class="kw">]]</span>
+
+<span class="fn">$c</span><span class="kw">[</span><span class="cmt">Add more stuff here maybe send the transcript url to a staff channel or anything else.</span><span class="kw">]</span></pre>
+                </div>
+
+                <div
+                  class="dark-surface bg-[#0a0c14] border border-[#2e3350] rounded-xl p-4 mt-4"
+                >
+                  <div class="flex items-start gap-3">
+                    <div
+                      class="w-5 h-5 rounded-full bg-blue-500/10 border border-blue-500/20 flex items-center justify-center flex-shrink-0 mt-0.5"
+                    >
+                      <svg
+                        class="w-3 h-3 text-blue-400"
+                        fill="none"
+                        stroke="currentColor"
+                        viewBox="0 0 24 24"
+                      >
+                        <path
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                          stroke-width="2"
+                          d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+                        />
+                      </svg>
+                    </div>
+                    <div class="text-xs text-gray-400 dark-text-3 leading-relaxed">
+                      <strong class="text-gray-300">API Key:</strong> Replace
+                      <code class="font-mono text-[#818cf8]">YOUR_API_KEY_HERE</code>
+                      with your BDTools API key. Get your key at
+                      <a
+                        href="https://api.bdtools.xyz"
+                        class="text-[#818cf8] hover:text-[#a5b4fc] underline transition-colors font-medium"
+                        target="_blank"
+                        >api.bdtools.xyz</a
+                      >
+                      by signing in with Discord. The key expires every 30 days,
+                      visit api.bdtools.xyz to refresh it.
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Known Limitations -->
+            <div class="mt-6 border-t border-[#1e2130] pt-6">
+              <h3 class="text-sm font-bold text-white dark-text mb-3">
+                Known Limitations
+              </h3>
+              <ul class="space-y-2">
+                <li
+                  class="flex items-start gap-2.5 text-sm text-gray-400 dark-text-3"
+                >
+                  <span class="text-yellow-400 mt-0.5 flex-shrink-0">▸</span>
+                  <div>
+                    <strong class="text-gray-200"
+                      >Always loops 200 times:</strong
+                    >
+                    the loop always runs 200 iterations (maximum limit)
+                    regardless of how many messages are in the channel, 1 message or 200 takes
+                    the same ~3 minutes. It's a BDFD limitation, there's no early exit.
+                  </div>
+                </li>
+                <li
+                  class="flex items-start gap-2.5 text-sm text-gray-400 dark-text-3"
+                >
+                  <span class="text-yellow-400 mt-0.5 flex-shrink-0">▸</span>
+                  <div>
+                    <strong class="text-gray-200"
+                      >Embeds/Images show as placeholder:</strong
+                    >
+                    Embeds and Images cannot be fetched using
+                    <code
+                      class="font-mono text-[#818cf8] bg-[#5865F2]/10 px-1 py-0.5 rounded"
+                      >$getMessage</code
+                    >
+                    in BDFD, so they'll appear as
+                    <code
+                      class="font-mono text-[#818cf8] bg-[#5865F2]/10 px-1 py-0.5 rounded"
+                      >[embed/image, could not be retrieved]</code
+                    >
+                    instead.
+                  </div>
+                </li>
+                <li
+                  class="flex items-start gap-2.5 text-sm text-gray-400 dark-text-3"
+                >
+                  <span class="text-yellow-400 mt-0.5 flex-shrink-0">▸</span>
+                  <div>
+                    <strong class="text-gray-200"
+                      >Keeps deleting after the ticket is closed:</strong
+                    >
+                    since the loop
+                    can't be stopped mid-way, it will keep deleting messages even after the ticket
+                    is fully closed. If someone sends a message while the loop is still running,
+                    that message will get deleted too.
+                  </div>
+                </li>
+                <li
+                  class="flex items-start gap-2.5 text-sm text-gray-400 dark-text-3"
+                >
+                  <span class="text-yellow-400 mt-0.5 flex-shrink-0">▸</span>
+                  <div>
+                    <strong class="text-gray-200"
+                      >Same channel = transcript gets overwritten:</strong
+                    >
+                    the URL is tied to the channel ID, so if you reuse a channel
+                    for a new ticket, the old transcript is gone.
+                  </div>
+                </li>
+              </ul>
+            </div>
+          </section>
+
+          <!-- GET cdn.bdtools.xyz/t/:hash -->
+          <section
+            id="ep-get"
+            class="endpoint-section dark-surface hidden scroll-fade"
+          >
+            <div class="flex items-center gap-3 mb-4 flex-wrap">
+              <span class="method-badge get">GET</span>
+              <code
+                class="font-mono text-sm text-gray-200 dark-text flex-1 min-w-0 break-all"
+                >cdn.bdtools.xyz/t/{hash}</code
+              >
+            </div>
+
+            <p class="text-sm text-gray-400 dark-text-3 leading-relaxed mb-4">
+              Retrieve a stored transcript as plain text. The URL is returned by
+              the create endpoint. The hash is a 16-character hex string derived
+              from SHA-256 of the channel ID.
+            </p>
+
+            <div class="flex flex-wrap gap-2 mb-5">
+              <span
+                class="inline-flex items-center gap-1.5 text-xs bg-green-500/10 text-green-400 border border-green-500/20 px-2.5 py-1 rounded-full font-semibold"
+              >
+                <svg class="w-3 h-3" fill="currentColor" viewBox="0 0 20 20">
+                  <path
+                    fill-rule="evenodd"
+                    d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
+                    clip-rule="evenodd"
+                  />
+                </svg>
+                No auth required
+              </span>
+              <span
+                class="inline-flex items-center gap-1.5 text-xs bg-blue-500/10 text-blue-400 border border-blue-500/20 px-2.5 py-1 rounded-full font-semibold"
+              >
+                <svg class="w-3 h-3" fill="currentColor" viewBox="0 0 20 20">
+                  <path
+                    fill-rule="evenodd"
+                    d="M10 18a8 8 0 100-16 8 8 0 000 16zm-1-10h2v5h-2V8zm0 7h2v2h-2v-2z"
+                    clip-rule="evenodd"
+                  />
+                </svg>
+                Rate limit: None
+              </span>
+            </div>
+
+            <!-- URL Format -->
+            <h3
+              class="text-xs font-mono font-bold text-gray-500 uppercase tracking-widest mb-2"
+            >
+              URL Format
+            </h3>
+            <div class="code-block mb-5">
+              <pre><span class="str">https://cdn.bdtools.xyz/t/a1b2c3d4e5f6g7h8</span></pre>
+            </div>
+
+            <!-- Responses -->
+            <h3
+              class="text-xs font-mono font-bold text-gray-500 uppercase tracking-widest mb-3"
+            >
+              Responses
+            </h3>
+
+            <div class="response-block">
+              <span class="status-badge success">200 OK</span>
+              <p class="text-sm text-gray-400 dark-text-3 mt-2 mb-2">
+                Content-Type:
+                <code class="font-mono text-[#818cf8]">text/plain</code>
+              </p>
+              <div class="code-block mt-2">
+                <pre>
+Transcript for #ticket-0042 (My Cool Server)
+Ticket Author: John (john)
+Date: 2026-05-25
+
+John (john): hey i need help with my purchase
+Jane (jane): sure what seems to be the issue
+John (john): i got charged twice
+Jane (jane): let me look into that for you
+John (john): thanks!</pre
+                >
+              </div>
+            </div>
+
+            <div class="response-block">
+              <span class="status-badge error-client">404 Not Found</span>
+              <div class="code-block mt-2">
+                <pre>Transcript not found.</pre>
+              </div>
+            </div>
+          </section>
+
+          <!-- Bottom navigation -->
+          <div
+            class="flex items-center justify-between pt-6 pb-6 border-t border-[#1e2130] mt-8"
+          >
+            <button
+              id="prevBtn"
+              onclick="navigateSection('prev')"
+              class="inline-flex items-center gap-2 text-sm text-gray-400 hover:text-[#818cf8] transition-colors font-semibold"
+            >
+              <svg
+                class="w-4 h-4"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M15 19l-7-7 7-7"
+                />
+              </svg>
+              <span id="prevText">Previous</span>
+            </button>
+            <button
+              id="nextBtn"
+              onclick="navigateSection('next')"
+              class="inline-flex items-center gap-2 text-sm text-gray-400 hover:text-[#818cf8] transition-colors font-semibold"
+            >
+              <span id="nextText">Next</span>
+              <svg
+                class="w-4 h-4"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M9 5l7 7-7 7"
+                />
+              </svg>
+            </button>
+          </div>
+        </main>
+      </div>
+    </div>
+
+    <!-- ── FOOTER ── -->
+    <footer class="border-t border-[#1e2130] bg-[#080a10] mt-auto">
+      <div
+        class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 flex flex-col sm:flex-row items-center justify-between gap-3"
+      >
+        <span class="text-sm text-gray-600"
+          >© 2026 BDTools. All rights reserved.</span
+        >
+        <div class="flex items-center gap-4 text-xs text-gray-600">
+          <a href="/tos" class="hover:text-gray-400 transition-colors"
+            >Terms of Service</a
+          >
+          <a href="/privacy" class="hover:text-gray-400 transition-colors"
+            >Privacy Policy</a
+          >
+          <a href="/contact" class="hover:text-gray-400 transition-colors"
+            >Contact</a
+          >
+        </div>
+      </div>
+    </footer>
+
+    <!-- ── TOAST ── -->
+    <div
+      id="toast"
+      class="fixed bottom-6 right-6 z-50 bg-[#5865F2] text-white text-xs font-semibold px-4 py-2.5 rounded-xl shadow-xl flex items-center gap-2"
+    >
+      <svg
+        class="w-3.5 h-3.5 flex-shrink-0"
+        fill="none"
+        stroke="currentColor"
+        viewBox="0 0 24 24"
+      >
+        <path
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="2.5"
+          d="M5 13l4 4L19 7"
+        />
+      </svg>
+      <span id="toastMsg">Copied!</span>
+    </div>
+
+    <!-- ── SCRIPTS ── -->
+    <script src="/dist/docs/shared.js"></script>
+    <script>
+      // Page-specific configuration
+      window.PAGE_SECTIONS = [
+        { id: "overview", label: "Overview" },
+        { id: "ep-create", label: "POST /ticket-transcript" },
+        { id: "ep-get", label: "GET /t/{hash}" },
+      ];
+      window.PREV_PAGE = { url: "/docs/bdscript", label: "BDScript" };
+      window.NEXT_PAGE = { url: "/docs/others", label: "Other Endpoints" };
+
+      // Copy BDFD code function
+      function copyBdfdCode() {
+        const codeElement = document.getElementById("bdfdCode");
+        if (!codeElement) {
+          showToast("Code not found", "red");
+          return;
+        }
+        const codeText = codeElement.textContent;
+        navigator.clipboard
+          .writeText(codeText)
+          .then(() => showToast("BDFD code copied!"))
+          .catch(() => showToast("Failed to copy", "red"));
+      }
+    </script>
+    <script src="/dist/docs/endpoints.js"></script>
+  </body>
+</html>

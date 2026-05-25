@@ -17,8 +17,7 @@
 | [Code Indenter](https://bdtools.xyz/indenter) | Auto-format and indent messy BDFD scripts for readability. |
 | [Character Escaper](https://bdtools.xyz/escaper) | Escape BDFD special characters: `$`, `;`, `\`, `]`. |
 | [Permission Calculator](https://bdtools.xyz/permission-calc) | Calculate Discord permission bitfields for bot invites. |
-| [Bot Guild List](https://bdtools.xyz/bot-guild-list) | API-authenticated dashboard to browse your bot's servers with member counts, icons, and invite links. |
-| [Bot Guild List](https://bdtools.xyz/bot-guild-list) | already there ✓ |
+| [Bot Guild List](https://app.bdtools.xyz/bot-guild-list) | API-authenticated dashboard to browse your bot's servers with member counts, icons, and invite links. |
 
 ---
 
@@ -96,12 +95,12 @@ $httpGet[https://api.bdtools.xyz/random-pokemon?gen=1]
 
 ## Stack
 
-- **Frontend** — TypeScript (compiled to ES2020), Tailwind CSS, Geist font
-- **Backend** — Netlify Functions (TypeScript/Node.js), MongoDB
-- **Auth** — Discord OAuth2, JWT
-- **Deployment** — Netlify (continuous deployment from GitHub)
-- **Cron** — cron-job.org (triggers node status scraper every 2 minutes)
-- **Cache** — Upstash Redis (rate limiting + guild list caching)
+- **Frontend**: TypeScript (compiled to ES2020), Tailwind CSS, Geist font
+- **Backend**: Netlify Functions (TypeScript/Node.js), MongoDB
+- **Auth**: Discord OAuth2, JWT
+- **Deployment**: Netlify (continuous deployment from GitHub)
+- **Cron**: cron-job.org (triggers node status scraper every 2 minutes)
+- **Cache**: Upstash Redis (rate limiting + guild list caching)
 
 ---
 

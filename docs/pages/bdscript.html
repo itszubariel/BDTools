@@ -27,48 +27,6 @@
   </head>
 
   <body class="bg-[#080a10] text-gray-100 min-h-screen flex flex-col">
-    <!-- ── LOGIN GATE ── -->
-    <div id="loginOverlay">
-      <div class="fu text-center px-6 w-full max-w-sm">
-        <img
-          src="/images/bdtools_logo.png"
-          alt="BDTools"
-          class="w-16 h-16 rounded-2xl mx-auto mb-6 shadow-2xl"
-          onerror="this.style.display = 'none'"
-        />
-        <h1
-          class="dark-text text-2xl font-black text-white mb-2 tracking-tight"
-        >
-          BDTools API Docs
-        </h1>
-        <p class="text-gray-400 text-sm mb-8">
-          Sign in with Discord to access the full API documentation, your
-          personal API key, and the interactive tester.
-        </p>
-        <button
-          id="loginBtn"
-          onclick="loginDiscord()"
-          class="inline-flex items-center gap-3 px-7 py-3 bg-[#5865F2] hover:bg-[#4752c4] text-white font-bold rounded-xl transition-all shadow-lg text-base w-full justify-center"
-        >
-          <svg
-            width="20"
-            height="20"
-            viewBox="0 0 127.14 96.36"
-            fill="currentColor"
-          >
-            <path
-              d="M107.7 8.07A105.15 105.15 0 0081.47 0a72.06 72.06 0 00-3.36 6.83 97.68 97.68 0 00-29.11 0A72.37 72.37 0 0045.64 0a105.89 105.89 0 00-26.25 8.09C2.79 32.65-1.71 56.6.54 80.21a105.73 105.73 0 0032.17 16.15 77.7 77.7 0 006.89-11.11 68.42 68.42 0 01-10.85-5.18c.91-.66 1.8-1.34 2.66-2a75.57 75.57 0 0064.32 0c.87.71 1.76 1.39 2.66 2a68.68 68.68 0 01-10.87 5.19 77 77 0 006.89 11.1 105.25 105.25 0 0032.19-16.14c2.64-27.38-4.51-51.11-18.9-72.15zM42.45 65.69C36.18 65.69 31 60 31 53s5-12.74 11.43-12.74S54 46 53.89 53s-5.05 12.69-11.44 12.69zm42.24 0C78.41 65.69 73.25 60 73.25 53s5-12.74 11.44-12.74S96.23 46 96.12 53s-5.04 12.69-11.43 12.69z"
-            />
-          </svg>
-          Sign in with Discord
-        </button>
-        <p
-          id="loginStatus"
-          class="text-xs text-gray-600 mt-4 min-h-[1.25rem]"
-        ></p>
-      </div>
-    </div>
-
     <!-- ── NAV ── -->
     <nav
       class="sticky top-0 z-50 border-b"
@@ -86,23 +44,7 @@
           />
           <span class="font-bold tracking-tight t1">BDTools</span>
         </a>
-        <div id="userInfo" class="hidden items-center gap-2 min-w-0">
-          <img
-            id="userAvatar"
-            src=""
-            alt=""
-            class="w-7 h-7 rounded-full flex-shrink-0"
-          />
-          <span
-            id="userName"
-            class="font-semibold text-sm hidden sm:block truncate"
-          ></span>
-          <button
-            onclick="openLogoutModal()"
-            class="text-xs text-gray-500 hover:text-red-400 transition-colors ml-1 flex-shrink-0"
-          >
-            Logout
-          </button>
+        <div class="flex items-center gap-2 min-w-0">
           <span
             id="themeLabel"
             class="text-xs text-gray-500 hidden sm:block select-none"
@@ -125,33 +67,7 @@
       </div>
     </nav>
 
-    <!-- ── LOGOUT MODAL ── -->
-    <div class="overlay hidden" id="logoutModal">
-      <div class="modal">
-        <button class="modal-close" onclick="closeLogoutModal()">
-          <svg
-            width="14"
-            height="14"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            stroke-width="2.5"
-          >
-            <line x1="18" y1="6" x2="6" y2="18" />
-            <line x1="6" y1="6" x2="18" y2="18" />
-          </svg>
-        </button>
-        <h3>Confirm Logout</h3>
-        <p>
-          Are you sure you want to log out? This will clear your session and API
-          key.
-        </p>
-        <div class="modal-buttons">
-          <button class="btn-ghost" onclick="closeLogoutModal()">Cancel</button>
-          <button class="btn-danger" onclick="logout()">Logout</button>
-        </div>
-      </div>
-    </div>
+    <!-- ── LOGOUT MODAL (removed — no auth) ── -->
 
     <!-- ── MOBILE DRAWER ── -->
     <div
@@ -426,6 +342,31 @@
                 </svg>
                 Rate limit: None
               </span>
+            </div>
+
+            <!-- Headers -->
+            <h3
+              class="text-xs font-mono font-bold text-gray-500 uppercase tracking-widest mb-3"
+            >
+              Headers
+            </h3>
+            <div class="dark-code bg-[#060810] border border-[#1e2130] rounded-xl overflow-hidden mb-5">
+              <table class="param-table">
+                <thead>
+                  <tr>
+                    <th>Header</th>
+                    <th>Value</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>Authorization</td>
+                    <td class="text-gray-400 dark-text-3">
+                      <code class="font-mono text-[#818cf8]">Bearer BDTools-YOUR_API_KEY</code>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
             </div>
 
             <!-- Request Body -->
@@ -2090,130 +2031,6 @@
               debugging. This helps you fix issues from top to bottom.
             </p>
 
-            <!-- Example BDFD Usage -->
-            <h3
-              class="text-xs font-mono font-bold text-gray-500 uppercase tracking-widest mb-2 mt-6"
-            >
-              Example BDFD Usage
-            </h3>
-            <p class="text-sm text-gray-400 dark-text-3 leading-relaxed mb-3">
-              To validate user-provided code, capture it with
-              <code
-                class="font-mono text-[#818cf8] bg-[#5865F2]/10 px-1 py-0.5 rounded"
-                >$message</code
-              >
-              and store it in a variable to prevent BDFD from executing it:
-            </p>
-            <div class="code-block mb-4">
-              <pre><span class="fn">$nomention</span>
-<span class="fn">$var</span><span class="kw">[</span><span class="str">code</span><span class="kw">;</span><span class="fn">$message</span><span class="kw">]</span>
-<span class="fn">$httpAddHeader</span><span class="kw">[</span><span class="str">Authorization</span><span class="kw">;</span><span class="str">Bearer BDTools-YOUR_API_KEY_HERE</span><span class="kw">]</span>
-<span class="fn">$httpPost</span><span class="kw">[</span><span class="str">https://api.bdtools.xyz/bdscript-checker</span><span class="kw">;</span>
-<span class="kw">{</span>
-  <span class="str">"code"</span><span class="kw">:</span> <span class="str">"$var[code]"</span>
-<span class="kw">}</span>
-<span class="kw">]</span>
-<span class="fn">$httpResult</span></pre>
-            </div>
-
-            <div
-              class="dark-surface bg-[#0a0c14] border border-[#2e3350] rounded-xl p-4 mb-4"
-            >
-              <div class="flex items-start gap-3">
-                <div
-                  class="w-5 h-5 rounded-full bg-blue-500/10 border border-blue-500/20 flex items-center justify-center flex-shrink-0 mt-0.5"
-                >
-                  <svg
-                    class="w-3 h-3 text-blue-400"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                  >
-                    <path
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                      stroke-width="2"
-                      d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
-                    />
-                  </svg>
-                </div>
-                <div class="text-xs text-gray-400 dark-text-3 leading-relaxed">
-                  <strong class="text-gray-300">How it works:</strong>
-                  <ol class="list-decimal list-inside mt-2 space-y-1">
-                    <li>
-                      User types:
-                      <code
-                        class="font-mono text-[#818cf8] bg-[#5865F2]/10 px-1 py-0.5 rounded"
-                        >!run $sendMessage[Hello World!]</code
-                      >
-                    </li>
-                    <li>
-                      <code
-                        class="font-mono text-[#818cf8] bg-[#5865F2]/10 px-1 py-0.5 rounded"
-                        >$message</code
-                      >
-                      captures the raw code after the command
-                    </li>
-                    <li>
-                      Store it in
-                      <code
-                        class="font-mono text-[#818cf8] bg-[#5865F2]/10 px-1 py-0.5 rounded"
-                        >$var[code]</code
-                      >
-                      to prevent execution
-                    </li>
-                    <li>Send to API for validation</li>
-                    <li>
-                      Display the result with
-                      <code
-                        class="font-mono text-[#818cf8] bg-[#5865F2]/10 px-1 py-0.5 rounded"
-                        >$httpResult</code
-                      >
-                    </li>
-                  </ol>
-                </div>
-              </div>
-            </div>
-
-            <div
-              class="dark-surface bg-[#0a0c14] border border-[#2e3350] rounded-xl p-4 mb-5"
-            >
-              <div class="flex items-start gap-3">
-                <div
-                  class="w-5 h-5 rounded-full bg-yellow-500/10 border border-yellow-500/20 flex items-center justify-center flex-shrink-0 mt-0.5"
-                >
-                  <svg
-                    class="w-3 h-3 text-yellow-400"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                  >
-                    <path
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                      stroke-width="2"
-                      d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"
-                    />
-                  </svg>
-                </div>
-                <div class="text-xs text-gray-400 dark-text-3 leading-relaxed">
-                  <strong class="text-yellow-400">Important:</strong> Always
-                  store the code in a
-                  <code
-                    class="font-mono text-[#818cf8] bg-[#5865F2]/10 px-1 py-0.5 rounded"
-                    >$var</code
-                  >
-                  before using it in JSON. If you use
-                  <code
-                    class="font-mono text-[#818cf8] bg-[#5865F2]/10 px-1 py-0.5 rounded"
-                    >$message</code
-                  >
-                  directly in the JSON, BDFD will execute the code instead of
-                  sending it as text.
-                </div>
-              </div>
-            </div>
-
             <!-- Error Responses -->
             <h3
               class="text-xs font-mono font-bold text-gray-500 uppercase tracking-widest mb-3 mt-6"
@@ -2250,6 +2067,168 @@
               >
               <div class="code-block mt-2">
                 <pre><span class="kw">{</span> <span class="key">"error"</span><span class="kw">:</span> <span class="str">"Internal server error"</span> <span class="kw">}</span></pre>
+              </div>
+            </div>
+
+            <!-- Example BDFD Command (Collapsible) -->
+            <div class="mt-6 border-t border-[#1e2130] pt-6">
+              <button
+                onclick="
+                  const c = document.getElementById('bdfd-example-content');
+                  c.classList.toggle('hidden');
+                  this.querySelector('svg').classList.toggle('rotate-180');
+                "
+                class="collapsible-toggle flex items-center justify-between w-full text-left group"
+              >
+                <h3
+                  class="text-sm font-bold text-white dark-text group-hover:text-[#818cf8] transition-colors"
+                >
+                  Example BDFD Command
+                </h3>
+                <svg
+                  class="w-4 h-4 text-gray-500 group-hover:text-[#818cf8] transition-all duration-200"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M19 9l-7 7-7-7"
+                  />
+                </svg>
+              </button>
+              <div id="bdfd-example-content" class="hidden">
+                <p
+                  class="text-sm text-gray-400 dark-text-3 mt-3 mb-3 leading-relaxed"
+                >
+                  Paste this into a BDFD command to validate user-provided code.
+                  Capture the code with
+                  <code
+                    class="font-mono text-[#818cf8] bg-[#5865F2]/10 px-1 py-0.5 rounded"
+                    >$message</code
+                  >
+                  and store it in a variable to prevent BDFD from executing it.
+                </p>
+                <div class="flex items-center justify-between mb-2">
+                  <span class="text-xs text-gray-500 font-mono">BDFD Code</span>
+                  <button
+                    onclick="copyBdfdCode()"
+                    class="text-xs bg-[#1e2130] hover:bg-[#252840] text-gray-400 border border-[#2e3350] px-3 py-1.5 rounded-lg transition-colors font-semibold"
+                  >
+                    Copy Code
+                  </button>
+                </div>
+                <div class="code-block">
+                  <pre id="bdfdCode"><span class="fn">$nomention</span>
+<span class="fn">$var</span><span class="kw">[</span><span class="str">code</span><span class="kw">;</span><span class="fn">$message</span><span class="kw">]</span>
+<span class="fn">$httpAddHeader</span><span class="kw">[</span><span class="str">Authorization</span><span class="kw">;</span><span class="str">Bearer BDTools-YOUR_API_KEY_HERE</span><span class="kw">]</span>
+<span class="fn">$httpPost</span><span class="kw">[</span><span class="str">https://api.bdtools.xyz/bdscript-checker</span><span class="kw">;</span>
+<span class="kw">{</span>
+  <span class="str">"code"</span><span class="kw">:</span> <span class="str">"$var[code]"</span>
+<span class="kw">}</span>
+<span class="kw">]</span>
+<span class="fn">$httpResult</span></pre>
+                </div>
+
+                <div
+                  class="dark-surface bg-[#0a0c14] border border-[#2e3350] rounded-xl p-4 mt-4"
+                >
+                  <div class="flex items-start gap-3">
+                    <div
+                      class="w-5 h-5 rounded-full bg-blue-500/10 border border-blue-500/20 flex items-center justify-center flex-shrink-0 mt-0.5"
+                    >
+                      <svg
+                        class="w-3 h-3 text-blue-400"
+                        fill="none"
+                        stroke="currentColor"
+                        viewBox="0 0 24 24"
+                      >
+                        <path
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                          stroke-width="2"
+                          d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+                        />
+                      </svg>
+                    </div>
+                    <div class="text-xs text-gray-400 dark-text-3 leading-relaxed">
+                      <strong class="text-gray-300">How it works:</strong>
+                      <ol class="list-decimal list-inside mt-2 space-y-1">
+                        <li>
+                          User types:
+                          <code
+                            class="font-mono text-[#818cf8] bg-[#5865F2]/10 px-1 py-0.5 rounded"
+                            >!run $sendMessage[Hello World!]</code
+                          >
+                        </li>
+                        <li>
+                          <code
+                            class="font-mono text-[#818cf8] bg-[#5865F2]/10 px-1 py-0.5 rounded"
+                            >$message</code
+                          >
+                          captures the raw code after the command
+                        </li>
+                        <li>
+                          Store it in
+                          <code
+                            class="font-mono text-[#818cf8] bg-[#5865F2]/10 px-1 py-0.5 rounded"
+                            >$var[code]</code
+                          >
+                          to prevent execution
+                        </li>
+                        <li>Send to API for validation</li>
+                        <li>
+                          Display the result with
+                          <code
+                            class="font-mono text-[#818cf8] bg-[#5865F2]/10 px-1 py-0.5 rounded"
+                            >$httpResult</code
+                          >
+                        </li>
+                      </ol>
+                    </div>
+                  </div>
+                </div>
+
+                <div
+                  class="dark-surface bg-[#0a0c14] border border-[#2e3350] rounded-xl p-4 mt-4"
+                >
+                  <div class="flex items-start gap-3">
+                    <div
+                      class="w-5 h-5 rounded-full bg-yellow-500/10 border border-yellow-500/20 flex items-center justify-center flex-shrink-0 mt-0.5"
+                    >
+                      <svg
+                        class="w-3 h-3 text-yellow-400"
+                        fill="none"
+                        stroke="currentColor"
+                        viewBox="0 0 24 24"
+                      >
+                        <path
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                          stroke-width="2"
+                          d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"
+                        />
+                      </svg>
+                    </div>
+                    <div class="text-xs text-gray-400 dark-text-3 leading-relaxed">
+                      <strong class="text-yellow-400">Important:</strong> Always
+                      store the code in a
+                      <code
+                        class="font-mono text-[#818cf8] bg-[#5865F2]/10 px-1 py-0.5 rounded"
+                        >$var</code
+                      >
+                      before using it in JSON. If you use
+                      <code
+                        class="font-mono text-[#818cf8] bg-[#5865F2]/10 px-1 py-0.5 rounded"
+                        >$message</code
+                      >
+                      directly in the JSON, BDFD will execute the code instead of
+                      sending it as text.
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
           </section>
@@ -2643,9 +2622,6 @@
     </div>
 
     <!-- ── SCRIPTS ── -->
-    <script>
-      window.DOCS_REDIRECT = "https://bdtools.xyz/docs";
-    </script>
     <script src="/dist/docs/shared.js"></script>
     <script>
       // Page-specific configuration
@@ -2655,7 +2631,24 @@
         { id: "ep-function-check", label: "GET /function-check" },
       ];
       window.PREV_PAGE = { url: "/docs/guild-list", label: "Guild List" };
-      window.NEXT_PAGE = { url: "/docs/others", label: "Other Endpoints" };
+      window.NEXT_PAGE = {
+        url: "/docs/ticket-transcript",
+        label: "Ticket Transcript",
+      };
+
+      // Copy BDFD code function
+      function copyBdfdCode() {
+        const codeElement = document.getElementById("bdfdCode");
+        if (!codeElement) {
+          showToast("Code not found", "red");
+          return;
+        }
+        const codeText = codeElement.textContent;
+        navigator.clipboard
+          .writeText(codeText)
+          .then(() => showToast("BDFD code copied!"))
+          .catch(() => showToast("Failed to copy", "red"));
+      }
     </script>
     <script src="/dist/docs/endpoints.js"></script>
   </body>

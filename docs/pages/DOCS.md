@@ -306,7 +306,7 @@ Optionally, you can request a PNG graph visualization by adding `?graph=true` to
       "createdAt": "2026-04-30T12:00:00.000Z"
     }
   ],
-  "png": "https://api.bdtools.xyz/images/limit-720-hash-a1b2c3d4.png"
+  "png": "https://cdn.bdtools.xyz/images/limit-720-hash-a1b2c3d4.png"
 }
 ```
 
@@ -317,7 +317,7 @@ Optionally, you can request a PNG graph visualization by adding `?graph=true` to
 - Image is cached for 5 minutes
 - Can be embedded directly in BDFD:
   ```shell
-  $image[https://api.bdtools.xyz/images/limit-720-hash-a1b2c3d4.png]
+  $image[https://cdn.bdtools.xyz/images/limit-720-hash-a1b2c3d4.png]
   ```
 
 **Example Requests:**
@@ -361,7 +361,7 @@ Serves dynamically generated PNG chart images for node status history. This endp
 
 **Example Usage:**
 ```shell
-$image[https://api.bdtools.xyz/images/limit-720-hash-a1b2c3d4.png]
+$image[https://cdn.bdtools.xyz/images/limit-720-hash-a1b2c3d4.png]
 ```
 
 **Error Response (400) - Invalid ID:**
@@ -398,7 +398,7 @@ Authorization: Bearer BDTools-YOUR_API_KEY_HERE
 
 ### Rate Limits & Restrictions
 - **POST /submit-server** is rate limited to **once per 5 hours** per API key.
-- **GET /get-servers** is only accessible from **bdtools.xyz** origin (specifically the Bot Guild List page at https://bdtools.xyz/bot-guild-list).
+- **GET /get-servers** is only accessible from **bdtools.xyz** origin (specifically the Bot Guild List page at https://app.bdtools.xyz/bot-guild-list).
 - Retrieved data is **cached in Redis** and invalidates on new submission.
 
 ---
@@ -433,7 +433,7 @@ Owner ID: 999888777666555444
 {
   "message": "Processing started. This may take anywhere from 15 seconds to 5 minutes depending on the number of servers and Discord's response time.",
   "receivedServers": 42,
-  "info": "Once processing is complete, you can view the updated guild list at https://bdtools.xyz/bot-guild-list"
+  "info": "Once processing is complete, you can view the updated guild list at https://app.bdtools.xyz/bot-guild-list"
 }
 ```
 
@@ -560,11 +560,11 @@ $httpResult
 
 ### GET /get-servers
 
-Retrieve the stored guild list for your bot. This endpoint is restricted to requests originating from `bdtools.xyz` (specifically the Bot Guild List page at https://bdtools.xyz/bot-guild-list) and returns cached data from Redis. The cache is automatically invalidated when you submit a new guild list.
+Retrieve the stored guild list for your bot. This endpoint is restricted to requests originating from `bdtools.xyz` (specifically the Bot Guild List page at https://app.bdtools.xyz/bot-guild-list) and returns cached data from Redis. The cache is automatically invalidated when you submit a new guild list.
 
 **Auth Required:** Yes  
 **Cached:** Redis (invalidated on new submission)  
-**Origin Restriction:** Only accessible from https://bdtools.xyz/bot-guild-list
+**Origin Restriction:** Only accessible from https://app.bdtools.xyz/bot-guild-list
 
 **Query Parameters:** None
 
@@ -1453,8 +1453,6 @@ Looks up a BDFD function by name using fuzzy matching. Useful for finding the co
 - `exact` — `true` if the match was exact, `false` if fuzzy
 - `confidence` — How confident the matcher is (100% = exact match)
 
-**Note:** The matcher uses an internal scoring algorithm (no external dependency). The `confidence` field is returned as a percentage string (for example, `"82%"`).
-
 **Error Response (400) - Missing Input:**
 ```json
 {
@@ -1476,8 +1474,117 @@ Looks up a BDFD function by name using fuzzy matching. Useful for finding the co
 - `/function-check/sendmesage` — fuzzy match
 - `/function-check/$getUserVar` — strips `$` automatically
 - `/function-check/$setUserVar[name;value]` — strips brackets automatically
+---
+
+## Ticket Transcript Endpoints
+
+Create and retrieve Discord ticket transcripts. The POST endpoint **requires authentication** via JWT Bearer token with the `BDTools-` prefix, while the GET endpoint remains public. Messages are formatted into a .txt transcript with Discord usernames/display names resolved server-side via the Discord API. Stored in MongoDB and served as plain text.
+
+**Authentication Format:**
+```
+Authorization: Bearer BDTools-YOUR_API_KEY_HERE
+```
+
+### POST /ticket-transcript
+
+Creates a ticket transcript from raw message data. Accepts a JSON body with `channelId`, `channelName`, `guildName`, `authorId`, `botId`, and a `messages` array. Each message should be formatted as `userId | content`. The endpoint resolves all user IDs via the Discord API, formats the results into a readable transcript, stores it in MongoDB, and returns a shareable URL.
+
+**Auth Required:** Yes  
+**Rate Limit:** None
+
+**Request Body:**
+```json
+{
+  "channelId": "123456789012345678",
+  "channelName": "ticket-0042",
+  "guildName": "My Cool Server",
+  "authorId": "111222333444555666",
+  "botId": "123456789012345678",
+  "messages": [
+    "111222333444555666 | hey i need help with my purchase",
+    "999888777666555444 | sure what seems to be the issue",
+    "111222333444555666 | i got charged twice",
+    "999888777666555444 | let me look into that for you"
+  ]
+}
+```
+
+**Success Response (200):**
+```json
+{
+  "url": "https://cdn.bdtools.xyz/t/a1b2c3d4e5f6g7h8"
+}
+```
+
+**Error Response (400) - Missing Fields:**
+```json
+{
+  "error": "Missing required fields: channelId, channelName, guildName, authorId, botId, messages."
+}
+```
+
+**Error Response (400) - Invalid JSON:**
+```json
+{
+  "error": "Invalid JSON in request body."
+}
+```
+
+**Error Response (401):**
+```json
+{
+  "error": "Invalid or missing API key."
+}
+```
+
+**Error Response (405):**
+```json
+{
+  "error": "Method not allowed. Use POST."
+}
+```
+
+**Error Response (500) - Database Connection:**
+```json
+{
+  "error": "Database connection failed."
+}
+```
 
 ---
+
+### GET cdn.bdtools.xyz/t/:hash
+
+Retrieve a stored transcript as plain text. The URL is returned by the create endpoint. The hash is a 16-character hex string derived from SHA-256 of the channel ID.
+
+**Auth Required:** No  
+**Rate Limit:** None
+
+**URL Format:** `https://cdn.bdtools.xyz/t/a1b2c3d4e5f6g7h8`
+
+**Success Response (200):**
+- Content-Type: `text/plain`
+- Body is the full transcript text:
+
+```
+Transcript for #ticket-0042 (My Cool Server)
+Ticket Author: John (john)
+Date: 2026-05-25
+
+John (john): hey i need help with my purchase
+Jane (jane): sure what seems to be the issue
+John (john): i got charged twice
+Jane (jane): let me look into that for you
+John (john): thanks!
+```
+
+**Error Response (404):**
+```
+Transcript not found.
+```
+
+---
+
 ## Other Endpoints
 
 These endpoints are **public** (no authentication required) and provide various utility functions including word games and Pokemon data.
@@ -1695,6 +1802,7 @@ Authorization: Bearer BDTools-eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...
 **Authentication by endpoint:**
 - **Node Status**: No auth required (public)
 - **Bot Guild List**: Auth required
+- **Ticket Transcript**: POST requires auth, GET is public
 - **BDScript**: Auth required + No auth required (public)
 - **Other Endpoints**: No auth required (public)
 
@@ -1713,5 +1821,5 @@ Authorization: Bearer BDTools-eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...
 - Other endpoints: No caching
 
 ### Origin Restrictions
-- `/get-servers`: Only accessible from https://bdtools.xyz/bot-guild-list
+- `/get-servers`: Only accessible from https://app.bdtools.xyz/bot-guild-list
 - Other endpoints: No origin restrictions

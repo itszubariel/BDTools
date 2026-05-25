@@ -4,14 +4,17 @@
 /embed-builder                /tools/html/embed-builder.html           200
 /send-embed-builder           /tools/html/send-embed-builder.html      200
 /container-builder            /tools/html/container-builder.html       200
-/bot-guild-list               /tools/html/bot-guild-list.html          200
+/bot-guild-list               https://app.bdtools.xyz/bot-guild-list   301!
 /permission-calculator        /tools/html/permission-calc.html         200
 
 /docs/node-status             /docs/pages/node-status.html             200
 /docs/guild-list              /docs/pages/guild-list.html              200
 /docs/bdscript                /docs/pages/bdscript.html                200
+/docs/ticket-transcript       /docs/pages/ticket-transcript.html       200
 /docs/others                  /docs/pages/others.html                  200
 /docs                         /docs/index.html                         200
 /docs/*                       /docs/:splat                             200
 
-https://bdtools.netlify.app/* https://bdtools.xyz/:splat               301!
+https://app.bdtools.xyz/bot-guild-list    /tools/html/bot-guild-list.html    200
+https://app.bdtools.xyz/*                 https://bdtools.xyz/:splat         301!
+https://bdtools.netlify.app/*             https://bdtools.xyz/:splat         301!
