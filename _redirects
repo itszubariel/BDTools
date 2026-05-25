@@ -4,7 +4,6 @@
 /embed-builder                /tools/html/embed-builder.html           200
 /send-embed-builder           /tools/html/send-embed-builder.html      200
 /container-builder            /tools/html/container-builder.html       200
-/bot-guild-list               https://app.bdtools.xyz/bot-guild-list   301!
 /permission-calculator        /tools/html/permission-calc.html         200
 
 /docs/node-status             /docs/pages/node-status.html             200

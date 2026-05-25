@@ -3,6 +3,6 @@ node_modules/
 .netlify
 Test/
 archived/
-
+.env
 .DS_Store
 tools/html/dropped
