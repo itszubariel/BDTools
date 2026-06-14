@@ -195,6 +195,7 @@
               your code (used in `!run` in the BDFD Server), and a fuzzy
               function check/lookup to find the correct function name.
             </p>
+
             <div class="flex flex-wrap gap-2 mb-4">
               <span
                 class="inline-flex items-center gap-1.5 text-xs bg-red-500/10 text-red-400 border border-red-500/20 px-2.5 py-1 rounded-full font-semibold"
@@ -317,6 +318,52 @@
               a local JSON file for fast validation.
             </p>
 
+            <h3
+              class="text-xs font-mono font-bold text-gray-500 uppercase tracking-widest mb-2 mt-6"
+            >
+              Input Sources
+            </h3>
+            <p class="text-sm text-gray-400 dark-text-3 leading-relaxed mb-2">
+              The API accepts code via two sources in the
+              <code>code</code> field:
+            </p>
+            <ul
+              class="text-sm text-gray-400 dark-text-3 list-disc list-inside mb-4 ml-2"
+            >
+              <li><strong>Raw BDFD code:</strong> Paste your code directly.</li>
+              <li>
+                <strong>Pastebin URL:</strong> Provide a link to a paste
+                (standard or raw).
+              </li>
+            </ul>
+
+            <div
+              class="dark-surface bg-[#0a0c14] border border-[#2e3350] rounded-xl p-4 mb-5"
+            >
+              <h4 class="text-sm font-bold text-gray-200 mb-2">
+                Pastebin Support
+              </h4>
+              <ul class="text-xs text-gray-400 dark-text-3 space-y-1 ml-2">
+                <li>
+                  • <strong>Supported URLs:</strong> Both standard (<code
+                    class="font-mono text-[#818cf8] bg-[#5865F2]/10 px-1 py-0.5 rounded"
+                    >https://pastebin.com/S6u3Ut7W</code
+                  >) and raw (<code
+                    class="font-mono text-[#818cf8] bg-[#5865F2]/10 px-1 py-0.5 rounded"
+                    >https://pastebin.com/raw/S6u3Ut7W</code
+                  >) formats are accepted.
+                </li>
+                <li>
+                  • <strong>Processing:</strong> The API automatically converts
+                  standard URLs to raw URLs to fetch the content.
+                </li>
+                <li>
+                  • <strong>Safety:</strong> Strict prefix checking, content
+                  size limited to 500KB, 5-second fetch timeout.
+                </li>
+              </ul>
+            </div>
+
             <div class="flex flex-wrap gap-2 mb-5">
               <span
                 class="inline-flex items-center gap-1.5 text-xs bg-red-500/10 text-red-400 border border-red-500/20 px-2.5 py-1 rounded-full font-semibold"
@@ -350,7 +397,9 @@
             >
               Headers
             </h3>
-            <div class="dark-code bg-[#060810] border border-[#1e2130] rounded-xl overflow-hidden mb-5">
+            <div
+              class="dark-code bg-[#060810] border border-[#1e2130] rounded-xl overflow-hidden mb-5"
+            >
               <table class="param-table">
                 <thead>
                   <tr>
@@ -362,7 +411,9 @@
                   <tr>
                     <td>Authorization</td>
                     <td class="text-gray-400 dark-text-3">
-                      <code class="font-mono text-[#818cf8]">Bearer BDTools-YOUR_API_KEY</code>
+                      <code class="font-mono text-[#818cf8]"
+                        >Bearer BDTools-YOUR_API_KEY</code
+                      >
                     </td>
                   </tr>
                 </tbody>
@@ -2153,7 +2204,9 @@
                         />
                       </svg>
                     </div>
-                    <div class="text-xs text-gray-400 dark-text-3 leading-relaxed">
+                    <div
+                      class="text-xs text-gray-400 dark-text-3 leading-relaxed"
+                    >
                       <strong class="text-gray-300">How it works:</strong>
                       <ol class="list-decimal list-inside mt-2 space-y-1">
                         <li>
@@ -2212,7 +2265,9 @@
                         />
                       </svg>
                     </div>
-                    <div class="text-xs text-gray-400 dark-text-3 leading-relaxed">
+                    <div
+                      class="text-xs text-gray-400 dark-text-3 leading-relaxed"
+                    >
                       <strong class="text-yellow-400">Important:</strong> Always
                       store the code in a
                       <code
@@ -2224,8 +2279,8 @@
                         class="font-mono text-[#818cf8] bg-[#5865F2]/10 px-1 py-0.5 rounded"
                         >$message</code
                       >
-                      directly in the JSON, BDFD will execute the code instead of
-                      sending it as text.
+                      directly in the JSON, BDFD will execute the code instead
+                      of sending it as text.
                     </div>
                   </div>
                 </div>

@@ -665,27 +665,13 @@ Validates BDFD code for syntax errors, argument issues, and BDFD requirements. R
 }
 ```
 
-**Success Response (200) - With Errors:**
-```json
-{
-  "errors": [
-    {
-      "function": "$setUserVar",
-      "line": 1,
-      "message": "$setUserVar - Too many arguments, expected up to 4, got 5"
-    }
-  ],
-  "hasErrors": true,
-  "statistics": {
-    "functions": 1,
-    "fakeFunctions": 0,
-    "arguments": 5,
-    "variables": ["points"]
-  }
-}
-```
+#### Pastebin Support
+You can pass a Pastebin link instead of raw code.
+- **Accepted**: `https://pastebin.com/S6u3Ut7W` (standard) or `https://pastebin.com/raw/S6u3Ut7W` (raw)
+- **Automatic Handling**: Fetches the code from the link and validates the content automatically.
+- **Safety**: Strict prefix checking, content size limited to 500KB, 5-second fetch timeout.
 
-**Success Response (200) - No Errors:**
+**Success Response (200):**
 ```json
 {
   "errors": [],

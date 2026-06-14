@@ -241,14 +241,12 @@
                 class="font-mono text-[#818cf8] bg-[#5865F2]/10 px-1 py-0.5 rounded"
                 >BDTools-</code
               >
-               prefix for authenticated endpoints.
-             </p>
+              prefix for authenticated endpoints.
+            </p>
             <div class="code-block mb-4">
               <pre><span class="cmt">// Authorization header format</span>
 <span class="key">Authorization</span><span class="kw">:</span> <span class="str">Bearer BDTools-YOUR_API_KEY_HERE</span></pre>
             </div>
-
-          
 
             <h3
               class="text-xs font-mono font-bold text-gray-500 uppercase tracking-widest mb-2 mt-5"
@@ -261,7 +259,9 @@
               >
                 <span class="text-yellow-400 mt-0.5 flex-shrink-0">▸</span>
                 <span
-                  ><strong class="text-gray-200">POST /ticket-transcript</strong>
+                  ><strong class="text-gray-200"
+                    >POST /ticket-transcript</strong
+                  >
                   is not rate limited.</span
                 >
               </li>
@@ -382,7 +382,9 @@
             >
               Headers
             </h3>
-            <div class="dark-code bg-[#060810] border border-[#1e2130] rounded-xl overflow-hidden mb-5">
+            <div
+              class="dark-code bg-[#060810] border border-[#1e2130] rounded-xl overflow-hidden mb-5"
+            >
               <table class="param-table">
                 <thead>
                   <tr>
@@ -394,7 +396,9 @@
                   <tr>
                     <td>Authorization</td>
                     <td class="text-gray-400 dark-text-3">
-                      <code class="font-mono text-[#818cf8]">Bearer BDTools-YOUR_API_KEY</code>
+                      <code class="font-mono text-[#818cf8]"
+                        >Bearer BDTools-YOUR_API_KEY</code
+                      >
                     </td>
                   </tr>
                 </tbody>
@@ -589,9 +593,13 @@
                         />
                       </svg>
                     </div>
-                    <div class="text-xs text-gray-400 dark-text-3 leading-relaxed">
+                    <div
+                      class="text-xs text-gray-400 dark-text-3 leading-relaxed"
+                    >
                       <strong class="text-gray-300">API Key:</strong> Replace
-                      <code class="font-mono text-[#818cf8]">YOUR_API_KEY_HERE</code>
+                      <code class="font-mono text-[#818cf8]"
+                        >YOUR_API_KEY_HERE</code
+                      >
                       with your BDTools API key. Get your key at
                       <a
                         href="https://api.bdtools.xyz"
@@ -622,8 +630,9 @@
                       >Always loops 200 times:</strong
                     >
                     the loop always runs 200 iterations (maximum limit)
-                    regardless of how many messages are in the channel, 1 message or 200 takes
-                    the same ~3 minutes. It's a BDFD limitation, there's no early exit.
+                    regardless of how many messages are in the channel, 1
+                    message or 200 takes the same ~3 minutes. It's a BDFD
+                    limitation, there's no early exit.
                   </div>
                 </li>
                 <li
@@ -655,9 +664,9 @@
                     <strong class="text-gray-200"
                       >Keeps deleting after the ticket is closed:</strong
                     >
-                    since the loop
-                    can't be stopped mid-way, it will keep deleting messages even after the ticket
-                    is fully closed. If someone sends a message while the loop is still running,
+                    since the loop can't be stopped mid-way, it will keep
+                    deleting messages even after the ticket is fully closed. If
+                    someone sends a message while the loop is still running,
                     that message will get deleted too.
                   </div>
                 </li>
