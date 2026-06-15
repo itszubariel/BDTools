@@ -48,6 +48,46 @@ window.addEventListener("load", () => {
   }
 });
 
+// ==================== UNESCAPE FUNCTION ====================
+function unescapeText(text) {
+  let result = text;
+
+  // Unescape $ (reverse order of escape)
+  const dollarRule = document.querySelector('.rule-select[data-from="$"]') as HTMLElement;
+  if (dollarRule) {
+    const select = dollarRule.querySelector(".rule-choice") as HTMLSelectElement;
+    let replacement =
+      select.value === "a" ? dollarRule.dataset.a : dollarRule.dataset.b;
+
+    // Escape special regex chars in replacement
+    const escapedReplacement = replacement.replace(/[-\/\\^$*+?.()|[\]{}]/g, "\\$&");
+    result = result.replace(new RegExp(escapedReplacement, "g"), "$");
+  }
+
+  // Unescape other rules
+  document.querySelectorAll(".rule-select").forEach((rule) => {
+    const htmlRule = rule as HTMLElement;
+    const from = htmlRule.dataset.from;
+    if (from === "$") return;
+
+    let replacement = !htmlRule.querySelector(".rule-choice")
+      ? "\\\\"
+      : (htmlRule.querySelector(".rule-choice") as HTMLSelectElement).value === "a"
+        ? htmlRule.dataset.a
+        : htmlRule.dataset.b;
+
+    const escapedReplacement = replacement.replace(/[-\/\\^$*+?.()|[\]{}]/g, "\\$&");
+
+    // Replace the replacement string back to the 'from' character
+    result = result.replace(new RegExp(escapedReplacement, "g"), from);
+  });
+
+  // Unescape backslashes last
+  result = result.replace(/\\\\/g, "\\");
+
+  return result;
+}
+
 // ==================== ESCAPE FUNCTION ====================
 function escapeText(text) {
   let result = text;
@@ -57,23 +97,24 @@ function escapeText(text) {
 
   // Escape everything except $ next
   document.querySelectorAll(".rule-select").forEach((rule) => {
-    const from = rule.dataset.from;
+    const htmlRule = rule as HTMLElement;
+    const from = htmlRule.dataset.from;
     if (from === "$") return;
 
-    let replacement = !rule.querySelector(".rule-choice")
+    let replacement = !htmlRule.querySelector(".rule-choice")
       ? "\\\\"
-      : rule.querySelector(".rule-choice").value === "a"
-        ? rule.dataset.a
-        : rule.dataset.b;
+      : (htmlRule.querySelector(".rule-choice") as HTMLSelectElement).value === "a"
+        ? htmlRule.dataset.a
+        : htmlRule.dataset.b;
 
     const escapedFrom = from.replace(/[-\/\\^$*+?.()|[\]{}]/g, "\\$&");
     result = result.replace(new RegExp(escapedFrom, "g"), replacement);
   });
 
   // Escape $ last
-  const dollarRule = document.querySelector('.rule-select[data-from="$"]');
+  const dollarRule = document.querySelector('.rule-select[data-from="$"]') as HTMLElement;
   if (dollarRule) {
-    const select = dollarRule.querySelector(".rule-choice");
+    const select = dollarRule.querySelector(".rule-choice") as HTMLSelectElement;
     let replacement =
       select.value === "a" ? dollarRule.dataset.a : dollarRule.dataset.b;
 
@@ -90,8 +131,8 @@ function escapeText(text) {
 }
 
 // ==================== UI LOGIC ====================
-const inputEl = document.getElementById("input-text");
-const outputEl = document.getElementById("output-text");
+const inputEl = document.getElementById("input-text") as HTMLTextAreaElement;
+const outputEl = document.getElementById("output-text") as HTMLTextAreaElement;
 
 document.getElementById("replace-btn").addEventListener("click", () => {
   const val = inputEl.value.trim();
@@ -102,6 +143,17 @@ document.getElementById("replace-btn").addEventListener("click", () => {
 
   outputEl.value = escapeText(val);
   toast("Code escaped successfully", "s");
+});
+
+document.getElementById("reverse-btn").addEventListener("click", () => {
+  const val = inputEl.value.trim();
+  if (!val) {
+    toast("Nothing to unescape", "e");
+    return;
+  }
+
+  outputEl.value = unescapeText(val);
+  toast("Code unescaped successfully", "s");
 });
 
 document.getElementById("copy-output").addEventListener("click", () => {

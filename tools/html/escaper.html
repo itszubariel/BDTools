@@ -69,7 +69,8 @@
               Character Escaper
             </h1>
             <p class="text-gray-400 text-sm mt-1">
-              Escape special characters in your BDFD scripts.
+              Escape or unescape special characters in your BDFD scripts. This
+              tool works both ways!
             </p>
             <div class="flex flex-wrap gap-1.5 mt-3">
               <span
@@ -201,7 +202,7 @@
         </div>
         <div class="card">
           <div class="card-hdr">
-            <span class="card-hdr-title">Escaped Output</span>
+            <span class="card-hdr-title">Output</span>
             <button class="icon-btn" id="copy-output" title="Copy">
               <svg
                 width="15"
@@ -221,14 +222,23 @@
               id="output-text"
               class="code-area"
               readonly
-              placeholder="Escaped output will appear here…"
+              placeholder="Output will appear here…"
             ></textarea>
           </div>
         </div>
       </div>
 
       <!-- Escape Button - Centered at bottom -->
-      <div style="margin-top: 1.5rem; text-align: center" class="fu fd2">
+      <div
+        style="
+          margin-top: 1.5rem;
+          text-align: center;
+          display: flex;
+          justify-content: center;
+          gap: 1rem;
+        "
+        class="fu fd2"
+      >
         <button class="btn btn-primary" id="replace-btn">
           <svg
             width="15"
@@ -244,6 +254,22 @@
             <path d="M21 13v2a4 4 0 01-4 4H3" />
           </svg>
           Escape Code
+        </button>
+        <button class="btn btn-primary" id="reverse-btn">
+          <svg
+            width="15"
+            height="15"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2.5"
+          >
+            <polyline points="7 23 3 19 7 15" />
+            <path d="M21 13V15A4 4 0 0117 19H3" />
+            <polyline points="17 1 21 5 17 9" />
+            <path d="M3 11V9a4 4 0 014-4h14" />
+          </svg>
+          Unescape Code
         </button>
       </div>
     </main>
