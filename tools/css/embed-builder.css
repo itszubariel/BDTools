@@ -320,6 +320,10 @@ main {
   gap: 1.25rem;
 }
 
+.layout > * {
+  min-width: 0;
+}
+
 @media (max-width: 900px) {
   .layout {
     grid-template-columns: 1fr;
