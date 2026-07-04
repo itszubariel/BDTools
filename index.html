@@ -51,7 +51,7 @@
         --text-4: #4b5563;
         /* very muted */
         --nav-bg: rgba(8, 10, 16, 0.9);
-        --tag-bg: #1e2130;
+        --tag-bg: #181a28;
         --tag-text: #6b7280;
       }
 
@@ -125,16 +125,19 @@
 
       /* ── Grid bg ── */
       .grid-bg {
-        background-image:
-          linear-gradient(rgba(88, 101, 242, 0.04) 1px, transparent 1px),
-          linear-gradient(90deg, rgba(88, 101, 242, 0.07) 1px, transparent 1px);
-        background-size: 48px 48px;
+        background-image: radial-gradient(
+          rgba(88, 101, 242, 0.18) 1px,
+          transparent 1px
+        );
+        background-size: 22px 22px;
       }
 
       html.light .grid-bg {
-        background-image:
-          linear-gradient(rgba(88, 101, 242, 0.06) 1px, transparent 1px),
-          linear-gradient(90deg, rgba(88, 101, 242, 0.09) 1px, transparent 1px);
+        background-image: radial-gradient(
+          rgba(88, 101, 242, 0.25) 1px,
+          transparent 1px
+        );
+        background-size: 22px 22px;
       }
 
       /* ── Nav ── */
@@ -148,16 +151,27 @@
       .tool-card {
         background: var(--surface) !important;
         border-color: var(--border) !important;
+        border-top: 2px solid transparent;
         transition:
           transform 0.2s,
           box-shadow 0.2s,
-          border-color 0.2s;
+          border-color 0.2s,
+          border-top-color 0.2s;
       }
 
       .tool-card:hover {
-        transform: translateY(-3px);
-        box-shadow: 0 8px 40px rgba(88, 101, 242, 0.15);
+        transform: translateY(-4px);
+        box-shadow: 0 12px 32px rgba(88, 101, 242, 0.15);
         border-color: #5865f2 !important;
+        border-top-color: #5865f2 !important;
+      }
+
+      .tool-card .icon-wrap {
+        transition: transform 0.2s;
+      }
+
+      .tool-card:hover .icon-wrap {
+        transform: scale(1.1);
       }
 
       /* ── Tag pill ── */
@@ -243,6 +257,14 @@
       .contrib-card {
         background: var(--surface) !important;
         border-color: var(--border) !important;
+        transition:
+          transform 0.2s,
+          box-shadow 0.2s;
+      }
+
+      .contrib-card:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 6px 20px rgba(88, 101, 242, 0.08);
       }
 
       /* ── Stats bar ── */
@@ -255,6 +277,29 @@
       .about-section {
         background: var(--bg-alt) !important;
         border-color: var(--border) !important;
+      }
+
+      .about-card {
+        background: var(--surface) !important;
+        border: 1px solid var(--border);
+        border-radius: 1rem;
+        padding: 1.5rem;
+      }
+
+      .about-eyebrow-wrap {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        margin-bottom: 0.75rem;
+      }
+
+      .about-eyebrow-wrap::before {
+        content: "";
+        width: 2px;
+        height: 0.9rem;
+        background: #5865f2;
+        border-radius: 1px;
+        flex-shrink: 0;
       }
 
       /* ── Footer ── */
@@ -271,6 +316,72 @@
           transparent,
           var(--bg)
         ) !important;
+      }
+
+      /* ── Animated lines ── */
+      .hero-lines {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 100%;
+        margin: auto;
+        width: 90vw;
+        pointer-events: none;
+      }
+
+      .hero-lines .line {
+        position: absolute;
+        width: 1px;
+        height: 100%;
+        top: 0;
+        left: 50%;
+        background: rgba(255, 255, 255, 0.06);
+        overflow: hidden;
+      }
+
+      .hero-lines .line::after {
+        content: "";
+        display: block;
+        position: absolute;
+        height: 15vh;
+        width: 100%;
+        top: -50%;
+        left: 0;
+        background: linear-gradient(
+          to bottom,
+          rgba(255, 255, 255, 0) 0%,
+          #ffffff 75%,
+          #ffffff 100%
+        );
+        animation: drop 7s 0s infinite;
+        animation-fill-mode: forwards;
+        animation-timing-function: cubic-bezier(0.4, 0.26, 0, 0.97);
+      }
+
+      .hero-lines .line:nth-child(1) {
+        margin-left: -25%;
+      }
+
+      .hero-lines .line:nth-child(1)::after {
+        animation-delay: 2s;
+      }
+
+      .hero-lines .line:nth-child(3) {
+        margin-left: 25%;
+      }
+
+      .hero-lines .line:nth-child(3)::after {
+        animation-delay: 2.5s;
+      }
+
+      @keyframes drop {
+        0% {
+          top: -50%;
+        }
+        100% {
+          top: 110%;
+        }
       }
 
       /* ── Animations ── */
@@ -375,6 +486,27 @@
         animation: pulse-accent 2s ease infinite;
       }
 
+      .hero-eyebrow {
+        font-size: 11px;
+        letter-spacing: 0.25em;
+        text-transform: uppercase;
+        color: #5865f2;
+        margin-bottom: 20px;
+        display: flex;
+        align-items: center;
+        gap: 14px;
+        font-family: "Geist Mono", monospace;
+        font-weight: 500;
+      }
+
+      .hero-eyebrow::before,
+      .hero-eyebrow::after {
+        content: "";
+        width: 28px;
+        height: 1px;
+        background: rgba(88, 101, 242, 0.4);
+      }
+
       /* ── Hero API Docs button ── */
       .hero-btn-secondary {
         background: var(--surface-2) !important;
@@ -384,6 +516,203 @@
 
       .hero-btn-secondary:hover {
         filter: brightness(1.1);
+      }
+
+      /* ── Hero glow orb ── */
+      .hero-glow {
+        position: absolute;
+        top: 44%;
+        left: 70%;
+        transform: translate(-50%, -50%);
+        width: 660px;
+        height: 660px;
+        background: radial-gradient(
+          ellipse at center,
+          rgba(88, 101, 242, 0.18) 0%,
+          rgba(88, 101, 242, 0.06) 35%,
+          transparent 70%
+        );
+        border-radius: 50%;
+        pointer-events: none;
+        z-index: 0;
+        animation: pulse-glow 4s ease-in-out infinite alternate;
+      }
+
+      @keyframes pulse-glow {
+        from {
+          opacity: 0.7;
+          transform: translate(-50%, -50%) scale(1);
+        }
+        to {
+          opacity: 1;
+          transform: translate(-50%, -50%) scale(1.08);
+        }
+      }
+
+      /* ── Hero rings ── */
+      .hero-ring {
+        position: absolute;
+        top: 44%;
+        left: 70%;
+        width: 320px;
+        height: 320px;
+        border: 1px solid rgba(88, 101, 242, 0.1);
+        border-radius: 50%;
+        transform: translate(-50%, -50%);
+        animation: rotate-ring 30s linear infinite;
+        pointer-events: none;
+        z-index: 0;
+      }
+
+      .hero-ring::after {
+        content: "";
+        position: absolute;
+        top: -4px;
+        left: 50%;
+        width: 8px;
+        height: 8px;
+        background: #5865f2;
+        border-radius: 50%;
+        transform: translateX(-50%);
+      }
+
+      .hero-ring-2 {
+        position: absolute;
+        top: 44%;
+        left: 70%;
+        width: 500px;
+        height: 500px;
+        border: 1px dashed rgba(88, 101, 242, 0.05);
+        border-radius: 50%;
+        transform: translate(-50%, -50%);
+        animation: rotate-ring 60s linear infinite reverse;
+        pointer-events: none;
+        z-index: 0;
+      }
+
+      @keyframes rotate-ring {
+        to {
+          transform: translate(-50%, -50%) rotate(360deg);
+        }
+      }
+
+      /* ── Hero particles ── */
+      .particles {
+        position: absolute;
+        inset: 0;
+        pointer-events: none;
+        overflow: hidden;
+        z-index: 0;
+      }
+
+      .particle {
+        position: absolute;
+        width: 2px;
+        height: 2px;
+        background: #5865f2;
+        border-radius: 50%;
+        opacity: 0;
+        animation: float-particle linear infinite;
+      }
+
+      @keyframes float-particle {
+        0% {
+          opacity: 0;
+          transform: translateY(0) scale(0);
+        }
+        10% {
+          opacity: 0.6;
+          transform: translateY(-10px) scale(1);
+        }
+        90% {
+          opacity: 0.3;
+        }
+        100% {
+          opacity: 0;
+          transform: translateY(-200px) scale(0.5);
+        }
+      }
+
+      /* ── Light theme ── */
+      html.light .hero-glow {
+        opacity: 0.35;
+      }
+      html.light .hero-ring {
+        border-color: rgba(88, 101, 242, 0.08);
+      }
+      html.light .hero-ring-2 {
+        border-color: rgba(88, 101, 242, 0.03);
+      }
+
+      /* ── Mobile shrink ── */
+      @media (max-width: 1024px) {
+        .hero-glow {
+          width: 400px;
+          height: 400px;
+          left: 50%;
+        }
+        .hero-ring {
+          width: 260px;
+          height: 260px;
+          left: 50%;
+        }
+        .hero-ring-2 {
+          width: 400px;
+          height: 400px;
+          left: 50%;
+        }
+        .particles {
+          display: none;
+        }
+      }
+
+      @media (max-width: 768px) {
+        .hero-glow {
+          width: 280px;
+          height: 280px;
+          left: 50%;
+        }
+        .hero-ring {
+          display: none;
+        }
+        .hero-ring-2 {
+          display: none;
+        }
+      }
+      .hero-btn-primary {
+        background: #5865f2;
+        color: #fff;
+        transition:
+          transform 0.2s,
+          box-shadow 0.2s,
+          background 0.2s;
+      }
+      .hero-btn-primary:hover {
+        background: #4752c4;
+        transform: translateY(-2px);
+        box-shadow: 0 8px 24px rgba(88, 101, 242, 0.35);
+      }
+      .hero-btn-primary:active {
+        transform: translateY(0);
+      }
+
+      .hero-btn-secondary {
+        background: var(--surface-2) !important;
+        color: var(--text-1) !important;
+        border-color: var(--border-2) !important;
+        transition:
+          transform 0.2s,
+          box-shadow 0.2s,
+          border-color 0.2s,
+          background 0.2s;
+      }
+      .hero-btn-secondary:hover {
+        border-color: #5865f2 !important;
+        transform: translateY(-2px);
+        box-shadow: 0 8px 24px rgba(88, 101, 242, 0.12);
+      }
+      .hero-btn-secondary:active {
+        transform: translateY(0);
       }
     </style>
   </head>
@@ -443,132 +772,243 @@
     </nav>
 
     <!-- HERO -->
-    <section class="relative grid-bg overflow-hidden">
+    <section
+      class="relative grid-bg overflow-hidden h-[calc(100vh-96px)] grid grid-rows-[1fr_auto]"
+    >
       <div class="hero-fade absolute inset-0 pointer-events-none"></div>
+
+      <div class="hero-glow"></div>
+      <div class="hero-ring"></div>
+      <div class="hero-ring-2"></div>
+      <div class="particles" id="particles"></div>
+
       <div
-        class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-24 pb-20 text-center fu w-full"
+        class="hidden lg:block absolute inset-0 pointer-events-none overflow-hidden"
+        style="z-index: 1"
       >
         <div
-          class="inline-flex items-center gap-2 bg-[#5865F2]/10 border border-[#5865F2]/25 text-[#818cf8] text-xs font-mono px-3 py-1.5 rounded-full mb-6"
+          class="tag absolute flex items-center gap-1 px-2 py-1 rounded-full border fu fu-2 opacity-[0.18] -rotate-2"
+          style="top: 18%; right: 6%"
+        >
+          <span style="color: var(--text-3)">"status":</span>
+          <span style="color: #5865f2 !important">200</span>
+        </div>
+
+        <div
+          class="tag absolute flex items-center gap-1.5 px-2.5 py-1 rounded-full border fu fu-4 opacity-[0.22] rotate-1"
+          style="top: 34%; right: 14%"
         >
           <span
-            class="live-dot w-1.5 h-1.5 rounded-full bg-[#5865F2] inline-block"
+            class="w-2 h-2 rounded-full shrink-0"
+            style="background: #5865f2"
           ></span>
-          Built for the BDFD Community
+          <span>#5865F2</span>
         </div>
-        <h1
-          class="text-5xl sm:text-6xl lg:text-7xl font-black tracking-tight mb-6 leading-none"
-          style="color: var(--text-1)"
+
+        <div
+          class="tag absolute px-2.5 py-1 rounded-full border fu fu-1 opacity-[0.14] rotate-3"
+          style="top: 50%; left: 55%"
         >
-          BDTools<span class="text-[#5865F2]">.</span>
-        </h1>
-        <p
-          class="text-lg max-w-xl mx-auto mb-10 leading-relaxed"
-          style="color: var(--text-2)"
+          <span style="color: var(--text-3)">/bdscript-checker</span>
+        </div>
+
+        <div
+          class="absolute px-2.5 py-1 rounded-full border fu fu-6 opacity-[0.11] -rotate-3"
+          style="
+            top: 66%;
+            right: 5%;
+            background: var(--surface);
+            border-color: var(--border-2);
+            color: var(--text-3);
+            font-family: &quot;Geist Mono&quot;, monospace;
+            font-size: 0.65rem;
+          "
         >
-          A collection of browser-based utilities for
-          <span class="font-medium" style="color: var(--text-1)"
-            >Bot Designer for Discord.</span
+          8589934591
+        </div>
+
+        <div
+          class="tag absolute flex items-center gap-1 px-2 py-1 rounded-full border fu fu-3 opacity-[0.2] rotate-2"
+          style="top: 28%; left: 60%"
+        >
+          <span style="color: var(--text-3)">"ok":</span>
+          <span style="color: #57f287 !important">true</span>
+        </div>
+
+        <div
+          class="tag absolute px-2.5 py-1 rounded-full border fu fu-7 opacity-[0.14] -rotate-1"
+          style="top: 76%; left: 56%"
+        >
+          <span style="color: var(--text-3)">/node-status</span>
+        </div>
+
+        <div
+          class="absolute w-5 h-5 rounded-full border fu fu-5 opacity-[0.25] rotate-6"
+          style="
+            top: 44%;
+            right: 30%;
+            background: #5865f2;
+            border-color: var(--border-2);
+          "
+        ></div>
+
+        <div
+          class="tag absolute px-2.5 py-1 rounded-full border fu fu-2 opacity-[0.12] rotate-[4deg]"
+          style="top: 60%; left: 70%"
+        >
+          <span style="color: var(--text-3)">/submit-server</span>
+        </div>
+      </div>
+      <div class="hero-lines">
+        <div class="line"></div>
+        <div class="line"></div>
+        <div class="line"></div>
+      </div>
+      <div
+        class="flex items-center justify-start px-4 sm:px-6 lg:px-8 pt-24 relative z-[2]"
+      >
+        <div class="w-full max-w-7xl mx-auto pl-6 lg:pl-10 fu">
+          <div class="hero-eyebrow fu">Bot Designer for Discord</div>
+          <h1
+            class="text-6xl sm:text-7xl lg:text-8xl font-black tracking-tight mb-6 leading-none"
+            style="color: var(--text-1)"
           >
-          no installs, no bots, just tools.
-        </p>
-        <div class="flex flex-wrap justify-center gap-3">
-          <a
-            onclick="
-              document
-                .getElementById('tools')
-                .scrollIntoView({ behavior: 'smooth', block: 'start' })
-            "
-            style="cursor: pointer"
-            class="px-6 py-2.5 bg-[#5865F2] hover:bg-[#4752c4] text-white text-sm font-semibold rounded-xl transition-colors"
+            BDTools<span class="text-[#5865F2]">.</span>
+          </h1>
+          <p
+            class="text-lg max-w-xl mb-10 leading-relaxed"
+            style="color: var(--text-2)"
           >
-            Browse Tools
-          </a>
-          <a
-            href="/docs"
-            class="hero-btn-secondary px-6 py-2.5 text-sm font-semibold rounded-xl border transition-colors"
-          >
-            API Docs
-          </a>
+            Browser-based utilities and a public API for building faster.<br />
+            No installs, no bots required.
+          </p>
+          <div class="flex flex-wrap justify-start gap-3">
+            <a
+              onclick="
+                document
+                  .getElementById('tools')
+                  .scrollIntoView({ behavior: 'smooth', block: 'start' })
+              "
+              style="cursor: pointer"
+              class="hero-btn-primary px-6 py-2.5 text-sm font-semibold rounded-xl transition-colors inline-flex items-center gap-2"
+            >
+              Browse Tools
+              <svg
+                class="w-4 h-4"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M17 8l4 4m0 0l-4 4m4-4H3"
+                />
+              </svg>
+            </a>
+
+            <a
+              href="/docs"
+              class="hero-btn-secondary px-6 py-2.5 text-sm font-semibold rounded-xl border transition-colors inline-flex items-center gap-2"
+            >
+              <svg
+                class="w-4 h-4"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"
+                />
+              </svg>
+              API Docs
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <div
+        class="stats-bar border-y"
+        style="border-color: var(--border); background: var(--bg-alt)"
+      >
+        <div
+          class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-5 grid grid-cols-2 sm:grid-cols-4 gap-4 text-center"
+        >
+          <div class="stat-num" style="animation-delay: 0.1s">
+            <div class="h-10 flex items-center justify-center">
+              <span class="text-3xl font-black text-[#5865F2]">8</span>
+            </div>
+            <div
+              class="text-xs mt-1 font-mono uppercase tracking-widest"
+              style="color: var(--text-3)"
+            >
+              Tools
+            </div>
+          </div>
+          <div class="stat-num" style="animation-delay: 0.2s">
+            <div class="h-10 flex items-center justify-center">
+              <svg
+                class="w-8 h-8 text-[#5865F2]"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"
+                />
+              </svg>
+            </div>
+            <div
+              class="text-xs mt-1 font-mono uppercase tracking-widest"
+              style="color: var(--text-3)"
+            >
+              Free Forever
+            </div>
+          </div>
+          <div class="stat-num" style="animation-delay: 0.3s">
+            <div class="h-10 flex items-center justify-center">
+              <svg
+                class="w-8 h-8 text-[#5865F2]"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"
+                />
+              </svg>
+            </div>
+            <div
+              class="text-xs mt-1 font-mono uppercase tracking-widest"
+              style="color: var(--text-3)"
+            >
+              Open Source
+            </div>
+          </div>
+          <div class="stat-num" style="animation-delay: 0.4s">
+            <div class="h-10 flex items-center justify-center">
+              <span class="text-3xl font-black text-[#5865F2]">21</span>
+            </div>
+            <div
+              class="text-xs mt-1 font-mono uppercase tracking-widest"
+              style="color: var(--text-3)"
+            >
+              Endpoints
+            </div>
+          </div>
         </div>
       </div>
     </section>
-
-    <!-- STATS BAR -->
-    <div class="stats-bar border-y" style="border-color: var(--border)">
-      <div
-        class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-5 grid grid-cols-2 sm:grid-cols-4 gap-4 text-center"
-      >
-        <div class="stat-num" style="animation-delay: 0.1s">
-          <div class="h-10 flex items-center justify-center">
-            <span class="text-3xl font-black text-[#5865F2]">8</span>
-          </div>
-          <div
-            class="text-xs mt-1 font-mono uppercase tracking-widest"
-            style="color: var(--text-3)"
-          >
-            Tools
-          </div>
-        </div>
-        <div class="stat-num" style="animation-delay: 0.2s">
-          <div class="h-10 flex items-center justify-center">
-            <svg
-              class="w-8 h-8 text-[#5865F2]"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-            >
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width="2"
-                d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"
-              />
-            </svg>
-          </div>
-          <div
-            class="text-xs mt-1 font-mono uppercase tracking-widest"
-            style="color: var(--text-3)"
-          >
-            Free Forever
-          </div>
-        </div>
-        <div class="stat-num" style="animation-delay: 0.3s">
-          <div class="h-10 flex items-center justify-center">
-            <svg
-              class="w-8 h-8 text-[#5865F2]"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-            >
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width="2"
-                d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"
-              />
-            </svg>
-          </div>
-          <div
-            class="text-xs mt-1 font-mono uppercase tracking-widest"
-            style="color: var(--text-3)"
-          >
-            Open Source
-          </div>
-        </div>
-        <div class="stat-num" style="animation-delay: 0.4s">
-          <div class="h-10 flex items-center justify-center">
-            <span class="text-3xl font-black text-[#5865F2]">17</span>
-          </div>
-          <div
-            class="text-xs mt-1 font-mono uppercase tracking-widest"
-            style="color: var(--text-3)"
-          >
-            Endpoints
-          </div>
-        </div>
-      </div>
-    </div>
 
     <!-- TOOLS GRID -->
     <section
@@ -596,10 +1036,10 @@
         <a
           href="https://app.bdtools.xyz/bot-guild-list"
           class="tool-card border rounded-2xl p-6 flex flex-col gap-4 scroll-fade"
-          style="transition-delay: 0.1s"
+          style="transition-delay: 0s"
         >
           <div
-            class="w-10 h-10 rounded-xl bg-[#5865F2]/10 border border-[#5865F2]/20 flex items-center justify-center"
+            class="icon-wrap w-10 h-10 rounded-xl bg-[#5865F2]/10 border border-[#5865F2]/20 flex items-center justify-center"
           >
             <svg
               class="w-5 h-5 text-[#5865F2]"
@@ -633,7 +1073,7 @@
           <div class="flex flex-wrap gap-1.5">
             <span class="tag border rounded-md px-2 py-0.5">TypeScript</span>
             <span class="tag border rounded-md px-2 py-0.5">HTML</span>
-            <span class="tag border rounded-md px-2 py-0.5">Tailwind</span>
+            <span class="tag border rounded-md px-2 py-0.5">Tailwind CSS</span>
           </div>
         </a>
 
@@ -641,10 +1081,10 @@
         <a
           href="/escaper"
           class="tool-card border rounded-2xl p-6 flex flex-col gap-4 scroll-fade"
-          style="transition-delay: 0.15s"
+          style="transition-delay: 0s"
         >
           <div
-            class="w-10 h-10 rounded-xl bg-[#5865F2]/10 border border-[#5865F2]/20 flex items-center justify-center"
+            class="icon-wrap w-10 h-10 rounded-xl bg-[#5865F2]/10 border border-[#5865F2]/20 flex items-center justify-center"
           >
             <svg
               class="w-5 h-5 text-[#5865F2]"
@@ -682,7 +1122,7 @@
           <div class="flex flex-wrap gap-1.5">
             <span class="tag border rounded-md px-2 py-0.5">TypeScript</span>
             <span class="tag border rounded-md px-2 py-0.5">HTML</span>
-            <span class="tag border rounded-md px-2 py-0.5">Tailwind</span>
+            <span class="tag border rounded-md px-2 py-0.5">Tailwind CSS</span>
           </div>
         </a>
 
@@ -690,10 +1130,10 @@
         <a
           href="/indenter"
           class="tool-card border rounded-2xl p-6 flex flex-col gap-4 scroll-fade"
-          style="transition-delay: 0.2s"
+          style="transition-delay: 0s"
         >
           <div
-            class="w-10 h-10 rounded-xl bg-[#5865F2]/10 border border-[#5865F2]/20 flex items-center justify-center"
+            class="icon-wrap w-10 h-10 rounded-xl bg-[#5865F2]/10 border border-[#5865F2]/20 flex items-center justify-center"
           >
             <svg
               class="w-5 h-5 text-[#5865F2]"
@@ -727,7 +1167,7 @@
           <div class="flex flex-wrap gap-1.5">
             <span class="tag border rounded-md px-2 py-0.5">TypeScript</span>
             <span class="tag border rounded-md px-2 py-0.5">HTML</span>
-            <span class="tag border rounded-md px-2 py-0.5">Tailwind</span>
+            <span class="tag border rounded-md px-2 py-0.5">Tailwind CSS</span>
           </div>
         </a>
 
@@ -735,10 +1175,10 @@
         <a
           href="/highlighter"
           class="tool-card border rounded-2xl p-6 flex flex-col gap-4 scroll-fade"
-          style="transition-delay: 0.25s"
+          style="transition-delay: 0s"
         >
           <div
-            class="w-10 h-10 rounded-xl bg-[#5865F2]/10 border border-[#5865F2]/20 flex items-center justify-center"
+            class="icon-wrap w-10 h-10 rounded-xl bg-[#5865F2]/10 border border-[#5865F2]/20 flex items-center justify-center"
           >
             <svg
               class="w-5 h-5 text-[#5865F2]"
@@ -772,7 +1212,7 @@
           <div class="flex flex-wrap gap-1.5">
             <span class="tag border rounded-md px-2 py-0.5">TypeScript</span>
             <span class="tag border rounded-md px-2 py-0.5">HTML</span>
-            <span class="tag border rounded-md px-2 py-0.5">Tailwind</span>
+            <span class="tag border rounded-md px-2 py-0.5">Tailwind CSS</span>
           </div>
         </a>
 
@@ -780,10 +1220,10 @@
         <a
           href="/embed-builder"
           class="tool-card border rounded-2xl p-6 flex flex-col gap-4 scroll-fade"
-          style="transition-delay: 0.3s"
+          style="transition-delay: 0s"
         >
           <div
-            class="w-10 h-10 rounded-xl bg-[#5865F2]/10 border border-[#5865F2]/20 flex items-center justify-center"
+            class="icon-wrap w-10 h-10 rounded-xl bg-[#5865F2]/10 border border-[#5865F2]/20 flex items-center justify-center"
           >
             <svg
               class="w-5 h-5 text-[#5865F2]"
@@ -816,7 +1256,7 @@
           <div class="flex flex-wrap gap-1.5">
             <span class="tag border rounded-md px-2 py-0.5">TypeScript</span>
             <span class="tag border rounded-md px-2 py-0.5">HTML</span>
-            <span class="tag border rounded-md px-2 py-0.5">Tailwind</span>
+            <span class="tag border rounded-md px-2 py-0.5">Tailwind CSS</span>
           </div>
         </a>
 
@@ -824,10 +1264,10 @@
         <a
           href="/send-embed-builder"
           class="tool-card border rounded-2xl p-6 flex flex-col gap-4 scroll-fade"
-          style="transition-delay: 0.35s"
+          style="transition-delay: 0s"
         >
           <div
-            class="w-10 h-10 rounded-xl bg-[#5865F2]/10 border border-[#5865F2]/20 flex items-center justify-center"
+            class="icon-wrap w-10 h-10 rounded-xl bg-[#5865F2]/10 border border-[#5865F2]/20 flex items-center justify-center"
           >
             <svg
               class="w-5 h-5 text-[#5865F2]"
@@ -862,7 +1302,7 @@
           <div class="flex flex-wrap gap-1.5">
             <span class="tag border rounded-md px-2 py-0.5">TypeScript</span>
             <span class="tag border rounded-md px-2 py-0.5">HTML</span>
-            <span class="tag border rounded-md px-2 py-0.5">Tailwind</span>
+            <span class="tag border rounded-md px-2 py-0.5">Tailwind CSS</span>
           </div>
         </a>
 
@@ -870,7 +1310,7 @@
         <a
           href="/container-builder"
           class="tool-card border border-[#5865F2]/40 rounded-2xl p-6 flex flex-col gap-4 scroll-fade relative overflow-hidden"
-          style="transition-delay: 0.4s"
+          style="transition-delay: 0s"
         >
           <div
             class="absolute top-3 right-3 text-[10px] font-mono bg-green-500/10 text-green-400 border border-green-500/20 px-2 py-0.5 rounded-full"
@@ -878,7 +1318,7 @@
             New
           </div>
           <div
-            class="w-10 h-10 rounded-xl bg-[#5865F2]/10 border border-[#5865F2]/20 flex items-center justify-center"
+            class="icon-wrap w-10 h-10 rounded-xl bg-[#5865F2]/10 border border-[#5865F2]/20 flex items-center justify-center"
           >
             <svg
               class="w-5 h-5 text-[#5865F2]"
@@ -912,7 +1352,7 @@
           <div class="flex flex-wrap gap-1.5">
             <span class="tag border rounded-md px-2 py-0.5">TypeScript</span>
             <span class="tag border rounded-md px-2 py-0.5">HTML</span>
-            <span class="tag border rounded-md px-2 py-0.5">Tailwind</span>
+            <span class="tag border rounded-md px-2 py-0.5">Tailwind CSS</span>
           </div>
         </a>
 
@@ -920,10 +1360,10 @@
         <a
           href="/permission-calculator"
           class="tool-card border border-[#5865F2]/40 rounded-2xl p-6 flex flex-col gap-4 scroll-fade relative overflow-hidden"
-          style="transition-delay: 0.45s"
+          style="transition-delay: 0s"
         >
           <div
-            class="w-10 h-10 rounded-xl bg-[#5865F2]/10 border border-[#5865F2]/20 flex items-center justify-center"
+            class="icon-wrap w-10 h-10 rounded-xl bg-[#5865F2]/10 border border-[#5865F2]/20 flex items-center justify-center"
           >
             <svg
               class="w-5 h-5 text-[#5865F2]"
@@ -957,7 +1397,7 @@
           <div class="flex flex-wrap gap-1.5">
             <span class="tag border rounded-md px-2 py-0.5">TypeScript</span>
             <span class="tag border rounded-md px-2 py-0.5">HTML</span>
-            <span class="tag border rounded-md px-2 py-0.5">Tailwind</span>
+            <span class="tag border rounded-md px-2 py-0.5">Tailwind CSS</span>
           </div>
         </a>
       </div>
@@ -970,12 +1410,14 @@
         class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 grid lg:grid-cols-2 gap-12"
       >
         <!-- About BDTools -->
-        <div>
-          <p
-            class="text-xs font-mono text-[#5865F2] uppercase tracking-widest mb-3"
-          >
-            // about
-          </p>
+        <div class="about-card">
+          <div class="about-eyebrow-wrap">
+            <p
+              class="text-xs font-mono text-[#5865F2] uppercase tracking-widest"
+            >
+              // about
+            </p>
+          </div>
           <h2
             class="text-2xl font-black mb-4 tracking-tight"
             style="color: var(--text-1)"
@@ -1016,12 +1458,14 @@
           </a>
         </div>
         <!-- About API -->
-        <div>
-          <p
-            class="text-xs font-mono text-[#5865F2] uppercase tracking-widest mb-3"
-          >
-            // api
-          </p>
+        <div class="about-card">
+          <div class="about-eyebrow-wrap">
+            <p
+              class="text-xs font-mono text-[#5865F2] uppercase tracking-widest"
+            >
+              // api
+            </p>
+          </div>
           <h2
             class="text-2xl font-black mb-4 tracking-tight"
             style="color: var(--text-1)"
@@ -1387,6 +1831,37 @@
         const fadeElements = document.querySelectorAll(".scroll-fade");
         fadeElements.forEach((el) => observer.observe(el));
       }, 1000);
+    });
+
+    /* ── Hero particles ── */
+    (function () {
+      const container = document.getElementById("particles");
+      if (!container) return;
+      for (let i = 0; i < 30; i++) {
+        const p = document.createElement("div");
+        p.className = "particle";
+        p.style.cssText =
+          "left:" +
+          (30 + Math.random() * 70) +
+          "%;top:" +
+          (50 + Math.random() * 50) +
+          "%;animation-duration:" +
+          (4 + Math.random() * 8) +
+          "s;animation-delay:" +
+          Math.random() * 6 +
+          "s;opacity:0;";
+        container.appendChild(p);
+      }
+    })();
+
+    /* ── Hero glow parallax ── */
+    document.addEventListener("mousemove", function (e) {
+      var glow = document.querySelector(".hero-glow");
+      if (!glow) return;
+      var x = (e.clientX / window.innerWidth - 0.5) * 16;
+      var y = (e.clientY / window.innerHeight - 0.5) * 16;
+      glow.style.transform =
+        "translate(calc(-50% + " + x + "px), calc(-50% + " + y + "px))";
     });
   </script>
 </html>
