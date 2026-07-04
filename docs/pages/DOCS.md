@@ -62,6 +62,13 @@ Returns a full status overview including summary counts and all nodes grouped in
 }
 ```
 
+**Error Response (404) - Unknown Path:**
+```json
+{
+  "error": "Unknown endpoint"
+}
+```
+
 ---
 
 ### GET /node-status/summary
@@ -398,6 +405,10 @@ Authorization: Bearer BDTools-YOUR_API_KEY_HERE
 
 ### Rate Limits & Restrictions
 - **POST /submit-server** is rate limited to **once per 5 hours** per API key.
+- **GET /get-servers**, **Node Status**, **BDScript function-check**, **Ticket Transcript GET**, and **Tools** endpoints are rate limited to **300 requests per minute** per IP.
+- **POST /bdscript-checker** is rate limited to **60 requests per minute** per IP.
+- **POST /ticket-transcript** is rate limited to **30 requests per minute** per IP.
+- **POST /get-apikey** is rate limited to **10 requests per 10 minutes** per IP.
 - **GET /get-servers** is only accessible from **bdtools.xyz** origin (specifically the Bot Guild List page at https://app.bdtools.xyz/bot-guild-list).
 - Retrieved data is **cached in Redis** and invalidates on new submission.
 
@@ -656,7 +667,7 @@ Endpoints for working with BDScript, BDFD's scripting language. Includes a code 
 Validates BDFD code for syntax errors, argument issues, and BDFD requirements. Returns detailed error messages with line numbers to help you fix issues quickly. Function definitions are loaded from a local JSON file for fast validation.
 
 **Auth Required:** Yes  
-**Rate Limit:** None
+**Rate Limit:** 60 requests per minute per IP
 
 **Request Body:**
 ```json
@@ -1409,7 +1420,7 @@ $httpResult
 Looks up a BDFD function by name using fuzzy matching. Useful for finding the correct function name when you're unsure of the exact spelling. Accepts the function name with or without the `$` prefix, with or without brackets.
 
 **Auth Required:** No  
-**Rate Limit:** None
+**Rate Limit:** 300 requests per minute per IP
 
 **Input Methods (in priority order):**
 - Path parameter: `/function-check/sendMessage`
@@ -1476,7 +1487,7 @@ Authorization: Bearer BDTools-YOUR_API_KEY_HERE
 Creates a ticket transcript from raw message data. Accepts a JSON body with `channelId`, `channelName`, `guildName`, `authorId`, `botId`, and a `messages` array. Each message should be formatted as `userId | content`. The endpoint resolves all user IDs via the Discord API, formats the results into a readable transcript, stores it in MongoDB, and returns a shareable URL.
 
 **Auth Required:** Yes  
-**Rate Limit:** None
+**Rate Limit:** 30 requests per minute per IP
 
 **Request Body:**
 ```json
@@ -1544,7 +1555,7 @@ Creates a ticket transcript from raw message data. Accepts a JSON body with `cha
 Retrieve a stored transcript as plain text. The URL is returned by the create endpoint. The hash is a 16-character hex string derived from SHA-256 of the channel ID.
 
 **Auth Required:** No  
-**Rate Limit:** None
+**Rate Limit:** 300 requests per minute per IP
 
 **URL Format:** `https://cdn.bdtools.xyz/t/a1b2c3d4e5f6g7h8`
 
@@ -1571,6 +1582,286 @@ Transcript not found.
 
 ---
 
+## Tools Endpoints
+
+Utility endpoints that power the BDTools client-side tools — escaping, unescaping, and Discord permission bitfield calculation. All endpoints are **public** (no authentication required).
+
+### POST /character-escape
+
+Escapes BDFD special characters (`$`, `;`, `]`, `\`) into safe representations using your choice of escape style per character. Accepts JSON, returns plain text so the result can be copy-pasted directly.
+
+**Auth Required:** No  
+**Rate Limit:** 300 requests per minute per IP
+
+**Request Body (JSON):**
+
+```json
+{
+  "text": "$hello; world] test\\123",
+  "rules": {
+    "dollar": "a",
+    "semicolon": "a",
+    "bracket": "a"
+  }
+}
+```
+
+**Fields:**
+
+| Field | Type | Required | Default | Description |
+|-------|------|----------|---------|-------------|
+| `text` | string | Yes | — | Raw BDScript code to escape |
+| `rules.dollar` | string | No | `"a"` | Escape style for `$`. `"a"` → `$$c[]`, `"b"` → `%{DOL}%` |
+| `rules.semicolon` | string | No | `"a"` | Escape style for `;`. `"a"` → `\;`, `"b"` → `%{-SEMICOL-}%` |
+| `rules.bracket` | string | No | `"a"` | Escape style for `]`. `"a"` → `\]`, `"b"` → `%ESCAPED%` |
+
+Each character can use a different style — mix and match per-rule.
+
+**Why Two Styles?** Both are valid BDFD escape methods. Style A uses the standard backslash-based escape sequences, while style B uses a bracket-delimited token format. Each behaves differently when BDFD evaluates the string — use whichever works best for your use case.
+
+**Escape Order:**
+
+Characters are escaped in a specific order to prevent conflicts:
+1. Backslashes first (`\` → `\\`)
+2. Semicolons (`;` → `\;` or `%{-SEMICOL-}%`)
+3. Closing brackets (`]` → `\]` or `%ESCAPED%`)
+4. Dollar signs last (`$` → `$$c[]` or `%{DOL}%`)
+
+**Success Response (200):**
+```
+Content-Type: text/plain
+
+$$c[]hello\; world\] test\\123
+```
+
+The response is `text/plain` so the output can be used directly in BDFD without JSON unescaping.
+
+**Example Usage:**
+```bdscript
+$httpPost[https://api.bdtools.xyz/character-escape;{"text":"$ping","rules":{"dollar":"a"}}]
+```
+
+**Error Response (400) - Missing Text:**
+```json
+{
+  "error": "Missing or invalid 'text' field."
+}
+```
+
+**Error Response (400) - Invalid JSON:**
+```json
+{
+  "error": "Invalid JSON body."
+}
+```
+
+**Error Response (405) - Wrong Method:**
+```json
+{
+  "error": "Method not allowed. Use POST."
+}
+```
+
+---
+
+### POST /character-unescape
+
+Reverses the escape operation. Accepts raw plain text (not JSON) — pass the escaper output directly as the request body. Both style A and style B patterns are detected and replaced automatically, so you don't need to specify which style was used.
+
+**Auth Required:** No  
+**Rate Limit:** 300 requests per minute per IP
+
+**Request:**
+```
+POST /character-unescape
+Content-Type: text/plain
+
+$$c[]hello\; world\] test%{DOL}%
+```
+
+Just send the raw escaped text as the body. No JSON wrapper needed.
+
+**Unescape Mappings:**
+
+| Character | Style A Pattern | Style B Pattern |
+|-----------|----------------|-----------------|
+| `$` | `$$c[]` | `%{DOL}%` |
+| `;` | `\;` | `%{-SEMICOL-}%` |
+| `]` | `\]` | `%ESCAPED%` |
+| `\` | `\\` | — |
+
+Mixed-style input is handled fine — style A and style B patterns can appear in the same string.
+
+**Success Response (200):**
+```
+Content-Type: text/plain
+
+$hello; world] test$
+```
+
+**Example Usage:**
+```bdscript
+$httpPost[https://api.bdtools.xyz/character-unescape;$$c[]hello]
+```
+
+**Error Response (500) - Processing Error:**
+```json
+{
+  "error": "Internal server error."
+}
+```
+
+---
+
+### POST /permissions/calculate
+
+Calculates a Discord permission bitfield from a list of permission names. Uses BigInt internally so it handles values beyond `Number.MAX_SAFE_INTEGER` correctly. Unknown permission names are silently ignored.
+
+**Auth Required:** No  
+**Rate Limit:** 300 requests per minute per IP
+
+**Request Body (JSON):**
+
+```json
+{
+  "permissions": ["Administrator", "Kick Members", "Ban Members"]
+}
+```
+
+**Fields:**
+
+| Field | Type | Required | Description |
+|-------|------|----------|-------------|
+| `permissions` | array | Yes | Array of permission name strings (case-insensitive) |
+
+**Supported Permissions (42 total):**
+
+**General Server:** `Create Invite`, `Manage Server`, `View Audit Log`, `View Server Insights`, `Administrator`
+
+**Member Management:** `Kick Members`, `Ban Members`, `Manage Nicknames`, `Change Nickname`
+
+**Channel Management:** `Manage Channels`, `Manage Roles`, `Manage Webhooks`, `View Channels`
+
+**Text Permissions:** `Send Messages`, `Send Messages in Threads`, `Create Public Threads`, `Create Private Threads`, `Embed Links`, `Attach Files`, `Add Reactions`, `Use External Emoji`, `Use External Stickers`, `Mention @everyone @here All Roles`, `Manage Messages`, `Manage Threads`, `Read Message History`, `Send Text-to-Speech Messages`, `Use Application Commands`
+
+**Voice Permissions:** `Connect`, `Speak`, `Video`, `Start Activities`, `Use Voice Activity`, `Priority Speaker`, `Mute Members`, `Deafen Members`, `Move Members`, `Request to Speak`
+
+**Other:** `Manage Emojis and Stickers`, `Manage Events`
+
+**Success Response (200):**
+```json
+{
+  "bitfield": "14",
+  "hex": "0xE",
+  "count": 3,
+  "permissions": [
+    "Administrator",
+    "Kick Members",
+    "Ban Members"
+  ]
+}
+```
+
+**Response Fields:**
+
+| Field | Type | Description |
+|-------|------|-------------|
+| `bitfield` | string | Decimal representation of the permission bitfield (as string to preserve precision) |
+| `hex` | string | Hexadecimal representation prefixed with `0x` |
+| `count` | number | Number of permissions that matched (unknown names are silently ignored) |
+| `permissions` | array | Resolved permission names with standardised casing |
+
+**Example Usage:**
+```bdscript
+$httpPost[https://api.bdtools.xyz/permissions/calculate;{"permissions":["Administrator","Ban Members"]}]
+```
+
+**Error Response (400) - Missing Permissions:**
+```json
+{
+  "error": "Missing or empty 'permissions' array."
+}
+```
+
+**Error Response (400) - Invalid JSON:**
+```json
+{
+  "error": "Invalid JSON body."
+}
+```
+
+**Error Response (404) - Unknown Path:**
+```json
+{
+  "error": "Unknown endpoint. Use /permissions/calculate or /permissions/decode"
+}
+```
+
+---
+
+### POST /permissions/decode
+
+Performs the reverse operation: given a permission bitfield, returns the list of enabled permission names. Useful for debugging bot permission integers, checking what an invite link grants, or auditing existing bots.
+
+**Auth Required:** No  
+**Rate Limit:** 300 requests per minute per IP
+
+**Request Body (JSON):**
+
+```json
+{
+  "bitfield": "14"
+}
+```
+
+**Fields:**
+
+| Field | Type | Required | Description |
+|-------|------|----------|-------------|
+| `bitfield` | string | Yes | Decimal or hex permission integer (BigInt-compatible, pass as string to preserve precision) |
+
+**Success Response (200):**
+```json
+{
+  "bitfield": "14",
+  "hex": "0xE",
+  "count": 3,
+  "permissions": [
+    "Administrator",
+    "Kick Members",
+    "Ban Members"
+  ]
+}
+```
+
+**Example Usage:**
+```bdscript
+$httpPost[https://api.bdtools.xyz/permissions/decode;{"bitfield":"14"}]
+```
+
+**Error Response (400) - Missing Bitfield:**
+```json
+{
+  "error": "Missing 'bitfield' field."
+}
+```
+
+**Error Response (400) - Invalid Bitfield:**
+```json
+{
+  "error": "Invalid bitfield value."
+}
+```
+
+**Error Response (404) - Unknown Path:**
+```json
+{
+  "error": "Unknown endpoint. Use /permissions/calculate or /permissions/decode"
+}
+```
+
+---
+
 ## Other Endpoints
 
 These endpoints are **public** (no authentication required) and provide various utility functions including word games and Pokemon data.
@@ -1580,7 +1871,7 @@ These endpoints are **public** (no authentication required) and provide various 
 Returns a random 5-letter word from a curated wordlist. Perfect for starting a new Wordle game. The wordlist contains common English words suitable for word-guessing games.
 
 **Auth Required:** No  
-**Rate Limit:** 30 requests per 10 seconds
+**Rate Limit:** 300 requests per minute per IP
 
 **Query Parameters:** None
 
@@ -1613,7 +1904,7 @@ Returns a random 5-letter word from a curated wordlist. Perfect for starting a n
 Validates whether a 5-letter word is a valid English word. First checks the curated wordlist, then falls back to an external dictionary. Returns the validation result and the source of validation (wordlist or dictionary).
 
 **Auth Required:** No  
-**Rate Limit:** 60 requests per 10 seconds
+**Rate Limit:** 300 requests per minute per IP
 
 **Query Parameters:**
 - `word` (string, required) - The 5-letter word to validate. Must contain only letters (a-z, A-Z).
@@ -1683,7 +1974,7 @@ Validates whether a 5-letter word is a valid English word. First checks the cura
 Returns a random Pokemon name from all generations (1-9, over 1000 Pokemon). Can optionally return the Pokemon sprite image by adding `?image=true`. Images are sourced from PokeAPI's official artwork collection. You can also request a specific Pokemon by name using the `?name=` parameter, or filter by generation using `?gen=`.
 
 **Auth Required:** No  
-**Rate Limit:** 30 requests per 10 seconds
+**Rate Limit:** 300 requests per minute per IP
 
 **Query Parameters:**
 - `gen` (integer, optional) - Filter by generation (1-9). Examples: `?gen=1` for Kanto, `?gen=2` for Johto, etc.
@@ -1794,10 +2085,10 @@ Authorization: Bearer BDTools-eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...
 
 ### Rate Limits
 - `/submit-server`: Once every 5 hours per API key
-- `/random-word`: 30 requests per 10 seconds
-- `/validate-word`: 60 requests per 10 seconds
-- `/random-pokemon`: 30 requests per 10 seconds
-- Other endpoints: No rate limits
+- Node Status, `/get-servers`, `/function-check`, `/t/{hash}`, `/random-word`, `/validate-word`, `/random-pokemon`, `/character-escape`, `/character-unescape`, `/permissions/*`: 300 requests per minute per IP
+- `/bdscript-checker`: 60 requests per minute per IP
+- `/ticket-transcript`: 30 requests per minute per IP
+- `/get-apikey`: 10 requests per 10 minutes per IP
 
 ### Caching
 - `/bdfd-functions`: Cached for 1 hour

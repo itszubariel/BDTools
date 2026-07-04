@@ -157,7 +157,7 @@
     </div>
 
     <!-- ── MAIN 3-COLUMN LAYOUT ── -->
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 w-full">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-8 w-full">
       <div class="docs-layout">
         <!-- ── LEFT SIDEBAR ── -->
         <aside class="left-sidebar">
@@ -378,7 +378,7 @@
                 Auth required
               </span>
               <span
-                class="inline-flex items-center gap-1.5 text-xs bg-blue-500/10 text-blue-400 border border-blue-500/20 px-2.5 py-1 rounded-full font-semibold"
+                class="inline-flex items-center gap-1.5 text-xs bg-yellow-500/10 text-yellow-400 border border-yellow-500/20 px-2.5 py-1 rounded-full font-semibold"
               >
                 <svg class="w-3 h-3" fill="currentColor" viewBox="0 0 20 20">
                   <path
@@ -387,7 +387,7 @@
                     clip-rule="evenodd"
                   />
                 </svg>
-                Rate limit: None
+                Rate limit: 60/min
               </span>
             </div>
 
@@ -934,7 +934,7 @@
                   >$if</code
                 >
                 inside a function argument must be closed inside that same
-                argument — the
+                argument. The
                 <code
                   class="font-mono text-[#818cf8] bg-[#5865F2]/10 px-1 py-0.5 rounded"
                   >$endif</code
@@ -2345,7 +2345,7 @@
                 No auth required
               </span>
               <span
-                class="inline-flex items-center gap-1.5 text-xs bg-blue-500/10 text-blue-400 border border-blue-500/20 px-2.5 py-1 rounded-full font-semibold"
+                class="inline-flex items-center gap-1.5 text-xs bg-yellow-500/10 text-yellow-400 border border-yellow-500/20 px-2.5 py-1 rounded-full font-semibold"
               >
                 <svg class="w-3 h-3" fill="currentColor" viewBox="0 0 20 20">
                   <path
@@ -2354,7 +2354,7 @@
                     clip-rule="evenodd"
                   />
                 </svg>
-                Rate limit: None
+                Rate limit: 300/min
               </span>
             </div>
 
@@ -2404,7 +2404,7 @@
                   class="font-mono text-[#818cf8] bg-[#5865F2]/10 px-1 py-0.5 rounded"
                   >input</code
                 >
-                (string, optional) — The function name to look up
+                (string, optional). The function name to look up
               </li>
             </ul>
 
@@ -2459,14 +2459,14 @@
                         class="font-mono text-[#818cf8] bg-[#5865F2]/10 px-1 py-0.5 rounded"
                         >input</code
                       >
-                      — The raw input you provided
+                      - The raw input you provided
                     </li>
                     <li>
                       <code
                         class="font-mono text-[#818cf8] bg-[#5865F2]/10 px-1 py-0.5 rounded"
                         >normalizedInput</code
                       >
-                      — Input after stripping
+                      - Input after stripping
                       <code
                         class="font-mono text-[#818cf8] bg-[#5865F2]/10 px-1 py-0.5 rounded"
                         >$</code
@@ -2477,21 +2477,21 @@
                         class="font-mono text-[#818cf8] bg-[#5865F2]/10 px-1 py-0.5 rounded"
                         >matchedFunction</code
                       >
-                      — The best matching BDFD function name
+                      - The best matching BDFD function name
                     </li>
                     <li>
                       <code
                         class="font-mono text-[#818cf8] bg-[#5865F2]/10 px-1 py-0.5 rounded"
                         >suggestedFunction</code
                       >
-                      — Same but with empty brackets appended
+                      - Same but with empty brackets appended
                     </li>
                     <li>
                       <code
                         class="font-mono text-[#818cf8] bg-[#5865F2]/10 px-1 py-0.5 rounded"
                         >exact</code
                       >
-                      —
+                      is
                       <code
                         class="font-mono text-[#818cf8] bg-[#5865F2]/10 px-1 py-0.5 rounded"
                         >true</code
@@ -2508,7 +2508,7 @@
                         class="font-mono text-[#818cf8] bg-[#5865F2]/10 px-1 py-0.5 rounded"
                         >confidence</code
                       >
-                      — How confident the matcher is (100% = exact match)
+                      - How confident the matcher is (100% = exact match)
                     </li>
                   </ul>
                 </div>
@@ -2528,7 +2528,7 @@
                   class="font-mono text-[#818cf8] bg-[#5865F2]/10 px-1 py-0.5 rounded"
                   >/function-check/sendMessage</code
                 >
-                — exact match
+                - exact match
               </li>
               <li>
                 •
@@ -2536,7 +2536,7 @@
                   class="font-mono text-[#818cf8] bg-[#5865F2]/10 px-1 py-0.5 rounded"
                   >/function-check/sendmesage</code
                 >
-                — fuzzy match
+                - fuzzy match
               </li>
               <li>
                 •
@@ -2544,7 +2544,7 @@
                   class="font-mono text-[#818cf8] bg-[#5865F2]/10 px-1 py-0.5 rounded"
                   >/function-check/$getUserVar</code
                 >
-                — strips $ automatically
+                - strips $ automatically
               </li>
               <li>
                 •
@@ -2552,7 +2552,7 @@
                   class="font-mono text-[#818cf8] bg-[#5865F2]/10 px-1 py-0.5 rounded"
                   >/function-check/$setUserVar[name;value]</code
                 >
-                — strips brackets automatically
+                - strips brackets automatically
               </li>
             </ul>
 
@@ -2581,6 +2581,16 @@
   <span class="key">"input"</span><span class="kw">:</span> <span class="str">"xyzqwerty"</span>
 <span class="kw">}</span></pre>
               </div>
+            </div>
+
+            <!-- BDFD Example -->
+            <h3
+              class="text-xs font-mono font-bold text-gray-500 uppercase tracking-widest mb-2 mt-6"
+            >
+              BDFD Example
+            </h3>
+            <div class="code-block">
+              <pre><span class="fn">$httpGet</span><span class="kw">[</span><span class="str">https://api.bdtools.xyz/function-check/sendMessage</span><span class="kw">]</span></pre>
             </div>
           </section>
 

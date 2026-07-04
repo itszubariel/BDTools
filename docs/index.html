@@ -58,7 +58,7 @@
     </nav>
 
     <!-- ── MAIN CONTENT ── -->
-    <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-12 w-full">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12 w-full">
       <!-- Hero -->
       <section class="fu mb-12 text-center scroll-fade">
         <div class="flex items-center justify-center gap-3 mb-4">
@@ -69,7 +69,7 @@
           </h1>
           <span
             class="text-xs font-mono bg-[#5865F2]/10 text-[#818cf8] border border-[#5865F2]/20 px-2 py-1 rounded-lg font-bold"
-            >v1.0</span
+            >v2.0</span
           >
         </div>
         <p
@@ -84,99 +84,115 @@
         </div>
       </section>
 
-      <!-- Getting an API Key -->
-      <section
-        class="dark-surface bg-[#0f1117] border border-[#1e2130] rounded-2xl p-6 fu mb-8 scroll-fade"
-      >
-        <div class="flex items-center gap-3 mb-4">
-          <div
-            class="w-10 h-10 rounded-xl bg-[#5865F2]/10 border border-[#5865F2]/20 flex items-center justify-center flex-shrink-0"
-          >
-            <svg
-              class="w-5 h-5 text-[#5865F2]"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-8">
+        <!-- Getting an API Key -->
+        <section
+          class="dark-surface bg-[#0f1117] border border-[#1e2130] rounded-2xl p-6 fu scroll-fade"
+        >
+          <div class="flex items-center gap-3 mb-4">
+            <div
+              class="w-10 h-10 rounded-xl bg-[#5865F2]/10 border border-[#5865F2]/20 flex items-center justify-center flex-shrink-0"
             >
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width="1.8"
-                d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"
-              />
-            </svg>
+              <svg
+                class="w-5 h-5 text-[#5865F2]"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="1.8"
+                  d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"
+                />
+              </svg>
+            </div>
+            <h2 class="text-lg font-bold text-white dark-text">
+              Get Your API Key
+            </h2>
           </div>
-          <h2 class="text-lg font-bold text-white dark-text">
-            Get Your API Key
-          </h2>
-        </div>
-        <p class="text-gray-400 dark-text-3 text-sm leading-relaxed mb-3">
-          To use authenticated endpoints, visit
-          <a
-            href="https://api.bdtools.xyz"
-            class="text-[#818cf8] hover:text-[#a5b4fc] underline transition-colors font-medium"
-            target="_blank"
-            >api.bdtools.xyz</a
-          >, sign in with Discord, and you'll receive your personal API key. The
-          key is permanent until you reset it.
-        </p>
-      </section>
+          <ol
+            class="text-sm text-gray-400 dark-text-3 space-y-2 mb-4 list-decimal list-inside"
+          >
+            <li>
+              Visit
+              <a
+                href="https://api.bdtools.xyz/login"
+                class="text-[#818cf8] hover:text-[#a5b4fc] underline transition-colors font-medium"
+                target="_blank"
+                >api.bdtools.xyz</a
+              >
+            </li>
+            <li>Sign in with your Discord account</li>
+            <li>Copy your personal API key from the dashboard</li>
+          </ol>
+          <div class="code-block mb-4">
+            <pre><span class="cmt">// Using your API key in BDFD</span>
+<span class="fn">$httpAddHeader</span><span class="kw">[</span><span class="str">Authorization</span><span class="kw">;</span><span class="str">Bearer YOUR_API_KEY</span><span class="kw">]</span></pre>
+          </div>
+        </section>
 
-      <!-- Authentication -->
-      <section
-        id="auth"
-        class="dark-surface bg-[#0f1117] border border-[#1e2130] rounded-2xl p-6 fu mb-8 scroll-fade"
-      >
-        <div class="flex items-center gap-3 mb-4">
-          <div
-            class="w-10 h-10 rounded-xl bg-[#5865F2]/10 border border-[#5865F2]/20 flex items-center justify-center flex-shrink-0"
-          >
-            <svg
-              class="w-5 h-5 text-[#5865F2]"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
+        <!-- Authentication -->
+        <section
+          id="auth"
+          class="dark-surface bg-[#0f1117] border border-[#1e2130] rounded-2xl p-6 fu scroll-fade"
+        >
+          <div class="flex items-center gap-3 mb-4">
+            <div
+              class="w-10 h-10 rounded-xl bg-[#5865F2]/10 border border-[#5865F2]/20 flex items-center justify-center flex-shrink-0"
             >
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width="1.8"
-                d="M15 7a2 2 0 012 2m4 0a6 6 0 01-7.743 5.743L11 17H9v2H7v2H4a1 1 0 01-1-1v-2.586a1 1 0 01.293-.707l5.964-5.964A6 6 0 1121 9z"
-              />
-            </svg>
+              <svg
+                class="w-5 h-5 text-[#5865F2]"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="1.8"
+                  d="M15 7a2 2 0 012 2m4 0a6 6 0 01-7.743 5.743L11 17H9v2H7v2H4a1 1 0 01-1-1v-2.586a1 1 0 01.293-.707l5.964-5.964A6 6 0 1121 9z"
+                />
+              </svg>
+            </div>
+            <h2 class="text-lg font-bold text-white dark-text">
+              Authentication
+            </h2>
           </div>
-          <h2 class="text-lg font-bold text-white dark-text">Authentication</h2>
-        </div>
-        <p class="text-gray-400 dark-text-3 text-sm leading-relaxed mb-4">
-          Guild List endpoints require authentication via JWT Bearer token.
-          Include your API key in the
-          <code
-            class="font-mono text-[#818cf8] bg-[#5865F2]/10 px-1 py-0.5 rounded"
-            >Authorization</code
-          >
-          header.
-        </p>
-        <div class="code-block mb-4">
-          <pre><span class="cmt">// Authorization header format</span>
+          <p class="text-gray-400 dark-text-3 text-sm leading-relaxed mb-4">
+            Guild List endpoints require authentication via JWT Bearer token.
+            Include your API key in the
+            <code
+              class="font-mono text-[#818cf8] bg-[#5865F2]/10 px-1 py-0.5 rounded"
+              >Authorization</code
+            >
+            header.
+          </p>
+          <div class="code-block mb-4">
+            <pre><span class="cmt">// Authorization header format</span>
 <span class="key">Authorization</span><span class="kw">:</span> <span class="str">Bearer YOUR_API_KEY_HERE</span></pre>
-        </div>
-        <p class="text-xs text-gray-500 dark-text-3">
-          <strong class="text-gray-400">Note:</strong> Node Status, BDScript
-          (/function-check), and Other Endpoints are public and do not require
-          authentication.
-        </p>
-      </section>
+          </div>
+          <p class="text-xs text-gray-500 dark-text-3">
+            <strong class="text-gray-400">Note:</strong> Only
+            <code class="text-xs">/submit-server</code>,
+            <code class="text-xs">/get-servers</code>,
+            <code class="text-xs">/bdscript-checker</code>, and
+            <code class="text-xs">/ticket-transcript</code>
+            require authentication. All other endpoints are public.
+          </p>
+        </section>
+      </div>
 
       <!-- Quick Navigation Cards -->
       <section class="fu mb-8 scroll-fade">
         <h2 class="text-xl font-bold text-white dark-text mb-4">
           API Documentation
         </h2>
-        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
           <!-- Node Status Card -->
           <a
             href="/docs/node-status"
-            class="dark-surface bg-[#0f1117] border border-[#1e2130] rounded-xl p-5 hover:border-[#5865F2]/40 transition-all group"
+            class="dark-surface bg-[#0f1117] border border-[#1e2130] rounded-xl p-5 hover:border-[#5865F2]/40 transition-all group flex flex-col"
           >
             <div class="flex items-start justify-between mb-3">
               <div
@@ -207,7 +223,7 @@
               Monitor BDFD node availability and status across all regions.
             </p>
             <div
-              class="flex items-center gap-1.5 text-xs text-[#818cf8] font-semibold"
+              class="flex items-center gap-1.5 text-xs text-[#818cf8] font-semibold mt-auto"
             >
               <span>View Docs</span>
               <svg
@@ -229,7 +245,7 @@
           <!-- Guild List Card -->
           <a
             href="/docs/guild-list"
-            class="dark-surface bg-[#0f1117] border border-[#1e2130] rounded-xl p-5 hover:border-[#5865F2]/40 transition-all group"
+            class="dark-surface bg-[#0f1117] border border-[#1e2130] rounded-xl p-5 hover:border-[#5865F2]/40 transition-all group flex flex-col"
           >
             <div class="flex items-start justify-between mb-3">
               <div
@@ -260,7 +276,7 @@
               Submit and retrieve bot guild lists with pagination support.
             </p>
             <div
-              class="flex items-center gap-1.5 text-xs text-[#818cf8] font-semibold"
+              class="flex items-center gap-1.5 text-xs text-[#818cf8] font-semibold mt-auto"
             >
               <span>View Docs</span>
               <svg
@@ -282,7 +298,7 @@
           <!-- BDScript Card -->
           <a
             href="/docs/bdscript"
-            class="dark-surface bg-[#0f1117] border border-[#1e2130] rounded-xl p-5 hover:border-[#5865F2]/40 transition-all group"
+            class="dark-surface bg-[#0f1117] border border-[#1e2130] rounded-xl p-5 hover:border-[#5865F2]/40 transition-all group flex flex-col"
           >
             <div class="flex items-start justify-between mb-3">
               <div
@@ -313,7 +329,7 @@
               Validate BDScript code and look up BDFD functions.
             </p>
             <div
-              class="flex items-center gap-1.5 text-xs text-[#818cf8] font-semibold"
+              class="flex items-center gap-1.5 text-xs text-[#818cf8] font-semibold mt-auto"
             >
               <span>View Docs</span>
               <svg
@@ -335,7 +351,7 @@
           <!-- Ticket Transcript Card -->
           <a
             href="/docs/ticket-transcript"
-            class="dark-surface bg-[#0f1117] border border-[#1e2130] rounded-xl p-5 hover:border-[#5865F2]/40 transition-all group"
+            class="dark-surface bg-[#0f1117] border border-[#1e2130] rounded-xl p-5 hover:border-[#5865F2]/40 transition-all group flex flex-col"
           >
             <div class="flex items-start justify-between mb-3">
               <div
@@ -366,7 +382,119 @@
               Generate and host ticket transcripts for BDFD bots.
             </p>
             <div
-              class="flex items-center gap-1.5 text-xs text-[#818cf8] font-semibold"
+              class="flex items-center gap-1.5 text-xs text-[#818cf8] font-semibold mt-auto"
+            >
+              <span>View Docs</span>
+              <svg
+                class="w-3.5 h-3.5 group-hover:translate-x-0.5 transition-transform"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2.5"
+                  d="M9 5l7 7-7 7"
+                />
+              </svg>
+            </div>
+          </a>
+
+          <!-- Tools Card -->
+          <a
+            href="/docs/tools"
+            class="dark-surface bg-[#0f1117] border border-[#1e2130] rounded-xl p-5 hover:border-[#5865F2]/40 transition-all group flex flex-col"
+          >
+            <div class="flex items-start justify-between mb-3">
+              <div
+                class="w-10 h-10 rounded-lg bg-orange-500/10 border border-orange-500/20 flex items-center justify-center flex-shrink-0"
+              >
+                <svg
+                  class="w-5 h-5 text-orange-400"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="1.8"
+                    d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.066 2.573c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.573 1.066c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.066-2.573c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"
+                  />
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="1.8"
+                    d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"
+                  />
+                </svg>
+              </div>
+              <span class="text-xs font-mono text-gray-500">4 endpoints</span>
+            </div>
+            <h3
+              class="text-base font-bold text-white dark-text mb-2 group-hover:text-[#818cf8] transition-colors"
+            >
+              Tools
+            </h3>
+            <p class="text-sm text-gray-400 dark-text-3 mb-3 leading-relaxed">
+              Escape/unescape BDFD characters and calculate Discord permission
+              bitfields.
+            </p>
+            <div
+              class="flex items-center gap-1.5 text-xs text-[#818cf8] font-semibold mt-auto"
+            >
+              <span>View Docs</span>
+              <svg
+                class="w-3.5 h-3.5 group-hover:translate-x-0.5 transition-transform"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2.5"
+                  d="M9 5l7 7-7 7"
+                />
+              </svg>
+            </div>
+          </a>
+          <!-- Other Endpoints Card -->
+          <a
+            href="/docs/others"
+            class="dark-surface bg-[#0f1117] border border-[#1e2130] rounded-xl p-5 hover:border-[#5865F2]/40 transition-all group flex flex-col"
+          >
+            <div class="flex items-start justify-between mb-3">
+              <div
+                class="w-10 h-10 rounded-lg bg-yellow-500/10 border border-yellow-500/20 flex items-center justify-center flex-shrink-0"
+              >
+                <svg
+                  class="w-5 h-5 text-yellow-400"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="1.8"
+                    d="M14.828 14.828a4 4 0 01-5.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+                  />
+                </svg>
+              </div>
+              <span class="text-xs font-mono text-gray-500">3 endpoints</span>
+            </div>
+            <h3
+              class="text-base font-bold text-white dark-text mb-2 group-hover:text-[#818cf8] transition-colors"
+            >
+              Other Endpoints
+            </h3>
+            <p class="text-sm text-gray-400 dark-text-3 mb-3 leading-relaxed">
+              Word games and Pokemon data for Discord bots.
+            </p>
+            <div
+              class="flex items-center gap-1.5 text-xs text-[#818cf8] font-semibold mt-auto"
             >
               <span>View Docs</span>
               <svg
@@ -385,104 +513,102 @@
             </div>
           </a>
         </div>
-
-        <!-- Other Endpoints — compact link -->
-        <a
-          href="/docs/others"
-          class="dark-surface bg-[#0f1117] border border-[#1e2130] rounded-xl p-4 hover:border-[#5865F2]/40 transition-all group flex items-center justify-between gap-4 mt-3"
-        >
-          <div class="flex items-center gap-3 min-w-0">
-            <div
-              class="w-9 h-9 rounded-lg bg-yellow-500/10 border border-yellow-500/20 flex items-center justify-center flex-shrink-0"
-            >
-              <svg
-                class="w-4.5 h-4.5 text-yellow-400"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-                width="18"
-                height="18"
-              >
-                <path
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  stroke-width="1.8"
-                  d="M14.828 14.828a4 4 0 01-5.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
-                />
-              </svg>
-            </div>
-            <div class="min-w-0">
-              <h3
-                class="text-sm font-bold text-white dark-text group-hover:text-[#818cf8] transition-colors"
-              >
-                Other Endpoints
-              </h3>
-              <p
-                class="text-xs text-gray-400 dark-text-3 leading-relaxed truncate"
-              >
-                Word games and Pokemon data for Discord bots.
-              </p>
-            </div>
-          </div>
-          <div class="flex items-center gap-3 flex-shrink-0">
-            <span class="text-xs font-mono text-gray-500">3 endpoints</span>
-            <svg
-              class="w-3.5 h-3.5 text-gray-500 group-hover:translate-x-0.5 transition-transform"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-            >
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width="2.5"
-                d="M9 5l7 7-7 7"
-              />
-            </svg>
-          </div>
-        </a>
       </section>
 
       <!-- Data Freshness Note -->
       <section
-        class="dark-surface bg-[#0f1117] border border-[#1e2130] rounded-xl p-5 fu scroll-fade"
+        class="dark-surface bg-[#0f1117] border border-[#1e2130] rounded-2xl p-6 fu scroll-fade"
       >
-        <div class="flex items-start gap-3">
+        <h2 class="text-lg font-bold text-white dark-text mb-4">
+          Data Freshness
+        </h2>
+        <div class="space-y-2">
           <div
-            class="w-8 h-8 rounded-lg bg-blue-500/10 border border-blue-500/20 flex items-center justify-center flex-shrink-0 mt-0.5"
+            class="flex items-center gap-3 py-2.5 border-b border-[#1e2130] last:border-0"
           >
-            <svg
-              class="w-4 h-4 text-blue-400"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
+            <span
+              class="w-2.5 h-2.5 rounded-full bg-blue-400 flex-shrink-0"
+            ></span>
+            <span
+              class="text-sm text-gray-300 dark-text font-medium w-28 flex-shrink-0"
+              >Node Status</span
             >
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width="2"
-                d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
-              />
-            </svg>
+            <span class="text-sm text-gray-400 dark-text-3"
+              >Updates every
+              <strong class="text-gray-300">2 minutes</strong> via scheduled
+              scraper</span
+            >
           </div>
-          <div>
-            <h3 class="text-sm font-bold text-white dark-text mb-2">
-              Data Freshness
-            </h3>
-            <ul class="space-y-1.5 text-sm text-gray-400 dark-text-3">
-              <li class="flex items-start gap-2">
-                <span class="text-blue-400 mt-0.5 flex-shrink-0">•</span>
-                <span
-                  >Node status updates every
-                  <strong class="text-gray-300">2 minutes</strong> via scheduled
-                  scraper</span
-                >
-              </li>
-              <li class="flex items-start gap-2">
-                <span class="text-blue-400 mt-0.5 flex-shrink-0">•</span>
-                <span>Guild list data cached until new submission</span>
-              </li>
-            </ul>
+          <div
+            class="flex items-center gap-3 py-2.5 border-b border-[#1e2130] last:border-0"
+          >
+            <span
+              class="w-2.5 h-2.5 rounded-full bg-green-400 flex-shrink-0"
+            ></span>
+            <span
+              class="text-sm text-gray-300 dark-text font-medium w-28 flex-shrink-0"
+              >Guild List</span
+            >
+            <span class="text-sm text-gray-400 dark-text-3"
+              >Cached until a new submission replaces the data</span
+            >
+          </div>
+          <div
+            class="flex items-center gap-3 py-2.5 border-b border-[#1e2130] last:border-0"
+          >
+            <span
+              class="w-2.5 h-2.5 rounded-full bg-purple-400 flex-shrink-0"
+            ></span>
+            <span
+              class="text-sm text-gray-300 dark-text font-medium w-28 flex-shrink-0"
+              >BDScript</span
+            >
+            <span class="text-sm text-gray-400 dark-text-3"
+              >Function list cached and refreshed periodically</span
+            >
+          </div>
+          <div
+            class="flex items-center gap-3 py-2.5 border-b border-[#1e2130] last:border-0"
+          >
+            <span
+              class="w-2.5 h-2.5 rounded-full bg-purple-400 flex-shrink-0"
+            ></span>
+            <span
+              class="text-sm text-gray-300 dark-text font-medium w-28 flex-shrink-0"
+              >Ticket Transcript</span
+            >
+            <span class="text-sm text-gray-400 dark-text-3"
+              >Stored permanently on the server. Manual deletion only.</span
+            >
+          </div>
+          <div
+            class="flex items-center gap-3 py-2.5 border-b border-[#1e2130] last:border-0"
+          >
+            <span
+              class="w-2.5 h-2.5 rounded-full bg-orange-400 flex-shrink-0"
+            ></span>
+            <span
+              class="text-sm text-gray-300 dark-text font-medium w-28 flex-shrink-0"
+              >Tools</span
+            >
+            <span class="text-sm text-gray-400 dark-text-3"
+              >Stateless, no server-side caching. Results computed on
+              demand.</span
+            >
+          </div>
+          <div
+            class="flex items-center gap-3 py-2.5 border-b border-[#1e2130] last:border-0"
+          >
+            <span
+              class="w-2.5 h-2.5 rounded-full bg-yellow-400 flex-shrink-0"
+            ></span>
+            <span
+              class="text-sm text-gray-300 dark-text font-medium w-28 flex-shrink-0"
+              >Other Endpoints</span
+            >
+            <span class="text-sm text-gray-400 dark-text-3"
+              >Data queried live from upstream sources on each request</span
+            >
           </div>
         </div>
       </section>

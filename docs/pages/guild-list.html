@@ -179,7 +179,7 @@
     </div>
 
     <!-- ── MAIN 3-COLUMN LAYOUT ── -->
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 w-full">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-8 w-full">
       <div class="docs-layout">
         <!-- ── LEFT SIDEBAR ── -->
         <aside class="left-sidebar">
@@ -358,20 +358,14 @@
               <span
                 class="inline-flex items-center gap-1.5 text-xs bg-yellow-500/10 text-yellow-400 border border-yellow-500/20 px-2.5 py-1 rounded-full font-semibold"
               >
-                <svg
-                  class="w-3 h-3"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                >
+                <svg class="w-3 h-3" fill="currentColor" viewBox="0 0 20 20">
                   <path
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    stroke-width="2"
-                    d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"
+                    fill-rule="evenodd"
+                    d="M10 18a8 8 0 100-16 8 8 0 000 16zm-1-10h2v5h-2V8zm0 7h2v2h-2v-2z"
+                    clip-rule="evenodd"
                   />
                 </svg>
-                Rate limited: once per 5 hours
+                Rate limited: 1/hr
               </span>
             </div>
 
@@ -522,7 +516,7 @@
                 >400 Bad Request — Invalid Format</span
               >
               <div class="code-block mt-2">
-                <pre><span class="kw">{</span> <span class="key">"error"</span><span class="kw">:</span> <span class="str">"Invalid body format. Found 7 server lines — must be a multiple of 4 (Server Name, Server ID, Invite Link, Owner ID per server)."</span> <span class="kw">}</span></pre>
+                <pre><span class="kw">{</span> <span class="key">"error"</span><span class="kw">:</span> <span class="str">"Invalid body format. Found 7 server lines - must be a multiple of 4 (Server Name, Server ID, Invite Link, Owner ID per server)."</span> <span class="kw">}</span></pre>
               </div>
             </div>
 
@@ -696,12 +690,13 @@
                       >
                       with your BDTools API key. Get your key at
                       <a
-                        href="https://api.bdtools.xyz"
+                        href="https://api.bdtools.xyz/login"
                         class="text-[#818cf8] hover:text-[#a5b4fc] underline transition-colors font-medium"
                         target="_blank"
                         >api.bdtools.xyz</a
                       >
-                      by signing in with Discord. The key is permanent until you reset it.
+                      by signing in with Discord. The key is permanent until you
+                      reset it.
                     </div>
                   </div>
                 </div>
@@ -783,7 +778,7 @@
                       target="_blank"
                       >https://app.bdtools.xyz/bot-guild-list</a
                     >
-                    — it cannot be called directly from bots or external apps.
+                    - it cannot be called directly from bots or external apps.
                   </p>
                 </div>
               </div>
@@ -819,6 +814,18 @@
                   />
                 </svg>
                 Redis cached
+              </span>
+              <span
+                class="inline-flex items-center gap-1.5 text-xs bg-yellow-500/10 text-yellow-400 border border-yellow-500/20 px-2.5 py-1 rounded-full font-semibold"
+              >
+                <svg class="w-3 h-3" fill="currentColor" viewBox="0 0 20 20">
+                  <path
+                    fill-rule="evenodd"
+                    d="M10 18a8 8 0 100-16 8 8 0 000 16zm-1-10h2v5h-2V8zm0 7h2v2h-2v-2z"
+                    clip-rule="evenodd"
+                  />
+                </svg>
+                Rate limit: 300/min
               </span>
             </div>
 

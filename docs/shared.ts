@@ -43,7 +43,7 @@ function showToast(msg: string, color?: string): void {
 }
 
 /* ── Section Navigation ── */
-function showSection(sectionId: string): void {
+function showSection(sectionId: string, scrollToTop = true): void {
   // Hide all sections first
   document.querySelectorAll(".endpoint-section").forEach((section) => {
     section.classList.add("hidden");
@@ -55,19 +55,20 @@ function showSection(sectionId: string): void {
     targetSection.classList.remove("hidden");
 
     // Force immediate visibility for all scroll-fade elements
-    // Do this synchronously before any scroll happens
     const fadeElements = targetSection.querySelectorAll(".scroll-fade");
     fadeElements.forEach((el) => {
       el.classList.add("visible");
       el.classList.remove("scroll-fade");
     });
 
-    // Also handle if the section itself has scroll-fade
     if (targetSection.classList.contains("scroll-fade")) {
       targetSection.classList.add("visible");
       targetSection.classList.remove("scroll-fade");
     }
   }
+
+  // Update URL hash
+  history.pushState(null, "", `#${sectionId}`);
 
   // Update active state in sidebar
   updateSidebarActive(sectionId);
@@ -75,9 +76,13 @@ function showSection(sectionId: string): void {
   // Close mobile drawer if open
   closeMobileDrawer();
 
-  // Scroll to top AFTER making content visible
+  // Scroll to top or target section
   requestAnimationFrame(() => {
-    window.scrollTo({ top: 0 });
+    if (scrollToTop) {
+      window.scrollTo({ top: 0 });
+    } else if (targetSection) {
+      targetSection.scrollIntoView({ behavior: "smooth" });
+    }
   });
 }
 
@@ -140,4 +145,10 @@ const scrollObserver = new IntersectionObserver((entries) => {
 window.addEventListener("load", () => {
   const fadeElements = document.querySelectorAll(".scroll-fade");
   fadeElements.forEach((el) => scrollObserver.observe(el));
+
+  // Restore section from URL hash
+  const hash = window.location.hash.slice(1);
+  if (hash && document.getElementById(hash)) {
+    showSection(hash, false);
+  }
 });

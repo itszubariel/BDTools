@@ -101,12 +101,10 @@
         <a class="sidebar-link active" onclick="showSection('overview')"
           >Overview</a
         >
-        <a class="sidebar-link" onclick="showSection('ep-create')"
+        <a class="sidebar-link" onclick="showSection('ep-ticket-transcript')"
           >POST /ticket-transcript</a
         >
-        <a class="sidebar-link" onclick="showSection('ep-get')"
-          >GET /t/{hash}</a
-        >
+        <a class="sidebar-link" onclick="showSection('ep-t')">GET /t/{hash}</a>
       </nav>
     </div>
 
@@ -157,7 +155,7 @@
     </div>
 
     <!-- ── MAIN 3-COLUMN LAYOUT ── -->
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 w-full">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-8 w-full">
       <div class="docs-layout">
         <!-- ── LEFT SIDEBAR ── -->
         <aside class="left-sidebar">
@@ -170,10 +168,12 @@
             <a class="sidebar-link active" onclick="showSection('overview')"
               >Overview</a
             >
-            <a class="sidebar-link" onclick="showSection('ep-create')"
+            <a
+              class="sidebar-link"
+              onclick="showSection('ep-ticket-transcript')"
               >POST /ticket-transcript</a
             >
-            <a class="sidebar-link" onclick="showSection('ep-get')"
+            <a class="sidebar-link" onclick="showSection('ep-t')"
               >GET /t/{hash}</a
             >
           </nav>
@@ -283,7 +283,7 @@
 
           <!-- POST /ticket-transcript -->
           <section
-            id="ep-create"
+            id="ep-ticket-transcript"
             class="endpoint-section dark-surface hidden scroll-fade"
           >
             <div class="flex items-center gap-3 mb-4 flex-wrap">
@@ -363,7 +363,7 @@
                 Auth required
               </span>
               <span
-                class="inline-flex items-center gap-1.5 text-xs bg-blue-500/10 text-blue-400 border border-blue-500/20 px-2.5 py-1 rounded-full font-semibold"
+                class="inline-flex items-center gap-1.5 text-xs bg-yellow-500/10 text-yellow-400 border border-yellow-500/20 px-2.5 py-1 rounded-full font-semibold"
               >
                 <svg class="w-3 h-3" fill="currentColor" viewBox="0 0 20 20">
                   <path
@@ -372,7 +372,7 @@
                     clip-rule="evenodd"
                   />
                 </svg>
-                Rate limit: None
+                Rate limit: 30/min
               </span>
             </div>
 
@@ -602,12 +602,13 @@
                       >
                       with your BDTools API key. Get your key at
                       <a
-                        href="https://api.bdtools.xyz"
+                        href="https://api.bdtools.xyz/login"
                         class="text-[#818cf8] hover:text-[#a5b4fc] underline transition-colors font-medium"
                         target="_blank"
                         >api.bdtools.xyz</a
                       >
-                      by signing in with Discord. The key is permanent until you reset it.
+                      by signing in with Discord. The key is permanent until you
+                      reset it.
                     </div>
                   </div>
                 </div>
@@ -687,7 +688,7 @@
 
           <!-- GET cdn.bdtools.xyz/t/:hash -->
           <section
-            id="ep-get"
+            id="ep-t"
             class="endpoint-section dark-surface hidden scroll-fade"
           >
             <div class="flex items-center gap-3 mb-4 flex-wrap">
@@ -718,7 +719,7 @@
                 No auth required
               </span>
               <span
-                class="inline-flex items-center gap-1.5 text-xs bg-blue-500/10 text-blue-400 border border-blue-500/20 px-2.5 py-1 rounded-full font-semibold"
+                class="inline-flex items-center gap-1.5 text-xs bg-yellow-500/10 text-yellow-400 border border-yellow-500/20 px-2.5 py-1 rounded-full font-semibold"
               >
                 <svg class="w-3 h-3" fill="currentColor" viewBox="0 0 20 20">
                   <path
@@ -727,7 +728,7 @@
                     clip-rule="evenodd"
                   />
                 </svg>
-                Rate limit: None
+                Rate limit: 300/min
               </span>
             </div>
 
@@ -774,6 +775,16 @@ John (john): thanks!</pre
               <div class="code-block mt-2">
                 <pre>Transcript not found.</pre>
               </div>
+            </div>
+
+            <!-- BDFD Example -->
+            <h3
+              class="text-xs font-mono font-bold text-gray-500 uppercase tracking-widest mb-2 mt-6"
+            >
+              BDFD Example
+            </h3>
+            <div class="code-block">
+              <pre><span class="fn">$httpGet</span><span class="kw">[</span><span class="str">https://cdn.bdtools.xyz/t/</span><span class="fn">$var</span><span class="kw">[</span><span class="str">hash</span><span class="kw">]]</span></pre>
             </div>
           </section>
 
@@ -875,11 +886,11 @@ John (john): thanks!</pre
       // Page-specific configuration
       window.PAGE_SECTIONS = [
         { id: "overview", label: "Overview" },
-        { id: "ep-create", label: "POST /ticket-transcript" },
-        { id: "ep-get", label: "GET /t/{hash}" },
+        { id: "ep-ticket-transcript", label: "POST /ticket-transcript" },
+        { id: "ep-t", label: "GET /t/{hash}" },
       ];
       window.PREV_PAGE = { url: "/docs/bdscript", label: "BDScript" };
-      window.NEXT_PAGE = { url: "/docs/others", label: "Other Endpoints" };
+      window.NEXT_PAGE = { url: "/docs/tools", label: "Tools" };
 
       // Copy BDFD code function
       function copyBdfdCode() {
