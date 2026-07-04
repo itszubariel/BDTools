@@ -306,6 +306,16 @@ html.light nav {
   max-width: 480px;
 }
 
+.tag {
+  font-family: var(--mono);
+  font-size: 0.68rem;
+  background: var(--bg4);
+  border: 1px solid var(--border2);
+  color: var(--text2);
+  padding: 2px 8px;
+  border-radius: 6px;
+}
+
 main {
   flex: 1;
   max-width: 1080px;
