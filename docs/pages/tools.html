@@ -1,0 +1,1211 @@
+<!doctype html>
+<html lang="en" class="dark">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0" />
+    <title>Tools | Docs</title>
+    <link rel="icon" href="https://bdtools.xyz/images/bdtools_logo.png" />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700;800&family=Geist+Mono:wght@400;500&display=swap"
+      rel="stylesheet"
+    />
+    <script>
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            fontFamily: {
+              sans: ["Geist", "sans-serif"],
+              mono: ["Geist Mono", "monospace"],
+            },
+          },
+        },
+      };
+    </script>
+    <link rel="stylesheet" href="/docs/shared.css" />
+  </head>
+
+  <body class="bg-[#080a10] text-gray-100 min-h-screen flex flex-col">
+    <!-- ── NAV ── -->
+    <nav
+      class="sticky top-0 z-50 border-b"
+      style="border-color: #1e2130; background: #080a10"
+    >
+      <div
+        class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-14 flex items-center justify-between gap-4"
+      >
+        <a href="/" class="flex items-center gap-2.5 group flex-shrink-0">
+          <img
+            src="/images/bdtools_logo.png"
+            alt="BDTools"
+            class="w-7 h-7 rounded-lg"
+            onerror="this.style.display = 'none'"
+          />
+          <span class="font-bold tracking-tight t1">BDTools</span>
+        </a>
+        <div class="flex items-center gap-2 min-w-0">
+          <span
+            id="themeLabel"
+            class="text-xs text-gray-500 hidden sm:block select-none"
+            >Dark Mode</span
+          >
+          <div id="themeToggle" class="tog-track on" onclick="toggleTheme()">
+            <div class="tog-thumb"></div>
+          </div>
+          <button
+            class="hamburger-btn"
+            id="hamburgerBtn"
+            onclick="toggleMobileDrawer()"
+            aria-label="Toggle menu"
+          >
+            <span></span>
+            <span></span>
+            <span></span>
+          </button>
+        </div>
+      </div>
+    </nav>
+
+    <!-- ── MOBILE DRAWER ── -->
+    <div
+      class="mobile-drawer-backdrop"
+      id="mobileDrawerBackdrop"
+      onclick="closeMobileDrawer()"
+    ></div>
+
+    <div class="mobile-drawer" id="mobileDrawer">
+      <div class="mobile-drawer-header">
+        <span class="mobile-drawer-title">Tools</span>
+        <button
+          class="mobile-drawer-close"
+          onclick="closeMobileDrawer()"
+          aria-label="Close menu"
+        >
+          <svg
+            width="20"
+            height="20"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+          >
+            <line x1="18" y1="6" x2="6" y2="18" />
+            <line x1="6" y1="6" x2="18" y2="18" />
+          </svg>
+        </button>
+      </div>
+      <nav class="space-y-0.5">
+        <a class="sidebar-link active" onclick="showSection('overview')"
+          >Overview</a
+        >
+        <a class="sidebar-link" onclick="showSection('ep-character-escape')"
+          >POST /character-escape</a
+        >
+        <a class="sidebar-link" onclick="showSection('ep-character-unescape')"
+          >POST /character-unescape</a
+        >
+        <a
+          class="sidebar-link"
+          onclick="showSection('ep-permissions-calculate')"
+          >POST /permissions/calculate</a
+        >
+        <a class="sidebar-link" onclick="showSection('ep-permissions-decode')"
+          >POST /permissions/decode</a
+        >
+      </nav>
+    </div>
+
+    <!-- ── PAGE HEADER ── -->
+    <div class="lowerNav border-b border-[#1e2130]">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 fu">
+        <!-- Breadcrumb -->
+        <nav
+          class="flex items-center gap-2 text-xs text-gray-500 mb-4 font-mono"
+        >
+          <a href="/docs" class="hover:text-[#818cf8] transition-colors"
+            >Docs</a
+          >
+          <span class="text-gray-700">/</span>
+          <span class="text-gray-300">Tools</span>
+        </nav>
+        <div class="flex items-center gap-3 mb-2">
+          <div
+            class="w-9 h-9 rounded-xl bg-orange-500/10 border border-orange-500/20 flex items-center justify-center flex-shrink-0"
+          >
+            <svg
+              class="w-4.5 h-4.5 text-orange-400"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+              width="18"
+              height="18"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="1.8"
+                d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.066 2.573c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.573 1.066c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.066-2.573c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"
+              />
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="1.8"
+                d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"
+              />
+            </svg>
+          </div>
+          <h1
+            class="text-2xl sm:text-3xl font-black text-white dark-text tracking-tight"
+          >
+            Tools
+          </h1>
+        </div>
+        <p class="text-gray-400 dark-text-2 text-sm max-w-xl leading-relaxed">
+          Escape/unescape BDFD special characters and calculate Discord
+          permission bitfields. All endpoints are public and require no
+          authentication.
+        </p>
+      </div>
+    </div>
+
+    <!-- ── MAIN 2-COLUMN LAYOUT ── -->
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-8 w-full">
+      <div class="docs-layout">
+        <!-- ── LEFT SIDEBAR ── -->
+        <aside class="left-sidebar">
+          <p
+            class="text-[10px] font-mono text-gray-600 uppercase tracking-widest mb-2 px-3"
+          >
+            Tools
+          </p>
+          <nav class="space-y-0.5" id="leftNav">
+            <a class="sidebar-link active" onclick="showSection('overview')"
+              >Overview</a
+            >
+            <a class="sidebar-link" onclick="showSection('ep-character-escape')"
+              >POST /character-escape</a
+            >
+            <a
+              class="sidebar-link"
+              onclick="showSection('ep-character-unescape')"
+              >POST /character-unescape</a
+            >
+            <a
+              class="sidebar-link"
+              onclick="showSection('ep-permissions-calculate')"
+              >POST /permissions/calculate</a
+            >
+            <a
+              class="sidebar-link"
+              onclick="showSection('ep-permissions-decode')"
+              >POST /permissions/decode</a
+            >
+          </nav>
+        </aside>
+
+        <!-- ── CONTENT ── -->
+        <main class="min-w-0">
+          <!-- Overview -->
+          <section
+            id="overview"
+            class="endpoint-section dark-surface fu scroll-fade"
+          >
+            <h2 class="text-lg font-bold text-white dark-text mb-3">
+              Overview
+            </h2>
+            <p class="text-sm text-gray-400 dark-text-3 leading-relaxed mb-4">
+              Escape/unescape BDFD special characters and calculate Discord
+              permission bitfields. Accepts JSON or plain text input depending
+              on the endpoint. All endpoints are public and require no
+              authentication.
+            </p>
+            <div class="flex flex-wrap gap-2 mb-4">
+              <span
+                class="inline-flex items-center gap-1.5 text-xs bg-green-500/10 text-green-400 border border-green-500/20 px-2.5 py-1 rounded-full font-semibold"
+              >
+                <svg class="w-3 h-3" fill="currentColor" viewBox="0 0 20 20">
+                  <path
+                    fill-rule="evenodd"
+                    d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
+                    clip-rule="evenodd"
+                  />
+                </svg>
+                No auth required
+              </span>
+            </div>
+            <div class="code-block">
+              <pre><span class="cmt">// Base URL for all tools endpoints</span>
+<span class="str">https://api.bdtools.xyz/tools</span></pre>
+            </div>
+          </section>
+
+          <!-- POST /character-escape -->
+          <section
+            id="ep-character-escape"
+            class="endpoint-section dark-surface hidden scroll-fade"
+          >
+            <div class="flex items-center gap-3 mb-4 flex-wrap">
+              <span class="method-badge post">POST</span>
+              <code
+                class="font-mono text-sm text-gray-200 dark-text flex-1 min-w-0 break-all"
+                >/character-escape</code
+              >
+              <button
+                onclick="copyUrl('/character-escape')"
+                class="text-xs bg-[#1e2130] hover:bg-[#252840] text-gray-400 border border-[#2e3350] px-3 py-1.5 rounded-lg transition-colors font-semibold flex-shrink-0 flex items-center gap-1.5"
+              >
+                <svg
+                  class="w-3 h-3"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"
+                  />
+                </svg>
+                Copy URL
+              </button>
+            </div>
+
+            <p class="text-sm text-gray-400 dark-text-3 leading-relaxed mb-4">
+              Escapes BDFD special characters (<code
+                class="font-mono text-[#818cf8] bg-[#5865F2]/10 px-1 py-0.5 rounded"
+                >$</code
+              >,
+              <code
+                class="font-mono text-[#818cf8] bg-[#5865F2]/10 px-1 py-0.5 rounded"
+                >;</code
+              >,
+              <code
+                class="font-mono text-[#818cf8] bg-[#5865F2]/10 px-1 py-0.5 rounded"
+                >]</code
+              >,
+              <code
+                class="font-mono text-[#818cf8] bg-[#5865F2]/10 px-1 py-0.5 rounded"
+                >\</code
+              >) into safe representations using your choice of escape style per
+              character. Accepts JSON, returns plain text so the result can be
+              copy-pasted directly.
+            </p>
+
+            <div class="flex flex-wrap gap-2 mb-5">
+              <span
+                class="inline-flex items-center gap-1.5 text-xs bg-green-500/10 text-green-400 border border-green-500/20 px-2.5 py-1 rounded-full font-semibold"
+              >
+                <svg class="w-3 h-3" fill="currentColor" viewBox="0 0 20 20">
+                  <path
+                    fill-rule="evenodd"
+                    d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
+                    clip-rule="evenodd"
+                  />
+                </svg>
+                No auth required
+              </span>
+              <span
+                class="inline-flex items-center gap-1.5 text-xs bg-yellow-500/10 text-yellow-400 border border-yellow-500/20 px-2.5 py-1 rounded-full font-semibold"
+              >
+                <svg class="w-3 h-3" fill="currentColor" viewBox="0 0 20 20">
+                  <path
+                    fill-rule="evenodd"
+                    d="M10 18a8 8 0 100-16 8 8 0 000 16zm-1-10h2v5h-2V8zm0 7h2v2h-2v-2z"
+                    clip-rule="evenodd"
+                  />
+                </svg>
+                Rate limit: 300/min
+              </span>
+            </div>
+
+            <h3
+              class="text-xs font-mono font-bold text-gray-500 uppercase tracking-widest mb-2"
+            >
+              Request Body
+            </h3>
+            <div class="code-block mb-4">
+              <pre><span class="kw">{</span>
+  <span class="key">"text"</span><span class="kw">:</span> <span class="str">"$hello; world] test\\123"</span><span class="kw">,</span>
+  <span class="key">"rules"</span><span class="kw">: {</span>
+    <span class="key">"dollar"</span><span class="kw">:</span> <span class="str">"a"</span><span class="kw">,</span>
+    <span class="key">"semicolon"</span><span class="kw">:</span> <span class="str">"a"</span><span class="kw">,</span>
+    <span class="key">"bracket"</span><span class="kw">:</span> <span class="str">"a"</span>
+  <span class="kw">}</span>
+<span class="kw">}</span></pre>
+            </div>
+
+            <h3
+              class="text-xs font-mono font-bold text-gray-500 uppercase tracking-widest mb-2"
+            >
+              Fields
+            </h3>
+            <div
+              class="dark-code bg-[#060810] border border-[#1e2130] rounded-xl overflow-hidden mb-5"
+            >
+              <table class="param-table">
+                <thead>
+                  <tr>
+                    <th>Field</th>
+                    <th>Type</th>
+                    <th>Default</th>
+                    <th>Description</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>text</td>
+                    <td>
+                      <span class="param-type">string</span
+                      ><span class="param-required">required</span>
+                    </td>
+                    <td class="text-gray-400 dark-text-3 font-mono text-sm">
+                      —
+                    </td>
+                    <td class="text-gray-400 dark-text-3">
+                      Raw BDScript code to escape.
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>rules.dollar</td>
+                    <td><span class="param-type">string</span></td>
+                    <td class="text-gray-400 dark-text-3 font-mono text-sm">
+                      <code class="font-mono text-[#818cf8]">"a"</code>
+                    </td>
+                    <td class="text-gray-400 dark-text-3">
+                      Escape style for
+                      <code class="font-mono text-[#818cf8]">$</code>.
+                      <code class="font-mono text-[#818cf8]">"a"</code> &rarr;
+                      <code class="font-mono text-[#818cf8]">$$c[]</code>,
+                      <code class="font-mono text-[#818cf8]">"b"</code> &rarr;
+                      <code class="font-mono text-[#818cf8]">%{DOL}%</code>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>rules.semicolon</td>
+                    <td><span class="param-type">string</span></td>
+                    <td class="text-gray-400 dark-text-3 font-mono text-sm">
+                      <code class="font-mono text-[#818cf8]">"a"</code>
+                    </td>
+                    <td class="text-gray-400 dark-text-3">
+                      Escape style for
+                      <code class="font-mono text-[#818cf8]">;</code>.
+                      <code class="font-mono text-[#818cf8]">"a"</code> &rarr;
+                      <code class="font-mono text-[#818cf8]">\;</code>,
+                      <code class="font-mono text-[#818cf8]">"b"</code> &rarr;
+                      <code class="font-mono text-[#818cf8]"
+                        >%{-SEMICOL-}%</code
+                      >
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>rules.bracket</td>
+                    <td><span class="param-type">string</span></td>
+                    <td class="text-gray-400 dark-text-3 font-mono text-sm">
+                      <code class="font-mono text-[#818cf8]">"a"</code>
+                    </td>
+                    <td class="text-gray-400 dark-text-3">
+                      Escape style for
+                      <code class="font-mono text-[#818cf8]">]</code>.
+                      <code class="font-mono text-[#818cf8]">"a"</code> &rarr;
+                      <code class="font-mono text-[#818cf8]">\]</code>,
+                      <code class="font-mono text-[#818cf8]">"b"</code> &rarr;
+                      <code class="font-mono text-[#818cf8]">%ESCAPED%</code>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+            <h3
+              class="text-xs font-mono font-bold text-gray-500 uppercase tracking-widest mb-2"
+            >
+              Escape Order
+            </h3>
+            <p class="text-sm text-gray-400 dark-text-3 leading-relaxed mb-4">
+              Characters are escaped in a specific order to prevent conflicts:
+            </p>
+            <div class="code-block mb-5">
+              <pre><span class="num">1</span>. Backslashes first  (<span class="str">\</span> &rarr; <span class="str">\\</span>)
+<span class="num">2</span>. Semicolons        (<span class="str">;</span> &rarr; <span class="str">\;</span> <span class="cmt">or</span> <span class="str">%{-SEMICOL-}%</span>)
+<span class="num">3</span>. Closing brackets   (<span class="str">]</span> &rarr; <span class="str">\]</span> <span class="cmt">or</span> <span class="str">%ESCAPED%</span>)
+<span class="num">4</span>. Dollar signs last  (<span class="str">$</span> &rarr; <span class="str">$$c[]</span> <span class="cmt">or</span> <span class="str">%{DOL}%</span>)</pre>
+            </div>
+
+            <h3
+              class="text-xs font-mono font-bold text-gray-500 uppercase tracking-widest mb-3"
+            >
+              Responses
+            </h3>
+
+            <div class="response-block">
+              <span class="status-badge success">200 OK</span>
+              <p class="text-sm text-gray-400 dark-text-3 mt-2 mb-2">
+                Content-Type:
+                <code class="font-mono text-[#818cf8]">text/plain</code>
+              </p>
+              <div class="code-block mt-2">
+                <pre><span class="str">$$c[]hello\; world\] test\\123</span></pre>
+              </div>
+            </div>
+
+            <div class="response-block">
+              <span class="status-badge error-client"
+                >400 Bad Request — Missing Text</span
+              >
+              <div class="code-block mt-2">
+                <pre><span class="kw">{</span> <span class="key">"error"</span><span class="kw">:</span> <span class="str">"Missing or invalid 'text' field."</span> <span class="kw">}</span></pre>
+              </div>
+            </div>
+
+            <div class="response-block">
+              <span class="status-badge error-client"
+                >400 Bad Request — Invalid JSON</span
+              >
+              <div class="code-block mt-2">
+                <pre><span class="kw">{</span> <span class="key">"error"</span><span class="kw">:</span> <span class="str">"Invalid JSON body."</span> <span class="kw">}</span></pre>
+              </div>
+            </div>
+
+            <div class="response-block">
+              <span class="status-badge error-client"
+                >405 Method Not Allowed</span
+              >
+              <div class="code-block mt-2">
+                <pre><span class="kw">{</span> <span class="key">"error"</span><span class="kw">:</span> <span class="str">"Method not allowed. Use POST."</span> <span class="kw">}</span></pre>
+              </div>
+            </div>
+
+            <h3
+              class="text-xs font-mono font-bold text-gray-500 uppercase tracking-widest mb-3 mt-5"
+            >
+              Example Usage
+            </h3>
+            <div class="code-block mb-5">
+              <pre><span class="fn">$httpPost</span><span class="kw">[</span><span class="str">https://api.bdtools.xyz/character-escape</span>;<span class="kw">{</span><span class="str">"text"</span>:<span class="str">"$ping"</span>,<span class="str">"rules"</span>:<span class="kw">{</span><span class="str">"dollar"</span>:<span class="str">"a"</span><span class="kw">}}</span><span class="kw">]</span></pre>
+            </div>
+          </section>
+
+          <!-- POST /character-unescape -->
+          <section
+            id="ep-character-unescape"
+            class="endpoint-section dark-surface hidden scroll-fade"
+          >
+            <div class="flex items-center gap-3 mb-4 flex-wrap">
+              <span class="method-badge post">POST</span>
+              <code
+                class="font-mono text-sm text-gray-200 dark-text flex-1 min-w-0 break-all"
+                >/character-unescape</code
+              >
+              <button
+                onclick="copyUrl('/character-unescape')"
+                class="text-xs bg-[#1e2130] hover:bg-[#252840] text-gray-400 border border-[#2e3350] px-3 py-1.5 rounded-lg transition-colors font-semibold flex-shrink-0 flex items-center gap-1.5"
+              >
+                <svg
+                  class="w-3 h-3"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"
+                  />
+                </svg>
+                Copy URL
+              </button>
+            </div>
+
+            <p class="text-sm text-gray-400 dark-text-3 leading-relaxed mb-4">
+              Reverses the escape operation. Accepts raw plain text (not JSON).
+              Pass the escaper output directly as the request body. Both style A
+              and style B patterns are detected and replaced automatically, so
+              you don't need to specify which style was used.
+            </p>
+
+            <div class="flex flex-wrap gap-2 mb-5">
+              <span
+                class="inline-flex items-center gap-1.5 text-xs bg-green-500/10 text-green-400 border border-green-500/20 px-2.5 py-1 rounded-full font-semibold"
+              >
+                <svg class="w-3 h-3" fill="currentColor" viewBox="0 0 20 20">
+                  <path
+                    fill-rule="evenodd"
+                    d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
+                    clip-rule="evenodd"
+                  />
+                </svg>
+                No auth required
+              </span>
+              <span
+                class="inline-flex items-center gap-1.5 text-xs bg-yellow-500/10 text-yellow-400 border border-yellow-500/20 px-2.5 py-1 rounded-full font-semibold"
+              >
+                <svg class="w-3 h-3" fill="currentColor" viewBox="0 0 20 20">
+                  <path
+                    fill-rule="evenodd"
+                    d="M10 18a8 8 0 100-16 8 8 0 000 16zm-1-10h2v5h-2V8zm0 7h2v2h-2v-2z"
+                    clip-rule="evenodd"
+                  />
+                </svg>
+                Rate limit: 300/min
+              </span>
+            </div>
+
+            <h3
+              class="text-xs font-mono font-bold text-gray-500 uppercase tracking-widest mb-2"
+            >
+              Request
+            </h3>
+            <div class="code-block mb-4">
+              <pre>POST /character-unescape
+Content-Type: text/plain
+
+<span class="str">$$c[]hello\; world\] test%{DOL}%</span></pre>
+            </div>
+            <p class="text-sm text-gray-400 dark-text-3 leading-relaxed mb-4">
+              Just send the raw escaped text as the body. No JSON wrapper
+              needed.
+            </p>
+
+            <h3
+              class="text-xs font-mono font-bold text-gray-500 uppercase tracking-widest mb-2"
+            >
+              Unescape Mappings
+            </h3>
+            <div
+              class="dark-code bg-[#060810] border border-[#1e2130] rounded-xl overflow-hidden mb-5"
+            >
+              <table class="param-table">
+                <thead>
+                  <tr>
+                    <th>Character</th>
+                    <th>Style A Pattern</th>
+                    <th>Style B Pattern</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td><code class="font-mono text-[#818cf8]">$</code></td>
+                    <td><code class="font-mono text-[#818cf8]">$$c[]</code></td>
+                    <td>
+                      <code class="font-mono text-[#818cf8]">%{DOL}%</code>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td><code class="font-mono text-[#818cf8]">;</code></td>
+                    <td><code class="font-mono text-[#818cf8]">\;</code></td>
+                    <td>
+                      <code class="font-mono text-[#818cf8]"
+                        >%{-SEMICOL-}%</code
+                      >
+                    </td>
+                  </tr>
+                  <tr>
+                    <td><code class="font-mono text-[#818cf8]">]</code></td>
+                    <td><code class="font-mono text-[#818cf8]">\]</code></td>
+                    <td>
+                      <code class="font-mono text-[#818cf8]">%ESCAPED%</code>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td><code class="font-mono text-[#818cf8]">\</code></td>
+                    <td><code class="font-mono text-[#818cf8]">\\</code></td>
+                    <td class="text-gray-500 dark-text-3">—</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <p class="text-sm text-gray-400 dark-text-3 leading-relaxed mb-5">
+              Mixed-style input is handled fine. Style A and style B patterns
+              can appear in the same string.
+            </p>
+
+            <h3
+              class="text-xs font-mono font-bold text-gray-500 uppercase tracking-widest mb-3"
+            >
+              Responses
+            </h3>
+
+            <div class="response-block">
+              <span class="status-badge success">200 OK</span>
+              <p class="text-sm text-gray-400 dark-text-3 mt-2 mb-2">
+                Content-Type:
+                <code class="font-mono text-[#818cf8]">text/plain</code>
+              </p>
+              <div class="code-block mt-2">
+                <pre><span class="str">$hello; world] test$</span></pre>
+              </div>
+            </div>
+
+            <div class="response-block">
+              <span class="status-badge error-server"
+                >500 Internal Server Error</span
+              >
+              <div class="code-block mt-2">
+                <pre><span class="kw">{</span> <span class="key">"error"</span><span class="kw">:</span> <span class="str">"Internal server error."</span> <span class="kw">}</span></pre>
+              </div>
+            </div>
+
+            <h3
+              class="text-xs font-mono font-bold text-gray-500 uppercase tracking-widest mb-3 mt-5"
+            >
+              Example Usage
+            </h3>
+            <div class="code-block mb-5">
+              <pre><span class="fn">$httpPost</span><span class="kw">[</span><span class="str">https://api.bdtools.xyz/character-unescape</span>;<span class="str">$$c[]hello</span><span class="kw">]</span></pre>
+            </div>
+          </section>
+
+          <!-- POST /permissions/calculate -->
+          <section
+            id="ep-permissions-calculate"
+            class="endpoint-section dark-surface hidden scroll-fade"
+          >
+            <div class="flex items-center gap-3 mb-4 flex-wrap">
+              <span class="method-badge post">POST</span>
+              <code
+                class="font-mono text-sm text-gray-200 dark-text flex-1 min-w-0 break-all"
+                >/permissions/calculate</code
+              >
+              <button
+                onclick="copyUrl('/permissions/calculate')"
+                class="text-xs bg-[#1e2130] hover:bg-[#252840] text-gray-400 border border-[#2e3350] px-3 py-1.5 rounded-lg transition-colors font-semibold flex-shrink-0 flex items-center gap-1.5"
+              >
+                <svg
+                  class="w-3 h-3"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"
+                  />
+                </svg>
+                Copy URL
+              </button>
+            </div>
+
+            <p class="text-sm text-gray-400 dark-text-3 leading-relaxed mb-4">
+              Calculates a Discord permission bitfield from a list of permission
+              names. Uses BigInt internally so it handles values beyond
+              <code
+                class="font-mono text-[#818cf8] bg-[#5865F2]/10 px-1 py-0.5 rounded"
+                >Number.MAX_SAFE_INTEGER</code
+              >
+              correctly. Unknown permission names are silently ignored.
+            </p>
+
+            <div class="flex flex-wrap gap-2 mb-5">
+              <span
+                class="inline-flex items-center gap-1.5 text-xs bg-green-500/10 text-green-400 border border-green-500/20 px-2.5 py-1 rounded-full font-semibold"
+              >
+                <svg class="w-3 h-3" fill="currentColor" viewBox="0 0 20 20">
+                  <path
+                    fill-rule="evenodd"
+                    d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
+                    clip-rule="evenodd"
+                  />
+                </svg>
+                No auth required
+              </span>
+              <span
+                class="inline-flex items-center gap-1.5 text-xs bg-yellow-500/10 text-yellow-400 border border-yellow-500/20 px-2.5 py-1 rounded-full font-semibold"
+              >
+                <svg class="w-3 h-3" fill="currentColor" viewBox="0 0 20 20">
+                  <path
+                    fill-rule="evenodd"
+                    d="M10 18a8 8 0 100-16 8 8 0 000 16zm-1-10h2v5h-2V8zm0 7h2v2h-2v-2z"
+                    clip-rule="evenodd"
+                  />
+                </svg>
+                Rate limit: 300/min
+              </span>
+            </div>
+
+            <h3
+              class="text-xs font-mono font-bold text-gray-500 uppercase tracking-widest mb-2"
+            >
+              Request Body
+            </h3>
+            <div class="code-block mb-4">
+              <pre><span class="kw">{</span>
+  <span class="key">"permissions"</span><span class="kw">:</span> <span class="kw">[</span>
+    <span class="str">"Administrator"</span><span class="kw">,</span>
+    <span class="str">"Kick Members"</span><span class="kw">,</span>
+    <span class="str">"Ban Members"</span>
+  <span class="kw">]</span>
+<span class="kw">}</span></pre>
+            </div>
+
+            <h3
+              class="text-xs font-mono font-bold text-gray-500 uppercase tracking-widest mb-2"
+            >
+              Fields
+            </h3>
+            <div
+              class="dark-code bg-[#060810] border border-[#1e2130] rounded-xl overflow-hidden mb-5"
+            >
+              <table class="param-table">
+                <thead>
+                  <tr>
+                    <th>Field</th>
+                    <th>Type</th>
+                    <th>Description</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>permissions</td>
+                    <td>
+                      <span class="param-type">array</span
+                      ><span class="param-required">required</span>
+                    </td>
+                    <td class="text-gray-400 dark-text-3">
+                      Array of permission name strings (case-insensitive).
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+            <h3
+              class="text-xs font-mono font-bold text-gray-500 uppercase tracking-widest mb-2"
+            >
+              Supported Permissions (42 total)
+            </h3>
+            <div class="code-block mb-5">
+              <pre><span class="cmt">// General Server Permissions</span>
+Create Invite, Manage Server, View Audit Log,
+View Server Insights, Administrator
+
+<span class="cmt">// Member Management</span>
+Kick Members, Ban Members, Manage Nicknames,
+Change Nickname
+
+<span class="cmt">// Channel Management</span>
+Manage Channels, Manage Roles, Manage Webhooks,
+View Channels
+
+<span class="cmt">// Text Permissions</span>
+Send Messages, Send Messages in Threads,
+Create Public Threads, Create Private Threads,
+Embed Links, Attach Files, Add Reactions,
+Use External Emoji, Use External Stickers,
+Mention everyone here All Roles,
+Manage Messages, Manage Threads,
+Read Message History, Send Text-to-Speech Messages,
+Use Application Commands
+
+<span class="cmt">// Voice Permissions</span>
+Connect, Speak, Video, Start Activities,
+Use Voice Activity, Priority Speaker,
+Mute Members, Deafen Members, Move Members,
+Request to Speak
+
+<span class="cmt">// Other Permissions</span>
+Manage Emojis and Stickers, Manage Events</pre>
+            </div>
+
+            <h3
+              class="text-xs font-mono font-bold text-gray-500 uppercase tracking-widest mb-3"
+            >
+              Responses
+            </h3>
+
+            <div class="response-block">
+              <span class="status-badge success">200 OK</span>
+              <div class="code-block mt-2">
+                <pre><span class="kw">{</span>
+  <span class="key">"bitfield"</span><span class="kw">:</span> <span class="str">"14"</span><span class="kw">,</span>
+  <span class="key">"hex"</span><span class="kw">:</span> <span class="str">"0xE"</span><span class="kw">,</span>
+  <span class="key">"count"</span><span class="kw">:</span> <span class="num">3</span><span class="kw">,</span>
+  <span class="key">"permissions"</span><span class="kw">: [</span>
+    <span class="str">"Administrator"</span><span class="kw">,</span>
+    <span class="str">"Kick Members"</span><span class="kw">,</span>
+    <span class="str">"Ban Members"</span>
+  <span class="kw">]</span>
+<span class="kw">}</span></pre>
+              </div>
+            </div>
+
+            <h3
+              class="text-xs font-mono font-bold text-gray-500 uppercase tracking-widest mb-2 mt-5"
+            >
+              Response Fields
+            </h3>
+            <div
+              class="dark-code bg-[#060810] border border-[#1e2130] rounded-xl overflow-hidden mb-5"
+            >
+              <table class="param-table">
+                <thead>
+                  <tr>
+                    <th>Field</th>
+                    <th>Type</th>
+                    <th>Description</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>bitfield</td>
+                    <td><span class="param-type">string</span></td>
+                    <td class="text-gray-400 dark-text-3">
+                      Decimal representation of the permission bitfield (as
+                      string to preserve precision).
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>hex</td>
+                    <td><span class="param-type">string</span></td>
+                    <td class="text-gray-400 dark-text-3">
+                      Hexadecimal representation prefixed with
+                      <code class="font-mono text-[#818cf8]">0x</code>.
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>count</td>
+                    <td><span class="param-type">number</span></td>
+                    <td class="text-gray-400 dark-text-3">
+                      Number of permissions that matched (unknown names are
+                      silently ignored).
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>permissions</td>
+                    <td><span class="param-type">array</span></td>
+                    <td class="text-gray-400 dark-text-3">
+                      Resolved permission names with standardised casing.
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+            <div class="response-block">
+              <span class="status-badge error-client"
+                >400 Bad Request — Missing Permissions</span
+              >
+              <div class="code-block mt-2">
+                <pre><span class="kw">{</span> <span class="key">"error"</span><span class="kw">:</span> <span class="str">"Missing or empty 'permissions' array."</span> <span class="kw">}</span></pre>
+              </div>
+            </div>
+
+            <div class="response-block">
+              <span class="status-badge error-client"
+                >400 Bad Request — Invalid JSON</span
+              >
+              <div class="code-block mt-2">
+                <pre><span class="kw">{</span> <span class="key">"error"</span><span class="kw">:</span> <span class="str">"Invalid JSON body."</span> <span class="kw">}</span></pre>
+              </div>
+            </div>
+
+            <div class="response-block">
+              <span class="status-badge error-client"
+                >404 Not Found — Unknown Path</span
+              >
+              <div class="code-block mt-2">
+                <pre><span class="kw">{</span>
+  <span class="key">"error"</span><span class="kw">:</span> <span class="str">"Unknown endpoint. Use /permissions/calculate or /permissions/decode"</span>
+<span class="kw">}</span></pre>
+              </div>
+            </div>
+
+            <h3
+              class="text-xs font-mono font-bold text-gray-500 uppercase tracking-widest mb-3 mt-5"
+            >
+              Example Usage
+            </h3>
+            <div class="code-block mb-5">
+              <pre><span class="fn">$httpPost</span><span class="kw">[</span><span class="str">https://api.bdtools.xyz/permissions/calculate</span>;<span class="kw">{</span><span class="str">"permissions"</span>:<span class="kw">[</span><span class="str">"Administrator"</span>,<span class="str">"Ban Members"</span><span class="kw">]}</span><span class="kw">]</span></pre>
+            </div>
+          </section>
+
+          <!-- POST /permissions/decode -->
+          <section
+            id="ep-permissions-decode"
+            class="endpoint-section dark-surface hidden scroll-fade"
+          >
+            <div class="flex items-center gap-3 mb-4 flex-wrap">
+              <span class="method-badge post">POST</span>
+              <code
+                class="font-mono text-sm text-gray-200 dark-text flex-1 min-w-0 break-all"
+                >/permissions/decode</code
+              >
+              <button
+                onclick="copyUrl('/permissions/decode')"
+                class="text-xs bg-[#1e2130] hover:bg-[#252840] text-gray-400 border border-[#2e3350] px-3 py-1.5 rounded-lg transition-colors font-semibold flex-shrink-0 flex items-center gap-1.5"
+              >
+                <svg
+                  class="w-3 h-3"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"
+                  />
+                </svg>
+                Copy URL
+              </button>
+            </div>
+
+            <p class="text-sm text-gray-400 dark-text-3 leading-relaxed mb-4">
+              Performs the reverse operation: given a permission bitfield,
+              returns the list of enabled permission names. Useful for debugging
+              bot permission integers, checking what an invite link grants, or
+              auditing existing bots.
+            </p>
+
+            <div class="flex flex-wrap gap-2 mb-5">
+              <span
+                class="inline-flex items-center gap-1.5 text-xs bg-green-500/10 text-green-400 border border-green-500/20 px-2.5 py-1 rounded-full font-semibold"
+              >
+                <svg class="w-3 h-3" fill="currentColor" viewBox="0 0 20 20">
+                  <path
+                    fill-rule="evenodd"
+                    d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
+                    clip-rule="evenodd"
+                  />
+                </svg>
+                No auth required
+              </span>
+              <span
+                class="inline-flex items-center gap-1.5 text-xs bg-yellow-500/10 text-yellow-400 border border-yellow-500/20 px-2.5 py-1 rounded-full font-semibold"
+              >
+                <svg class="w-3 h-3" fill="currentColor" viewBox="0 0 20 20">
+                  <path
+                    fill-rule="evenodd"
+                    d="M10 18a8 8 0 100-16 8 8 0 000 16zm-1-10h2v5h-2V8zm0 7h2v2h-2v-2z"
+                    clip-rule="evenodd"
+                  />
+                </svg>
+                Rate limit: 300/min
+              </span>
+            </div>
+
+            <h3
+              class="text-xs font-mono font-bold text-gray-500 uppercase tracking-widest mb-2"
+            >
+              Request Body
+            </h3>
+            <div class="code-block mb-4">
+              <pre><span class="kw">{</span>
+  <span class="key">"bitfield"</span><span class="kw">:</span> <span class="str">"14"</span>
+<span class="kw">}</span></pre>
+            </div>
+
+            <h3
+              class="text-xs font-mono font-bold text-gray-500 uppercase tracking-widest mb-2"
+            >
+              Fields
+            </h3>
+            <div
+              class="dark-code bg-[#060810] border border-[#1e2130] rounded-xl overflow-hidden mb-5"
+            >
+              <table class="param-table">
+                <thead>
+                  <tr>
+                    <th>Field</th>
+                    <th>Type</th>
+                    <th>Description</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>bitfield</td>
+                    <td>
+                      <span class="param-type">string</span
+                      ><span class="param-required">required</span>
+                    </td>
+                    <td class="text-gray-400 dark-text-3">
+                      Decimal or hex permission integer (BigInt-compatible, pass
+                      as string to preserve precision).
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+            <h3
+              class="text-xs font-mono font-bold text-gray-500 uppercase tracking-widest mb-3"
+            >
+              Responses
+            </h3>
+
+            <div class="response-block">
+              <span class="status-badge success">200 OK</span>
+              <div class="code-block mt-2">
+                <pre><span class="kw">{</span>
+  <span class="key">"bitfield"</span><span class="kw">:</span> <span class="str">"14"</span><span class="kw">,</span>
+  <span class="key">"hex"</span><span class="kw">:</span> <span class="str">"0xE"</span><span class="kw">,</span>
+  <span class="key">"count"</span><span class="kw">:</span> <span class="num">3</span><span class="kw">,</span>
+  <span class="key">"permissions"</span><span class="kw">: [</span>
+    <span class="str">"Administrator"</span><span class="kw">,</span>
+    <span class="str">"Kick Members"</span><span class="kw">,</span>
+    <span class="str">"Ban Members"</span>
+  <span class="kw">]</span>
+<span class="kw">}</span></pre>
+              </div>
+            </div>
+
+            <div class="response-block">
+              <span class="status-badge error-client"
+                >400 Bad Request — Missing Bitfield</span
+              >
+              <div class="code-block mt-2">
+                <pre><span class="kw">{</span> <span class="key">"error"</span><span class="kw">:</span> <span class="str">"Missing 'bitfield' field."</span> <span class="kw">}</span></pre>
+              </div>
+            </div>
+
+            <div class="response-block">
+              <span class="status-badge error-client"
+                >400 Bad Request — Invalid Bitfield</span
+              >
+              <div class="code-block mt-2">
+                <pre><span class="kw">{</span> <span class="key">"error"</span><span class="kw">:</span> <span class="str">"Invalid bitfield value."</span> <span class="kw">}</span></pre>
+              </div>
+            </div>
+
+            <div class="response-block">
+              <span class="status-badge error-client"
+                >404 Not Found — Unknown Path</span
+              >
+              <div class="code-block mt-2">
+                <pre><span class="kw">{</span>
+  <span class="key">"error"</span><span class="kw">:</span> <span class="str">"Unknown endpoint. Use /permissions/calculate or /permissions/decode"</span>
+<span class="kw">}</span></pre>
+              </div>
+            </div>
+
+            <h3
+              class="text-xs font-mono font-bold text-gray-500 uppercase tracking-widest mb-3 mt-5"
+            >
+              Example Usage
+            </h3>
+            <div class="code-block mb-5">
+              <pre><span class="fn">$httpPost</span><span class="kw">[</span><span class="str">https://api.bdtools.xyz/permissions/decode</span>;<span class="kw">{</span><span class="str">"bitfield"</span>:<span class="str">"14"</span><span class="kw">}</span><span class="kw">]</span></pre>
+            </div>
+          </section>
+
+          <!-- Bottom navigation -->
+          <div
+            class="flex items-center justify-between pt-6 pb-6 border-t border-[#1e2130] mt-8"
+          >
+            <button
+              id="prevBtn"
+              onclick="navigateSection('prev')"
+              class="inline-flex items-center gap-2 text-sm text-gray-400 hover:text-[#818cf8] transition-colors font-semibold"
+            >
+              <svg
+                class="w-4 h-4"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M15 19l-7-7 7-7"
+                />
+              </svg>
+              <span id="prevText">Previous</span>
+            </button>
+            <button
+              id="nextBtn"
+              onclick="navigateSection('next')"
+              class="inline-flex items-center gap-2 text-sm text-gray-400 hover:text-[#818cf8] transition-colors font-semibold"
+            >
+              <span id="nextText">Next</span>
+              <svg
+                class="w-4 h-4"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M9 5l7 7-7 7"
+                />
+              </svg>
+            </button>
+          </div>
+        </main>
+      </div>
+    </div>
+
+    <!-- ── FOOTER ── -->
+    <footer class="border-t border-[#1e2130] bg-[#080a10] mt-auto">
+      <div
+        class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 flex flex-col sm:flex-row items-center justify-between gap-3"
+      >
+        <span class="text-sm text-gray-600"
+          >© 2026 BDTools. All rights reserved.</span
+        >
+        <div class="flex items-center gap-4 text-xs text-gray-600">
+          <a href="/tos" class="hover:text-gray-400 transition-colors"
+            >Terms of Service</a
+          >
+          <a href="/privacy" class="hover:text-gray-400 transition-colors"
+            >Privacy Policy</a
+          >
+          <a href="/contact" class="hover:text-gray-400 transition-colors"
+            >Contact</a
+          >
+        </div>
+      </div>
+    </footer>
+
+    <!-- ── TOAST ── -->
+    <div
+      id="toast"
+      class="fixed bottom-6 right-6 z-50 bg-[#5865F2] text-white text-xs font-semibold px-4 py-2.5 rounded-xl shadow-xl flex items-center gap-2"
+    >
+      <svg
+        class="w-3.5 h-3.5 flex-shrink-0"
+        fill="none"
+        stroke="currentColor"
+        viewBox="0 0 24 24"
+      >
+        <path
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="2.5"
+          d="M5 13l4 4L19 7"
+        />
+      </svg>
+      <span id="toastMsg">Copied!</span>
+    </div>
+
+    <!-- ── SCRIPTS ── -->
+    <script src="/dist/docs/shared.js"></script>
+    <script>
+      // Page-specific configuration
+      window.PAGE_SECTIONS = [
+        { id: "overview", label: "Overview" },
+        { id: "ep-character-escape", label: "POST /character-escape" },
+        { id: "ep-character-unescape", label: "POST /character-unescape" },
+        {
+          id: "ep-permissions-calculate",
+          label: "POST /permissions/calculate",
+        },
+        { id: "ep-permissions-decode", label: "POST /permissions/decode" },
+      ];
+      window.PREV_PAGE = {
+        url: "/docs/ticket-transcript",
+        label: "Ticket Transcript",
+      };
+      window.NEXT_PAGE = { url: "/docs/others", label: "Other Endpoints" };
+    </script>
+    <script src="/dist/docs/endpoints.js"></script>
+  </body>
+</html>
