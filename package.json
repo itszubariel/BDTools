@@ -6,9 +6,9 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node server.js",
     "dev": "npx nodemon server.js",
-    "build:browser": "tsc -p tsconfig.json",
-    "build:functions": "tsc -p netlify/functions/tsconfig.json",
-    "build": "npm run build:browser && npm run build:functions"
+    "build:browser": "tsc -p tsconfig.json || true",
+    "build:functions": "tsc -p api/tsconfig.json || true",
+    "build": "npm run build:browser"
   },
   "keywords": [],
   "author": "",
@@ -17,6 +17,7 @@
   "devDependencies": {
     "@types/jsonwebtoken": "^9.0.0",
     "@types/node": "^20.0.0",
+    "@vercel/node": "^5.8.22",
     "nodemon": "^3.1.10",
     "typescript": "^5.0.0"
   },

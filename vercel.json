@@ -1,0 +1,24 @@
+{
+  "buildCommand": "npm run build",
+  "outputDirectory": ".",
+  "routes": [
+    { "handle": "filesystem" },
+    { "src": "/escaper", "dest": "/tools/html/escaper.html" },
+    { "src": "/indenter", "dest": "/tools/html/indenter.html" },
+    { "src": "/highlighter", "dest": "/tools/html/highlighter.html" },
+    { "src": "/embed-builder", "dest": "/tools/html/embed-builder.html" },
+    { "src": "/send-embed-builder", "dest": "/tools/html/send-embed-builder.html" },
+    { "src": "/container-builder", "dest": "/tools/html/container-builder.html" },
+    { "src": "/permission-calculator", "dest": "/tools/html/permission-calc.html" },
+    { "src": "/contact", "dest": "/contact.html" },
+    { "src": "/privacy", "dest": "/privacy.html" },
+    { "src": "/tos", "dest": "/tos.html" },
+    { "src": "/docs/node-status", "dest": "/docs/pages/node-status.html" },
+    { "src": "/docs/guild-list", "dest": "/docs/pages/guild-list.html" },
+    { "src": "/docs/bdscript", "dest": "/docs/pages/bdscript.html" },
+    { "src": "/docs/ticket-transcript", "dest": "/docs/pages/ticket-transcript.html" },
+    { "src": "/docs/tools", "dest": "/docs/pages/tools.html" },
+    { "src": "/docs/others", "dest": "/docs/pages/others.html" },
+    { "src": "/docs", "dest": "/docs/index.html" }
+  ]
+}

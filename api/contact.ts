@@ -1,13 +1,4 @@
-interface NetlifyEvent {
-  httpMethod: string;
-  body: string | null;
-  headers: Record<string, string>;
-}
-
-interface NetlifyResponse {
-  statusCode: number;
-  body: string;
-}
+import type { VercelRequest, VercelResponse } from "@vercel/node";
 
 interface DiscordEmbedField {
   name: string;
@@ -31,61 +22,38 @@ interface DiscordWebhookPayload {
   embeds: DiscordEmbed[];
 }
 
-export const handler = async (
-  event: NetlifyEvent,
-): Promise<NetlifyResponse> => {
+export default async function handler(req: VercelRequest, res: VercelResponse) {
   console.log("[contact] 🔔 Handler triggered");
 
   // --- Method check ---
-  if (event.httpMethod !== "POST") {
-    console.warn(`[contact] ⚠️  Invalid HTTP method: ${event.httpMethod}`);
-    return {
-      statusCode: 405,
-      body: JSON.stringify({ error: "Method Not Allowed. Use POST." }),
-    };
+  if (req.method !== "POST") {
+    console.warn(`[contact] ⚠️  Invalid HTTP method: ${req.method}`);
+    return res.status(405).json({ error: "Method Not Allowed. Use POST." });
   }
 
   // --- Env check ---
   const webhookURL = process.env.WEBHOOK_URL;
   if (!webhookURL) {
     console.error("[contact] ❌ Missing WEBHOOK_URL environment variable");
-    return {
-      statusCode: 500,
-      body: JSON.stringify({
-        error: "Server misconfiguration: webhook URL not set.",
-      }),
-    };
+    return res
+      .status(500)
+      .json({ error: "Server misconfiguration: webhook URL not set." });
   }
 
   // --- Parse body ---
   let data: unknown;
   try {
-    data = JSON.parse(event.body || "{}");
+    data = typeof req.body === "string" ? JSON.parse(req.body) : req.body;
   } catch (err) {
     console.error(
       "[contact] ❌ Failed to parse request body:",
       (err as Error).message,
     );
-    return {
-      statusCode: 400,
-      body: JSON.stringify({ error: "Invalid JSON body." }),
-    };
+    return res.status(400).json({ error: "Invalid JSON body." });
   }
 
   // --- Validate required fields ---
-  const {
-    discord,
-    email,
-    topic,
-    subject,
-    msg,
-  }: {
-    discord?: string;
-    email?: string;
-    topic?: string;
-    subject?: string;
-    msg?: string;
-  } = data as {
+  const { discord, email, topic, subject, msg } = data as {
     discord?: string;
     email?: string;
     topic?: string;
@@ -97,10 +65,7 @@ export const handler = async (
     console.warn(
       "[contact] ⚠️  Missing required fields — subject and msg are required",
     );
-    return {
-      statusCode: 400,
-      body: JSON.stringify({ error: "Subject and message are required." }),
-    };
+    return res.status(400).json({ error: "Subject and message are required." });
   }
 
   console.log(
@@ -126,9 +91,9 @@ export const handler = async (
 
   // --- Send to Discord ---
   console.log("[contact] 🚀 Sending payload to Discord webhook...");
-  let res: Response;
+  let response: Response;
   try {
-    res = await fetch(webhookURL, {
+    response = await fetch(webhookURL, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(payload),
@@ -138,35 +103,28 @@ export const handler = async (
       "[contact] ❌ Network error sending to Discord webhook:",
       (err as Error).message,
     );
-    return {
-      statusCode: 500,
-      body: JSON.stringify({
-        error: "Failed to reach Discord. Please try again.",
-      }),
-    };
+    return res
+      .status(500)
+      .json({ error: "Failed to reach Discord. Please try again." });
   }
 
-  if (!res.ok) {
+  if (!response.ok) {
     let errorText = "";
     try {
-      errorText = await res.text();
+      errorText = await response.text();
     } catch (_) {}
     console.error(
-      `[contact] ❌ Discord webhook rejected the request (HTTP ${res.status}): ${errorText}`,
+      `[contact] ❌ Discord webhook rejected the request (HTTP ${response.status}): ${errorText}`,
     );
-    return {
-      statusCode: 502,
-      body: JSON.stringify({
-        error: `Discord webhook failed with status ${res.status}.`,
-      }),
-    };
+    return res
+      .status(502)
+      .json({
+        error: `Discord webhook failed with status ${response.status}.`,
+      });
   }
 
   console.log(
     "[contact] 🎉 Contact form message delivered to Discord successfully",
   );
-  return {
-    statusCode: 200,
-    body: JSON.stringify({ success: true }),
-  };
-};
+  return res.status(200).json({ success: true });
+}
