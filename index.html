@@ -843,14 +843,14 @@
         </div>
 
         <div
-          class="absolute w-5 h-5 rounded-full border fu fu-5 opacity-[0.25] rotate-6"
-          style="
-            top: 44%;
-            right: 30%;
-            background: #5865f2;
-            border-color: var(--border-2);
-          "
-        ></div>
+          class="absolute"
+          style="top: 44%; right: 30%; transform: translate(50%, -50%)"
+        >
+          <div
+            class="w-5 h-5 rounded-full border fu fu-5 opacity-[0.25] rotate-6"
+            style="background: #5865f2; border-color: var(--border-2)"
+          ></div>
+        </div>
 
         <div
           class="tag absolute px-2.5 py-1 rounded-full border fu fu-2 opacity-[0.12] rotate-[4deg]"
@@ -961,29 +961,6 @@
                   stroke-linecap="round"
                   stroke-linejoin="round"
                   stroke-width="2"
-                  d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"
-                />
-              </svg>
-            </div>
-            <div
-              class="text-xs mt-1 font-mono uppercase tracking-widest"
-              style="color: var(--text-3)"
-            >
-              Free Forever
-            </div>
-          </div>
-          <div class="stat-num" style="animation-delay: 0.3s">
-            <div class="h-10 flex items-center justify-center">
-              <svg
-                class="w-8 h-8 text-[#5865F2]"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-              >
-                <path
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  stroke-width="2"
                   d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"
                 />
               </svg>
@@ -995,7 +972,7 @@
               Open Source
             </div>
           </div>
-          <div class="stat-num" style="animation-delay: 0.4s">
+          <div class="stat-num" style="animation-delay: 0.3s">
             <div class="h-10 flex items-center justify-center">
               <span class="text-3xl font-black text-[#5865F2]">21</span>
             </div>
@@ -1004,6 +981,17 @@
               style="color: var(--text-3)"
             >
               Endpoints
+            </div>
+          </div>
+          <div class="stat-num" style="animation-delay: 0.4s">
+            <div class="h-10 flex items-center justify-center">
+              <span class="text-3xl font-black text-[#5865F2]">2</span>
+            </div>
+            <div
+              class="text-xs mt-1 font-mono uppercase tracking-widest"
+              style="color: var(--text-3)"
+            >
+              Guides
             </div>
           </div>
         </div>
@@ -1306,17 +1294,12 @@
           </div>
         </a>
 
-        <!-- CompV2 Builder — NEW -->
+        <!-- CompV2 Builder -->
         <a
           href="/container-builder"
           class="tool-card border border-[#5865F2]/40 rounded-2xl p-6 flex flex-col gap-4 scroll-fade relative overflow-hidden"
           style="transition-delay: 0s"
         >
-          <div
-            class="absolute top-3 right-3 text-[10px] font-mono bg-green-500/10 text-green-400 border border-green-500/20 px-2 py-0.5 rounded-full"
-          >
-            New
-          </div>
           <div
             class="icon-wrap w-10 h-10 rounded-xl bg-[#5865F2]/10 border border-[#5865F2]/20 flex items-center justify-center"
           >
@@ -1402,6 +1385,7 @@
         </a>
       </div>
     </section>
+
     <section
       class="about-section border-t scroll-fade"
       style="border-color: var(--border)"
@@ -1506,6 +1490,121 @@
             </svg>
           </a>
         </div>
+      </div>
+    </section>
+
+    <!-- GUIDES -->
+    <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 scroll-fade">
+      <div class="flex items-end justify-between mb-10">
+        <div>
+          <p
+            class="text-xs font-mono text-[#5865F2] uppercase tracking-widest mb-2"
+          >
+            // guides
+          </p>
+          <h2
+            class="text-3xl font-black tracking-tight"
+            style="color: var(--text-1)"
+          >
+            Guides
+          </h2>
+        </div>
+      </div>
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
+        <!-- Components V2 -->
+        <a
+          href="https://cv2.guides.bdtools.xyz"
+          class="tool-card border rounded-2xl p-6 flex flex-col gap-4 scroll-fade relative overflow-hidden"
+        >
+          <div
+            class="absolute top-3 right-3 text-[10px] font-mono bg-green-500/10 text-green-400 border border-green-500/20 px-2 py-0.5 rounded-full"
+          >
+            New
+          </div>
+          <div
+            class="icon-wrap w-10 h-10 rounded-xl bg-[#5865F2]/10 border border-[#5865F2]/20 flex items-center justify-center"
+          >
+            <svg
+              class="w-5 h-5 text-[#5865F2]"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="1.8"
+                d="M4 5a1 1 0 011-1h4a1 1 0 011 1v7a1 1 0 01-1 1H5a1 1 0 01-1-1V5zM14 5a1 1 0 011-1h4a1 1 0 011 1v7a1 1 0 01-1 1h-4a1 1 0 01-1-1V5zM4 16a1 1 0 011-1h4a1 1 0 011 1v3a1 1 0 01-1 1H5a1 1 0 01-1-1v-3zM14 16a1 1 0 011-1h4a1 1 0 011 1v3a1 1 0 01-1 1h-4a1 1 0 01-1-1v-3z"
+              />
+            </svg>
+          </div>
+          <div class="flex-1">
+            <div class="flex items-center gap-2 mb-1">
+              <h3 class="font-bold text-base" style="color: var(--text-1)">
+                Components V2 Guide
+              </h3>
+              <span
+                class="text-[10px] bg-[#5865F2]/10 text-[#818cf8] border border-[#5865F2]/20 px-1.5 py-0.5 rounded-md font-mono"
+                >Guide</span
+              >
+            </div>
+            <p class="text-sm leading-relaxed" style="color: var(--text-3)">
+              A beginner-friendly guide to Components V2 in BDFD. Covers
+              containers, sections, buttons, select menus, and more.
+            </p>
+          </div>
+          <div class="flex flex-wrap gap-1.5">
+            <span class="tag border rounded-md px-2 py-0.5">14 functions</span>
+            <span class="tag border rounded-md px-2 py-0.5">With examples</span>
+          </div>
+        </a>
+        <!-- HTTP -->
+        <a
+          href="https://http.guides.bdtools.xyz"
+          class="tool-card border rounded-2xl p-6 flex flex-col gap-4 scroll-fade"
+        >
+          <div
+            class="absolute top-3 right-3 text-[10px] font-mono bg-green-500/10 text-green-400 border border-green-500/20 px-2 py-0.5 rounded-full"
+          >
+            New
+          </div>
+          <div
+            class="icon-wrap w-10 h-10 rounded-xl bg-[#5865F2]/10 border border-[#5865F2]/20 flex items-center justify-center"
+          >
+            <svg
+              class="w-5 h-5 text-[#5865F2]"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="1.8"
+                d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4"
+              />
+            </svg>
+          </div>
+          <div class="flex-1">
+            <div class="flex items-center gap-2 mb-1">
+              <h3 class="font-bold text-base" style="color: var(--text-1)">
+                HTTP Guide
+              </h3>
+              <span
+                class="text-[10px] bg-[#5865F2]/10 text-[#818cf8] border border-[#5865F2]/20 px-1.5 py-0.5 rounded-md font-mono"
+                >Guide</span
+              >
+            </div>
+            <p class="text-sm leading-relaxed" style="color: var(--text-3)">
+              A beginner-friendly guide to the HTTP functions in BDFD. Learn to
+              call APIs, handle responses, and manage headers.
+            </p>
+          </div>
+          <div class="flex flex-wrap gap-1.5">
+            <span class="tag border rounded-md px-2 py-0.5">10 functions</span>
+            <span class="tag border rounded-md px-2 py-0.5">With examples</span>
+          </div>
+        </a>
       </div>
     </section>
 
