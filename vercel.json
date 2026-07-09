@@ -10,6 +10,7 @@
     { "src": "/send-embed-builder", "dest": "/tools/html/send-embed-builder.html" },
     { "src": "/container-builder", "dest": "/tools/html/container-builder.html" },
     { "src": "/permission-calculator", "dest": "/tools/html/permission-calc.html" },
+    { "src": "/bot-guild-list", "dest": "/tools/html/bot-guild-list.html" },
     { "src": "/contact", "dest": "/contact.html" },
     { "src": "/privacy", "dest": "/privacy.html" },
     { "src": "/tos", "dest": "/tos.html" },
