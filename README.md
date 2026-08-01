@@ -112,7 +112,7 @@ All rights reserved. This repository is public for reference only, you may not c
 
 ## Credits
 
-Built and maintained by [Zubariel](https://zubariel.is-a.dev).  
+Built and maintained by [Zubariel](https://zubariel.is-a.dev) and [riv](https://riv.2social.top).  
 Thanks to Catearo (BDFD examples), Luka (testing and bug reports), and skraba (testing and feedback for the CompV2 Builder).
 
 Not officially affiliated with Bot Designer for Discord.
