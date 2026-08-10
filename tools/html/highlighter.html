@@ -16,6 +16,22 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width,initial-scale=1" />
     <title>BDTools | Code Highlighter</title>
+    <meta property="og:title" content="BDTools | Code Highlighter" />
+    <meta
+      property="og:description"
+      content="Highlight different functions and text using unique colors for a better BDFD coding experience."
+    />
+    <meta
+      property="og:image"
+      content="https://bdtools.xyz/images/bdtools_logo.png"
+    />
+    <meta property="og:url" content="https://bdtools.xyz" />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="BDTools" />
+    <meta name="theme-color" content="#673ab7" />
+    <meta name="author" content="Zubariel" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
     <link rel="icon" href="https://bdtools.xyz/images/bdtools_logo.png" />
     <link
       href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700;800;900&family=Geist+Mono:wght@400;500&display=swap"
@@ -69,7 +85,6 @@
             </svg>
           </div>
 
-          <!-- Text Content -->
           <div>
             <h1
               class="dark-text text-2xl font-black text-white tracking-tight dt"
@@ -93,7 +108,6 @@
     </div>
 
     <main>
-      <!-- Toolbar -->
       <div class="toolbar fu fd1 scroll-fade">
         <button class="btn btn-primary" id="add-function-btn">
           + Add Function
@@ -108,10 +122,8 @@
         </button>
       </div>
 
-      <!-- Fn cards -->
       <div class="fn-grid fu fd1" id="functions-list"></div>
 
-      <!-- Output -->
       <div class="card" style="margin-top: 1rem" class="fu fd2">
         <div class="card-hdr">
           <span class="card-hdr-title">Generated JSON Output</span>
@@ -141,7 +153,6 @@
       </div>
     </main>
 
-    <!-- EDIT MODAL -->
     <div class="overlay" id="edit-modal">
       <div class="modal">
         <button class="modal-close" id="close-modal">
@@ -248,7 +259,6 @@
       </div>
     </div>
 
-    <!-- DELETE CONFIRM MODAL -->
     <div class="overlay" id="delete-modal">
       <div class="modal">
         <h3>Confirm Deletion</h3>
@@ -269,7 +279,6 @@
       </div>
     </div>
 
-    <!-- DELETE ALL CONFIRM -->
     <div class="overlay" id="delete-all-modal">
       <div class="modal">
         <h3>Reset Theme</h3>
@@ -290,7 +299,6 @@
       </div>
     </div>
 
-    <!-- ADD FUNCTION MODAL -->
     <div class="overlay" id="add-function-overlay">
       <div class="modal" style="width: 420px">
         <button class="modal-close" id="cancel-add-function">
@@ -345,7 +353,6 @@
       </div>
     </div>
 
-    <!-- IMPORT MODAL -->
     <div class="overlay" id="import-overlay">
       <div class="modal" style="width: 420px">
         <button class="modal-close" id="cancel-import-btn">

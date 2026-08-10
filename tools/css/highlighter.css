@@ -124,7 +124,6 @@ html.light .lowerNav {
   position: relative;
   overflow: hidden;
 
-  /* MATCHES YOUR CARD SYSTEM */
   background:
     radial-gradient(
       120% 120% at 0% 0%,
@@ -140,12 +139,10 @@ html.light .lowerNav {
   animation: tin 0.25s ease both;
 }
 
-/* success */
 .toast.s {
   border-left: 3px solid #22c55e;
 }
 
-/* error */
 .toast.e {
   border-left: 3px solid #ef4444;
 }
@@ -457,7 +454,6 @@ main {
   background: var(--bg4);
 }
 
-/* fn cards grid */
 .fn-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
@@ -502,7 +498,6 @@ main {
   flex-shrink: 0;
 }
 
-/* toolbar */
 .toolbar {
   display: flex;
   align-items: center;
@@ -511,7 +506,6 @@ main {
   margin-bottom: 1rem;
 }
 
-/* modal overlay */
 .overlay {
   position: fixed;
   inset: 0;
@@ -560,7 +554,6 @@ main {
   color: var(--text);
 }
 
-/* style btns */
 .style-row {
   display: flex;
   gap: 0.375rem;
@@ -590,7 +583,6 @@ main {
   color: #fff;
 }
 
-/* fn search list */
 #function-list li {
   padding: 0.5rem;
   border-radius: var(--r);
@@ -675,7 +667,6 @@ footer p {
   }
 }
 
-/* pickr override */
 .pcr-app {
   z-index: 9999 !important;
 }
