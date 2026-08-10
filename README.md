@@ -130,7 +130,7 @@ BDTools provides several guides to help you master Bot Designer for Discord.
 
 ## Credits
 
-Built and maintained by [Zubariel](https://zubariel.is-a.dev).  
+Built and maintained by [Zubariel](https://zubariel.is-a.dev).
 ### Thanks to:
 - **Catearo**: Provided BDFD example codes for the /submit-server and /ticket-transcript endpoints.
 - **Luka**: Tested and reviewed early tools including the Escaper, Indenter, and Highlighter.
@@ -138,5 +138,7 @@ Built and maintained by [Zubariel](https://zubariel.is-a.dev).
 - **skraba**: Provided testing and valuable feedback for the CompV2 Builder during development.
 - **Speshy**: Reviewed and ensured accuracy across the HTTP, Components V2, and JSON guides.
 - **Kitten**: Provided insights and reviewed accuracy for the Text Splitting guide.
+
+and also **kyll** and **riv**, for being the goated mates 🍻.
 
 Not officially affiliated with Bot Designer for Discord.
