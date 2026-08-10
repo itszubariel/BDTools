@@ -18,6 +18,7 @@ Returns a full status overview including summary counts and all nodes grouped in
 **Query Parameters:** None
 
 **Success Response (200):**
+
 ```json
 {
   "totalBots": 812,
@@ -56,6 +57,7 @@ Returns a full status overview including summary counts and all nodes grouped in
 ```
 
 **Error Response (500):**
+
 ```json
 {
   "error": "Internal server error"
@@ -63,6 +65,7 @@ Returns a full status overview including summary counts and all nodes grouped in
 ```
 
 **Error Response (404) - Unknown Path:**
+
 ```json
 {
   "error": "Unknown endpoint"
@@ -83,6 +86,7 @@ Alias for `/node-status`. Returns the identical full response with summary count
 **Responses:** Same shape as GET /node-status
 
 **Success Response (200):**
+
 ```json
 {
   "totalBots": 812,
@@ -100,6 +104,7 @@ Alias for `/node-status`. Returns the identical full response with summary count
 ```
 
 **Error Response (500):**
+
 ```json
 {
   "error": "Internal server error"
@@ -118,6 +123,7 @@ Returns a flat array of all standard nodes sorted by node ID. Use this when you 
 **Query Parameters:** None
 
 **Success Response (200):**
+
 ```json
 [
   {
@@ -136,6 +142,7 @@ Returns a flat array of all standard nodes sorted by node ID. Use this when you 
 ```
 
 **Error Response (500):**
+
 ```json
 {
   "error": "Internal server error"
@@ -152,9 +159,11 @@ Returns the current status of a single standard node by its numeric ID. Replace 
 **Updated:** Every 2 minutes
 
 **Path Parameters:**
+
 - `id` (integer, required) - The numeric ID of the standard node to retrieve
 
 **Success Response (200):**
+
 ```json
 {
   "nodeId": 5,
@@ -165,6 +174,7 @@ Returns the current status of a single standard node by its numeric ID. Replace 
 ```
 
 **Error Response (404):**
+
 ```json
 {
   "error": "Node not found"
@@ -172,6 +182,7 @@ Returns the current status of a single standard node by its numeric ID. Replace 
 ```
 
 **Error Response (500):**
+
 ```json
 {
   "error": "Internal server error"
@@ -190,6 +201,7 @@ Returns a flat array of all high-performance (HP) nodes sorted by node ID. HP no
 **Query Parameters:** None
 
 **Success Response (200):**
+
 ```json
 [
   {
@@ -208,6 +220,7 @@ Returns a flat array of all high-performance (HP) nodes sorted by node ID. HP no
 ```
 
 **Error Response (500):**
+
 ```json
 {
   "error": "Internal server error"
@@ -226,6 +239,7 @@ Returns a flat array of all currently offline nodes (both standard and high-perf
 **Query Parameters:** None
 
 **Success Response (200):**
+
 ```json
 [
   {
@@ -244,6 +258,7 @@ Returns a flat array of all currently offline nodes (both standard and high-perf
 ```
 
 **Error Response (500):**
+
 ```json
 {
   "error": "Internal server error"
@@ -262,6 +277,7 @@ Optionally, you can request a PNG graph visualization by adding `?graph=true` to
 **Updated:** Every 2 minutes
 
 **Query Parameters:**
+
 - `limit` (integer or string, optional) - Number of snapshots to return, or time range in human-readable format:
   - **Numeric**: `720` (exact number of snapshots)
   - **Days**: `1d`, `7d` (days, e.g., `7d` = 7 days)
@@ -271,6 +287,7 @@ Optionally, you can request a PNG graph visualization by adding `?graph=true` to
 - `graph` (string, optional) - Set to `true` or `yes` to receive a PNG graph URL alongside the data.
 
 **Success Response (200) - Without Graph:**
+
 ```json
 [
   {
@@ -293,6 +310,7 @@ Optionally, you can request a PNG graph visualization by adding `?graph=true` to
 ```
 
 **Success Response (200) - With Graph (`?graph=true`):**
+
 ```json
 {
   "data": [
@@ -318,6 +336,7 @@ Optionally, you can request a PNG graph visualization by adding `?graph=true` to
 ```
 
 **Graph Image Features:**
+
 - Dark-themed chart with purple line graph
 - Title automatically adjusts based on time range (e.g., "Total Bots Online - Past 24 Hours" or "Total Bots Online - Past 7 Days")
 - Shows total bots online over the requested time period
@@ -328,13 +347,15 @@ Optionally, you can request a PNG graph visualization by adding `?graph=true` to
   ```
 
 **Example Requests:**
+
 - `/node-status/history?limit=24h&graph=true` - Get 24 hours of data with graph
 - `/node-status/history?limit=1d&graph=true` - Get 1 day of data with graph (same as 24h)
 - `/node-status/history?limit=3d&graph=true` - Get 3 days of data with graph
 - `/node-status/history?limit=7d&graph=true` - Get 7 days of data with graph
 - `/node-status/history?limit=12h&graph=true` - Get 12 hours of data with graph
 - `/node-status/history?limit=720` - Get exactly 720 snapshots (numeric format still works)
-**Error Response (500):**
+  **Error Response (500):**
+
 ```json
 {
   "error": "Internal server error"
@@ -351,9 +372,11 @@ Serves dynamically generated PNG chart images for node status history. This endp
 **Cached:** 5 minutes
 
 **Path Parameters:**
+
 - `id` (string, required) - Encoded image identifier containing chart parameters (e.g., `limit-720-hash-a1b2c3d4`)
 
 **Chart Features:**
+
 - Dark-themed background (#1f2937)
 - Purple line graph showing total bots online
 - Smooth curve with gradient fill
@@ -363,15 +386,18 @@ Serves dynamically generated PNG chart images for node status history. This endp
 - 1000x400px resolution
 
 **Success Response (200):**
+
 - Content-Type: `image/png`
 - Returns a PNG image
 
 **Example Usage:**
+
 ```shell
 $image[https://cdn.bdtools.xyz/images/limit-720-hash-a1b2c3d4.png]
 ```
 
 **Error Response (400) - Invalid ID:**
+
 ```json
 {
   "error": "Invalid image ID format"
@@ -379,6 +405,7 @@ $image[https://cdn.bdtools.xyz/images/limit-720-hash-a1b2c3d4.png]
 ```
 
 **Error Response (404) - No Data:**
+
 ```json
 {
   "error": "No history data available"
@@ -386,6 +413,7 @@ $image[https://cdn.bdtools.xyz/images/limit-720-hash-a1b2c3d4.png]
 ```
 
 **Error Response (502) - Chart Generation Failed:**
+
 ```json
 {
   "error": "Failed to generate chart"
@@ -399,11 +427,13 @@ $image[https://cdn.bdtools.xyz/images/limit-720-hash-a1b2c3d4.png]
 Submit and retrieve bot server lists. All guild list endpoints **require authentication** via JWT Bearer token with the `BDTools-` prefix.
 
 **Authentication Format:**
+
 ```
 Authorization: Bearer BDTools-YOUR_API_KEY_HERE
 ```
 
 ### Rate Limits & Restrictions
+
 - **POST /submit-server** is rate limited to **once per 5 hours** per API key.
 - **GET /get-servers**, **Node Status**, **BDScript function-check**, **Ticket Transcript GET**, and **Tools** endpoints are rate limited to **300 requests per minute** per IP.
 - **POST /bdscript-checker** is rate limited to **60 requests per minute** per IP.
@@ -440,6 +470,7 @@ Owner ID: 999888777666555444
 **Important:** The `Author ID` in the body must match the Discord user ID associated with your API key, or the request will be rejected with a 403 error.
 
 **Success Response (202 Accepted):**
+
 ```json
 {
   "message": "Processing started. This may take anywhere from 15 seconds to 5 minutes depending on the number of servers and Discord's response time.",
@@ -449,6 +480,7 @@ Owner ID: 999888777666555444
 ```
 
 **Error Response (400) - Empty Body:**
+
 ```json
 {
   "error": "Request body is empty."
@@ -456,6 +488,7 @@ Owner ID: 999888777666555444
 ```
 
 **Error Response (400) - Missing Author ID:**
+
 ```json
 {
   "error": "The first line must be \"Author ID: <id>\"."
@@ -463,6 +496,7 @@ Owner ID: 999888777666555444
 ```
 
 **Error Response (400) - Empty Author ID:**
+
 ```json
 {
   "error": "Author ID value is empty."
@@ -470,6 +504,7 @@ Owner ID: 999888777666555444
 ```
 
 **Error Response (400) - No Servers:**
+
 ```json
 {
   "error": "No server entries found after Author ID."
@@ -477,6 +512,7 @@ Owner ID: 999888777666555444
 ```
 
 **Error Response (400) - Invalid Format:**
+
 ```json
 {
   "error": "Invalid body format. Found 7 server lines — must be a multiple of 4 (Server Name, Server ID, Invite Link, Owner ID per server)."
@@ -484,6 +520,7 @@ Owner ID: 999888777666555444
 ```
 
 **Error Response (400) - Wrong Field Order:**
+
 ```json
 {
   "error": "Line 3: Expected \"Server ID:\", got \"Invite Link: ...\""
@@ -491,6 +528,7 @@ Owner ID: 999888777666555444
 ```
 
 **Error Response (400) - Empty Field:**
+
 ```json
 {
   "error": "Server entry at index 2 has one or more empty fields."
@@ -498,6 +536,7 @@ Owner ID: 999888777666555444
 ```
 
 **Error Response (401):**
+
 ```json
 {
   "error": "Invalid or missing API key."
@@ -505,6 +544,7 @@ Owner ID: 999888777666555444
 ```
 
 **Error Response (403) - Author ID Mismatch:**
+
 ```json
 {
   "error": "Author ID does not match API key."
@@ -512,6 +552,7 @@ Owner ID: 999888777666555444
 ```
 
 **Error Response (405):**
+
 ```json
 {
   "error": "Method not allowed. Use POST."
@@ -519,6 +560,7 @@ Owner ID: 999888777666555444
 ```
 
 **Error Response (429):**
+
 ```json
 {
   "error": "You can only submit once every 5 hours.",
@@ -527,6 +569,7 @@ Owner ID: 999888777666555444
 ```
 
 **Error Response (500) - Database Connection:**
+
 ```json
 {
   "error": "Database connection failed."
@@ -534,6 +577,7 @@ Owner ID: 999888777666555444
 ```
 
 **Error Response (500) - Processing:**
+
 ```json
 {
   "error": "Internal server error."
@@ -580,6 +624,7 @@ Retrieve the stored guild list for your bot. This endpoint is restricted to requ
 **Query Parameters:** None
 
 **Success Response (200):**
+
 ```json
 {
   "authorId": "123456789012345678",
@@ -615,6 +660,7 @@ Retrieve the stored guild list for your bot. This endpoint is restricted to requ
 **Enriched Data:** The response includes additional fields (`memberCount`, `icon`, `banner`, `description`, `features`, `vanityUrlCode`) that are fetched asynchronously from Discord after submission. These fields may be `null` if enrichment hasn't completed yet or if the data is unavailable.
 
 **Error Response (401):**
+
 ```json
 {
   "error": "Invalid or missing API key."
@@ -622,6 +668,7 @@ Retrieve the stored guild list for your bot. This endpoint is restricted to requ
 ```
 
 **Error Response (403) - Invalid Origin:**
+
 ```json
 {
   "error": "Access denied: Invalid origin."
@@ -629,6 +676,7 @@ Retrieve the stored guild list for your bot. This endpoint is restricted to requ
 ```
 
 **Error Response (404):**
+
 ```json
 {
   "error": "No servers found for this API key."
@@ -636,6 +684,7 @@ Retrieve the stored guild list for your bot. This endpoint is restricted to requ
 ```
 
 **Error Response (405):**
+
 ```json
 {
   "error": "Method not allowed. Use GET."
@@ -643,6 +692,7 @@ Retrieve the stored guild list for your bot. This endpoint is restricted to requ
 ```
 
 **Error Response (500) - Database Connection:**
+
 ```json
 {
   "error": "Database connection failed."
@@ -650,6 +700,7 @@ Retrieve the stored guild list for your bot. This endpoint is restricted to requ
 ```
 
 **Error Response (500) - Query:**
+
 ```json
 {
   "error": "Internal server error."
@@ -670,6 +721,7 @@ Validates BDFD code for syntax errors, argument issues, and BDFD requirements. R
 **Rate Limit:** 60 requests per minute per IP
 
 **Request Body:**
+
 ```json
 {
   "code": "$setUserVar[test;1;2;3;4]"
@@ -677,12 +729,15 @@ Validates BDFD code for syntax errors, argument issues, and BDFD requirements. R
 ```
 
 #### Pastebin Support
+
 You can pass a Pastebin link instead of raw code.
+
 - **Accepted**: `https://pastebin.com/S6u3Ut7W` (standard) or `https://pastebin.com/raw/S6u3Ut7W` (raw)
 - **Automatic Handling**: Fetches the code from the link and validates the content automatically.
 - **Safety**: Strict prefix checking, content size limited to 500KB, 5-second fetch timeout.
 
 **Success Response (200):**
+
 ```json
 {
   "errors": [],
@@ -697,6 +752,7 @@ You can pass a Pastebin link instead of raw code.
 ```
 
 **Statistics Object:**
+
 - `functions` - Total number of **real** (known) function calls in the code
 - `fakeFunctions` - Total number of **fake** (unknown) function calls that don't exist in BDFD
 - `arguments` - Total number of arguments across all functions
@@ -713,9 +769,11 @@ You can pass a Pastebin link instead of raw code.
 The validator performs comprehensive checks to catch errors before your code runs:
 
 #### 1. Unknown Functions
+
 Warns if a function doesn't exist in the BDFD function list. All unknown functions show warnings, including those nested inside other function arguments.
 
 **Example Error:**
+
 ```json
 {
   "function": "$unknownFunc",
@@ -728,9 +786,11 @@ Warns if a function doesn't exist in the BDFD function list. All unknown functio
 **Note:** Only `$` by itself (without a function name) is treated as a literal string and won't trigger a warning. Everything else that starts with `$` followed by a name is treated as a function call.
 
 #### 2. Argument Count Validation
+
 Validates minimum and maximum argument counts. Handles functions with multiple signatures (different argument patterns).
 
 **Example Errors:**
+
 ```json
 {
   "function": "$setUserVar",
@@ -738,6 +798,7 @@ Validates minimum and maximum argument counts. Handles functions with multiple s
   "message": "$setUserVar - Expected at least 2 argument(s), got 1"
 }
 ```
+
 ```json
 {
   "function": "$setUserVar",
@@ -747,15 +808,18 @@ Validates minimum and maximum argument counts. Handles functions with multiple s
 ```
 
 **Argument Counting Rules:**
+
 - No brackets: `$function` = 0 arguments
 - Empty brackets: `$function[]` = 1 empty argument
 - Semicolons separate arguments: `$function[A;B]` = 2 arguments
 - Trailing semicolon counts: `$function[A;]` = 2 arguments (second is empty)
 
 #### 3. Empty Argument Validation
+
 Checks if empty arguments are allowed based on function definition.
 
 **Example Error:**
+
 ```json
 {
   "function": "$addTextDisplay",
@@ -765,9 +829,11 @@ Checks if empty arguments are allowed based on function definition.
 ```
 
 #### 4. Enum Validation
+
 Validates that enum arguments use valid values from the allowed list.
 
 **Example Error:**
+
 ```json
 {
   "function": "$addButtonCV2",
@@ -777,9 +843,11 @@ Validates that enum arguments use valid values from the allowed list.
 ```
 
 #### 5. Type Validation
+
 Validates argument types including Number, Boolean, Integer, and Snowflake (Discord IDs).
 
 **Example Errors:**
+
 ```json
 {
   "function": "$sum",
@@ -787,6 +855,7 @@ Validates argument types including Number, Boolean, Integer, and Snowflake (Disc
   "message": "$sum - Argument 1 (Number) must be a number, got 'abc'"
 }
 ```
+
 ```json
 {
   "function": "$deleteMessage",
@@ -794,6 +863,7 @@ Validates argument types including Number, Boolean, Integer, and Snowflake (Disc
   "message": "$deleteMessage - Argument 1 (Message ID) must be a valid Discord ID (snowflake), got '123'"
 }
 ```
+
 ```json
 {
   "function": "$roleGrant",
@@ -803,6 +873,7 @@ Validates argument types including Number, Boolean, Integer, and Snowflake (Disc
 ```
 
 **Type Rules:**
+
 - **Number/Integer:** Must be numeric (e.g., `123`, `-45`, `3.14`)
 - **Boolean:** Must be `true`, `false`, `yes`, `no`, `1`, or `0`
 - **Snowflake:** Must be 17-19 digit Discord ID
@@ -811,15 +882,16 @@ Validates argument types including Number, Boolean, Integer, and Snowflake (Disc
     - `-123456789012345678` removes the role
     - `123456789012345678` without operator will error
     - Works with find functions: `+$findRole[Staff]`
-- **URL**: Must be a valid `http://` or `https://` URL, only validated for pure `URL` type arguments, not `String | URL` unions. 
-
+- **URL**: Must be a valid `http://` or `https://` URL, only validated for pure `URL` type arguments, not `String | URL` unions.
 
 **Special Value:** The BDFD special value `!unchanged` is recognized in `$modifyChannel`, `$modifyRole`, and `$editThread` only and skips type validation. This value indicates "keep the current value unchanged".
 
 #### 6. JSON Syntax Validation
+
 Validates JSON syntax in `$jsonParse` to catch malformed JSON.
 
 **Example Error:**
+
 ```json
 {
   "function": "$jsonParse",
@@ -829,11 +901,13 @@ Validates JSON syntax in `$jsonParse` to catch malformed JSON.
 ```
 
 #### 7. Bracket Matching
+
 Detects unclosed brackets during function extraction and unexpected closing brackets outside function arguments.
 
 **Important:** Escaped brackets `\]` don't count as closing brackets because they're part of the text content.
 
 **Example Errors:**
+
 ```json
 {
   "function": "syntax",
@@ -841,6 +915,7 @@ Detects unclosed brackets during function extraction and unexpected closing brac
   "message": "Unexpected closing bracket ']'"
 }
 ```
+
 ```json
 {
   "function": "$sendMessage",
@@ -850,15 +925,18 @@ Detects unclosed brackets during function extraction and unexpected closing brac
 ```
 
 **Examples:**
+
 - `$sendMessage[hello]]` → Error (extra closing bracket)
 - `$sendMessage[hello\]` → Error (escaped bracket, missing actual closing bracket)
 - `$sendMessage[hello\]]` → Valid (escaped bracket as content, then closing bracket)
 - `$sendMessage[hello` → Error (missing closing bracket)
 
 #### 7a. Invalid Bracket Wrapping
+
 Detects accidentally doubled brackets in function arguments.
 
 **Example Errors:**
+
 ```json
 {
   "function": "$ban",
@@ -866,6 +944,7 @@ Detects accidentally doubled brackets in function arguments.
   "message": "$ban - Argument 1 has invalid bracket wrapping: '[$authorID]'. Did you accidentally use double brackets?"
 }
 ```
+
 ```json
 {
   "function": "$sendMessage",
@@ -877,6 +956,7 @@ Detects accidentally doubled brackets in function arguments.
 **Why this happens:** BDFD uses single brackets `[]` with semicolons to separate arguments. Writing `$function[[arg]]` instead of `$function[arg]` is always invalid.
 
 #### 8. Unclosed Blocks
+
 Detects unclosed control flow blocks like `$if`, `$try`, and `$async`.
 
 **Scope-aware matching:** Blocks are matched within their nesting scope. A `$if` inside a function argument must be closed inside that same argument — the `$endif` outside won't match it.
@@ -884,6 +964,7 @@ Detects unclosed control flow blocks like `$if`, `$try`, and `$async`.
 **Boundary-aware matching:** `$else`, `$elseif`, and block closers must appear after the opener's argument brackets are closed.
 
 **Examples:**
+
 ```bdscript
 $description[$if[x==y]ok]$endif   // ❌ $if inside $description is unclosed
 $description[$if[x==y]ok$endif]   // ✅ $if and $endif both inside $description
@@ -892,6 +973,7 @@ $if[x==y$elseif[z==1]]$endif      // ❌ $if is missing ] before $elseif
 ```
 
 **Example Error:**
+
 ```json
 {
   "function": "$if",
@@ -901,12 +983,15 @@ $if[x==y$elseif[z==1]]$endif      // ❌ $if is missing ] before $elseif
 ```
 
 **Block Pairs:**
+
 - `$if` ... `$endif` (note: `$else` is optional)
 - `$try` ... `$endtry` (note: `$catch` is optional)
 - `$async` ... `$endasync`
 
 #### 9. Multiple $else and $catch Detection, $elseif After $else
+
 Detects:
+
 - Multiple `$else` statements in the same `$if` block (only one allowed)
 - Multiple `$catch` statements in the same `$try` block (only one allowed)
 - `$elseif` appearing after `$else` in the same `$if` block (incorrect order)
@@ -914,6 +999,7 @@ Detects:
 The correct order for `$if` blocks is: `$if` → `$elseif` (optional) → `$else` (optional)
 
 **Example Errors:**
+
 ```json
 {
   "function": "$else",
@@ -921,6 +1007,7 @@ The correct order for `$if` blocks is: `$if` → `$elseif` (optional) → `$else
   "message": "Multiple $else statements in the same $if block (started on line 1). Only one $else is allowed per $if block."
 }
 ```
+
 ```json
 {
   "function": "$catch",
@@ -928,6 +1015,7 @@ The correct order for `$if` blocks is: `$if` → `$elseif` (optional) → `$else
   "message": "Multiple $catch statements in the same $try block (started on line 1). Only one $catch is allowed per $try block."
 }
 ```
+
 ```json
 {
   "function": "$elseif",
@@ -937,15 +1025,19 @@ The correct order for `$if` blocks is: `$if` → `$elseif` (optional) → `$else
 ```
 
 #### 10. Context Validation (Parent-Child Relationships)
+
 Ensures context-dependent functions have their required parent functions defined **before** use.
 
 **Modal Components:**
+
 - `$addTextInput` requires `$newModal`
 
 **Select Menus:**
+
 - `$addSelectMenuOption` requires `$newSelectMenu` or `$editSelectMenu`
 
 **Components v2:**
+
 - `$addThumbnail` requires `$addSection`
 - `$addMediaGalleryItem` requires `$addMediaGallery`
 - `$addButtonCV2` requires `$addActionRow` or `$addSection`
@@ -953,9 +1045,11 @@ Ensures context-dependent functions have their required parent functions defined
 - `$addStringSelectOption` requires `$addStringSelect`
 
 **Text Splitting:**
+
 - `$splitText`, `$getTextSplitLength`, `$joinSplitText`, etc. require `$textSplit`
 
 **JSON Functions:**
+
 - `$json`, `$jsonUnset`, `$jsonArray`, etc. require `$jsonParse` or `$jsonSet`
 
 **Note:** `$addTextDisplay` and `$addSeparator` can exist without a parent (optional).
@@ -968,6 +1062,7 @@ $jsonArray[eLog] $jsonParse[{}]  ❌ Wrong order
 ```
 
 **Example Errors:**
+
 ```json
 {
   "function": "$addTextInput",
@@ -975,6 +1070,7 @@ $jsonArray[eLog] $jsonParse[{}]  ❌ Wrong order
   "message": "$addTextInput requires $newModal to be called first"
 }
 ```
+
 ```json
 {
   "function": "$addButtonCV2",
@@ -984,29 +1080,36 @@ $jsonArray[eLog] $jsonParse[{}]  ❌ Wrong order
 ```
 
 #### 11. Components v2 Validation Rules
+
 Validates BDFD's requirements for Components v2 to catch errors before running code.
 
 **Sections:**
+
 - Must have at least 1 Text Display component
 - Must have at least 1 accessory (thumbnail or button)
 - Duplicate section IDs are not allowed (each section needs a unique ID)
 
 **Containers:**
+
 - Must have at least 1 child component
 
 **Media Galleries:**
+
 - Must have at least 1 media item
 
 **Action Rows:**
+
 - Cannot mix buttons and select menus
 - Maximum 5 buttons per action row
 - Maximum 1 select menu per action row
 
 **Parent-Child Order:**
+
 - Parents must be defined before children reference them
 - Empty required parent IDs trigger errors
 
 **Example Errors:**
+
 ```json
 {
   "function": "$addSection",
@@ -1014,6 +1117,7 @@ Validates BDFD's requirements for Components v2 to catch errors before running c
   "message": "Section 'main' needs at least 1 Text Display component — use $addTextDisplay to add content"
 }
 ```
+
 ```json
 {
   "function": "$addSection",
@@ -1021,6 +1125,7 @@ Validates BDFD's requirements for Components v2 to catch errors before running c
   "message": "Section 'main' needs an accessory (thumbnail or button) — use $addThumbnail or $addButtonCV2"
 }
 ```
+
 ```json
 {
   "function": "$addActionRow",
@@ -1028,6 +1133,7 @@ Validates BDFD's requirements for Components v2 to catch errors before running c
   "message": "Action Row 'row1' cannot mix buttons and select menus — use separate action rows"
 }
 ```
+
 ```json
 {
   "function": "$addActionRow",
@@ -1035,6 +1141,7 @@ Validates BDFD's requirements for Components v2 to catch errors before running c
   "message": "Action Row 'row1' has 6 buttons — maximum of 5 buttons per action row"
 }
 ```
+
 ```json
 {
   "function": "$addButtonCV2",
@@ -1044,9 +1151,11 @@ Validates BDFD's requirements for Components v2 to catch errors before running c
 ```
 
 #### 12. Modal Text Input Validation
+
 Validates `$addTextInput` arguments beyond just requiring `$newModal`.
 
 **Rules:**
+
 - Min and max length must be integers between 0 and 4000
 - Min cannot exceed max
 - Value cannot exceed 4000 characters (resolved after escape sequences)
@@ -1054,6 +1163,7 @@ Validates `$addTextInput` arguments beyond just requiring `$newModal`.
 - All checks skipped when values contain variable or number-returning functions
 
 **Example Errors:**
+
 ```json
 {
   "function": "$addTextInput",
@@ -1061,6 +1171,7 @@ Validates `$addTextInput` arguments beyond just requiring `$newModal`.
   "message": "$addTextInput - Minimum length must be between 0 and 4000, got 5000"
 }
 ```
+
 ```json
 {
   "function": "$addTextInput",
@@ -1068,6 +1179,7 @@ Validates `$addTextInput` arguments beyond just requiring `$newModal`.
   "message": "$addTextInput - Minimum length (10) cannot be greater than Maximum length (5)"
 }
 ```
+
 ```json
 {
   "function": "$addTextInput",
@@ -1077,11 +1189,13 @@ Validates `$addTextInput` arguments beyond just requiring `$newModal`.
 ```
 
 **Select Menus:**
+
 - `$newSelectMenu` and `$editSelectMenu` must have at least 1 option
 - `$addStringSelect` must have at least 1 option
 - Max value cannot exceed the number of options (you can't select 25 items if you only have 1 option)
 
 **Example Errors:**
+
 ```json
 {
   "function": "$newSelectMenu",
@@ -1089,6 +1203,7 @@ Validates `$addTextInput` arguments beyond just requiring `$newModal`.
   "message": "Select Menu 'menu1' must have at least 1 option — use $addSelectMenuOption to add options"
 }
 ```
+
 ```json
 {
   "function": "$addStringSelect",
@@ -1098,14 +1213,17 @@ Validates `$addTextInput` arguments beyond just requiring `$newModal`.
 ```
 
 #### 13. Negative Number Validation
+
 Validates that functions which don't accept negative numbers receive valid values.
 
 **Functions checked:**
+
 - `$random` - Both min and max must be >= 0
 - `$cropText` - Cannot accept negative values
 - `$sqrt` - Cannot accept negative values
 
 **Example Errors:**
+
 ```json
 {
   "function": "$random",
@@ -1113,6 +1231,7 @@ Validates that functions which don't accept negative numbers receive valid value
   "message": "$random - Argument 1 cannot be negative, got '-5'"
 }
 ```
+
 ```json
 {
   "function": "$cropText",
@@ -1122,19 +1241,23 @@ Validates that functions which don't accept negative numbers receive valid value
 ```
 
 #### 14. Min/Max Value Validation
+
 Validates min and max value constraints for select menus.
 
 **$newSelectMenu / $editSelectMenu:**
+
 - Min must be >= 0
 - Max must be <= 25
 - Min must be < Max (strict inequality)
 
 **CompV2 Select Menus ($addUserSelect, $addRoleSelect, $addChannelSelect, $addMentionableSelect, $addStringSelect):**
+
 - Min must be >= 0
 - Max must be <= 25
 - Min must be <= Max (can be equal)
 
 **Example Errors:**
+
 ```json
 {
   "function": "$newSelectMenu",
@@ -1142,6 +1265,7 @@ Validates min and max value constraints for select menus.
   "message": "$newSelectMenu - Min value cannot be negative, got -1"
 }
 ```
+
 ```json
 {
   "function": "$addUserSelect",
@@ -1149,6 +1273,7 @@ Validates min and max value constraints for select menus.
   "message": "$addUserSelect - Max value cannot be greater than 25, got 30"
 }
 ```
+
 ```json
 {
   "function": "$random",
@@ -1156,6 +1281,7 @@ Validates min and max value constraints for select menus.
   "message": "$random - Min value (10) must be less than Max value (5)"
 }
 ```
+
 ```json
 {
   "function": "$addChannelSelect",
@@ -1165,9 +1291,11 @@ Validates min and max value constraints for select menus.
 ```
 
 #### 15. Variable Name Validation
+
 Validates that "Variable name" arguments contain literal string names, not function calls.
 
 **Affected functions:**
+
 - `$userLeaderboard[Variable name;Sort]`
 - `$serverLeaderboard[Variable name;Sort]`
 - `$globalUserLeaderboard[Variable name;Sort]`
@@ -1177,6 +1305,7 @@ Validates that "Variable name" arguments contain literal string names, not funct
 **Why?** These functions expect a literal variable name (like `"points"` or `"level"`), not a dynamic value. Even variable functions like `$getUserVar[]` are not allowed.
 
 **Example Error:**
+
 ```json
 {
   "function": "$userLeaderboard",
@@ -1186,16 +1315,20 @@ Validates that "Variable name" arguments contain literal string names, not funct
 ```
 
 #### 16. Function Context Compatibility
+
 Validates that functions are used in compatible contexts.
 
 **Embed builders cannot be inside message senders:**
+
 - Embed builders: `$description`, `$title`, `$footer`, `$author`, `$addField`, `$color`, `$thumbnail`, `$image`, etc.
 - Message senders: `$sendMessage`, `$channelSendMessage`, `$dm`, `$reply`, `$replyIn`
 
 **Message senders cannot be nested inside other functions** (except control flow like `$if`, `$else`, `$try`, etc.):
+
 - Message senders are actions that send messages, they don't return values
 
 **Example Errors:**
+
 ```json
 {
   "function": "$description",
@@ -1203,6 +1336,7 @@ Validates that functions are used in compatible contexts.
   "message": "$description - Incorrect function use: cannot be used inside $sendMessage"
 }
 ```
+
 ```json
 {
   "function": "$sendMessage",
@@ -1212,6 +1346,7 @@ Validates that functions are used in compatible contexts.
 ```
 
 **Valid:**
+
 ```bdscript
 $if[x==y]$sendMessage[yes]$endif                // ✅ control flow is allowed
 $setUserVar[x;$sendMessage[hi]]                  // ✅ variable functions can contain anything
@@ -1227,6 +1362,7 @@ When arguments contain **known functions from `functions.json`**, **variables**,
 For normal argument validation, any real nested function from `functions.json` skips literal enum/type/URL checks for that argument. The nested function itself is still validated separately, so fake functions still produce unknown-function warnings.
 
 **Variable functions that trigger bypass:**
+
 - `$var[]`
 - `$getUserVar[]`
 - `$getServerVar[]`
@@ -1235,6 +1371,7 @@ For normal argument validation, any real nested function from `functions.json` s
 - `$message[]` / `$noMentionMessage` / `$mentioned[]` (user input - can be any type)
 
 **ID-returning functions that skip snowflake validation:**
+
 - `$afkChannelID`, `$authorID`, `$botID`, `$botOwnerID`, `$categoryID`, `$channelID`, `$dmChannelID`
 - `$getChannelSelectChannelID`, `$getMentionableSelectUserID`, `$getRoleSelectRoleID`, `$getUserSelectUserID`
 - `$guildID`, `$highestRole`, `$lastMessageID`, `$mentioned`, `$messageID`, `$parentID`
@@ -1244,54 +1381,65 @@ For normal argument validation, any real nested function from `functions.json` s
 - **Note:** `$customID` and `$slashID` are NOT included (they return custom strings, not Discord snowflakes)
 
 **Number-returning functions that skip number validation:**
+
 - **Count/Amount functions**: `$allMembersCount`, `$boostCount`, `$categoryCount`, `$channelCount`, `$commandsCount`, `$emoteCount`, `$getChannelSelectChannelCount`, `$getMentionableSelectUserCount`, `$getRoleSelectRoleCount`, `$getStringSelectCount`, `$getUserSelectUserCount`, `$linesCount`, `$membersCount`, `$roleCount`, `$slashCommandsCount`, `$threadMessageCount`, `$threadUserCount`
 - **Math functions**: `$ceil`, `$divide`, `$floor`, `$max`, `$min`, `$multi`, `$random`, `$sqrt`, `$sub`, `$sum`
 - **Position/Index functions**: `$botNode`, `$channelPosition`, `$getTextSplitIndex`, `$getTextSplitLength`, `$rolePosition`
 - **Other numeric functions**: `$aiQuota`, `$executionTime`, `$getTimestamp`, `$getCooldown`, `$getSlowmode`
 
 **Boolean-returning functions that skip boolean validation:**
+
 - **Check functions**: `$checkCondition`, `$checkContains`, `$checkUserPerms`
 - **Exists functions**: `$channelExists`, `$emojiExists`, `$guildExists`, `$varExists`
 - **Has functions**: `$hasRole`
 - **Is functions**: `$isAdmin`, `$isBanned`, `$isBoolean`, `$isBooster`, `$isBot`, `$isEmojiAnimated`, `$isHoisted`, `$isInteger`, `$isMentionable`, `$isMentioned`, `$isMessageEdited`, `$isNSFW`, `$isNumber`, `$isSlash`, `$isTicket`, `$isTimedOut`, `$isUserDMEnabled`, `$isValidHex`
 
 **URL-returning functions that skip URL validation:**
+
 - `$authorAvatar`, `$getAttachments`, `$getBotInvite`, `$getServerInvite`, `$guildBanner`, `$serverIcon`
 - `$userAvatar`, `$userBanner`, `$userServerAvatar`, `$webhookCreate`
 
 **Special values:**
+
 - `!unchanged` - Works in `$modifyChannel`, `$modifyRole`, and `$editThread` only
 
 **What gets skipped:**
+
 - **Known functions from `functions.json`**: Literal argument validation for the argument containing the function (enum, permission, type, URL, JSON syntax)
 - **Variable functions**: Enum validation, type validation, JSON syntax validation, parent-child ID validation
 - **Type-specific helpers**: ID, number, boolean, and URL function lists are still used where special validation logic needs to recognize a known return type
 - **!unchanged**: Type validation in `$modifyChannel`, `$modifyRole`, and `$editThread`
 
 **Examples:**
+
 ```bdscript
 $addButtonCV2[btn;Click;$getUserVar[style];...;...;$var[rowId]]
 ```
+
 This will **not** error even if `$getUserVar[style]` returns an invalid enum, because the validator can't know the value at validation time.
 
 ```bdscript
 $sendMessage[hello;$authorID]
 ```
+
 This will **not** error because `$authorID` returns a Discord ID (snowflake), so snowflake validation is skipped.
 
 ```bdscript
 $deleteMessage[$channelID;$messageID]
 ```
+
 Both `$channelID` and `$messageID` return Discord IDs, so snowflake validation is skipped for both arguments.
 
 ```bdscript
 $sum[$aiQuota;$executionTime]
 ```
+
 This will **not** error because both `$aiQuota` and `$executionTime` return numbers, so number validation is skipped.
 
 ```bdscript
 $random[$membersCount;$boostCount]
 ```
+
 This will **not** error because both `$membersCount` and `$boostCount` return numbers, so number validation is skipped for the min/max arguments.
 
 ```bdscript
@@ -1299,23 +1447,26 @@ $if[$isBot[$authorID]==true]
   $sendMessage[You are a bot!]
 $endif
 ```
+
 This will **not** error because `$isBot` returns a boolean (true/false), so boolean validation is skipped.
 
 ```bdscript
 $onlyIf[$checkUserPerms[$authorID;administrator]==yes;You need admin!]
 ```
+
 This will **not** error because `$checkUserPerms` returns a boolean, so boolean validation is skipped.
 
 ```bdscript
 $roleGrant[$authorID;+$findRole[Staff];-$findRole[Moderator]]
 ```
+
 This will **not** error because `$findRole` returns a role ID (snowflake), so snowflake validation is skipped. The `+` and `-` operators are still required for `$roleGrant`.
 
 ```bdscript
 $modifyChannel[1234567890123456789;New Name;;;!unchanged;!unchanged]
 ```
-The `!unchanged` values will **not** error for type validation in `$modifyChannel`, `$modifyRole`, or `$editThread` because it's a special BDFD value meaning "keep the current value unchanged".
 
+The `!unchanged` values will **not** error for type validation in `$modifyChannel`, `$modifyRole`, or `$editThread` because it's a special BDFD value meaning "keep the current value unchanged".
 
 ---
 
@@ -1323,15 +1474,15 @@ The `!unchanged` values will **not** error for type validation in `$modifyChanne
 
 The validator properly handles BDFD escape sequences:
 
-| Escape | Result | Description |
-|--------|--------|-------------|
-| `$c[]` | `$` | Escaped dollar sign (displays `$` as text) |
-| `\;` | `;` | Escaped semicolon (includes `;` in argument) |
-| `\]` | `]` | Escaped closing bracket (includes `]` in argument) |
-| `\\` | `\` | Escaped backslash (displays `\` as text) |
-| `%{DOL}%` | `$` | Alternative dollar escape |
-| `%{-SEMICOL-}%` | `;` | Alternative semicolon escape |
-| `%ESCAPED%` | `]` | Alternative bracket escape |
+| Escape          | Result | Description                                        |
+| --------------- | ------ | -------------------------------------------------- |
+| `$c[]`          | `$`    | Escaped dollar sign (displays `$` as text)         |
+| `\;`            | `;`    | Escaped semicolon (includes `;` in argument)       |
+| `\]`            | `]`    | Escaped closing bracket (includes `]` in argument) |
+| `\\`            | `\`    | Escaped backslash (displays `\` as text)           |
+| `%{DOL}%`       | `$`    | Alternative dollar escape                          |
+| `%{-SEMICOL-}%` | `;`    | Alternative semicolon escape                       |
+| `%ESCAPED%`     | `]`    | Alternative bracket escape                         |
 
 ---
 
@@ -1340,6 +1491,7 @@ The validator properly handles BDFD escape sequences:
 The API automatically handles multi-line code with line breaks. Users can type their code naturally with proper formatting, and the API will parse it correctly.
 
 **Example:**
+
 ```bdscript
 $if[$authorID==$botOwnerID]
   $sendMessage[Hello owner!]
@@ -1373,6 +1525,7 @@ $httpResult
 ```
 
 **How it works:**
+
 1. User types: `!run $sendMessage[Hello World!]`
 2. `$message` captures the raw code after the command
 3. Store it in `$var[code]` to prevent execution
@@ -1386,6 +1539,7 @@ $httpResult
 ### Error Responses
 
 **Error Response (401) - Unauthorized:**
+
 ```json
 {
   "error": "Invalid or missing API key."
@@ -1393,6 +1547,7 @@ $httpResult
 ```
 
 **Error Response (400) - Invalid Request:**
+
 ```json
 {
   "error": "Missing or invalid 'code' field"
@@ -1400,6 +1555,7 @@ $httpResult
 ```
 
 **Error Response (405) - Method Not Allowed:**
+
 ```json
 {
   "error": "Method not allowed. Use POST."
@@ -1407,6 +1563,7 @@ $httpResult
 ```
 
 **Error Response (500) - Internal Server Error:**
+
 ```json
 {
   "error": "Internal server error"
@@ -1423,14 +1580,17 @@ Looks up a BDFD function by name using fuzzy matching. Useful for finding the co
 **Rate Limit:** 300 requests per minute per IP
 
 **Input Methods (in priority order):**
+
 - Path parameter: `/function-check/sendMessage`
 - Query parameter: `?input=sendMessage`
 - POST body: `{ "input": "sendMessage" }`
 
 **Query Parameters:**
+
 - `input` (string, optional) — The function name to look up
 
 **Success Response (200):**
+
 ```json
 {
   "input": "sendmesage",
@@ -1443,6 +1603,7 @@ Looks up a BDFD function by name using fuzzy matching. Useful for finding the co
 ```
 
 **Fields:**
+
 - `input` — The raw input you provided
 - `normalizedInput` — Input after stripping `$`, brackets, and whitespace
 - `matchedFunction` — The best matching BDFD function name
@@ -1451,6 +1612,7 @@ Looks up a BDFD function by name using fuzzy matching. Useful for finding the co
 - `confidence` — How confident the matcher is (100% = exact match)
 
 **Error Response (400) - Missing Input:**
+
 ```json
 {
   "error": "Missing function input.",
@@ -1459,6 +1621,7 @@ Looks up a BDFD function by name using fuzzy matching. Useful for finding the co
 ```
 
 **Error Response (404) - No Match:**
+
 ```json
 {
   "error": "No matching function found.",
@@ -1467,10 +1630,12 @@ Looks up a BDFD function by name using fuzzy matching. Useful for finding the co
 ```
 
 **Example Requests:**
+
 - `/function-check/sendMessage` — exact match
 - `/function-check/sendmesage` — fuzzy match
 - `/function-check/$getUserVar` — strips `$` automatically
 - `/function-check/$setUserVar[name;value]` — strips brackets automatically
+
 ---
 
 ## Ticket Transcript Endpoints
@@ -1478,6 +1643,7 @@ Looks up a BDFD function by name using fuzzy matching. Useful for finding the co
 Create and retrieve Discord ticket transcripts. The POST endpoint **requires authentication** via JWT Bearer token with the `BDTools-` prefix, while the GET endpoint remains public. Messages are formatted into a .txt transcript with Discord usernames/display names resolved server-side via the Discord API. Stored in MongoDB and served as plain text.
 
 **Authentication Format:**
+
 ```
 Authorization: Bearer BDTools-YOUR_API_KEY_HERE
 ```
@@ -1490,6 +1656,7 @@ Creates a ticket transcript from raw message data. Accepts a JSON body with `cha
 **Rate Limit:** 30 requests per minute per IP
 
 **Request Body:**
+
 ```json
 {
   "channelId": "123456789012345678",
@@ -1507,6 +1674,7 @@ Creates a ticket transcript from raw message data. Accepts a JSON body with `cha
 ```
 
 **Success Response (200):**
+
 ```json
 {
   "url": "https://cdn.bdtools.xyz/t/a1b2c3d4e5f6g7h8"
@@ -1514,6 +1682,7 @@ Creates a ticket transcript from raw message data. Accepts a JSON body with `cha
 ```
 
 **Error Response (400) - Missing Fields:**
+
 ```json
 {
   "error": "Missing required fields: channelId, channelName, guildName, authorId, botId, messages."
@@ -1521,6 +1690,7 @@ Creates a ticket transcript from raw message data. Accepts a JSON body with `cha
 ```
 
 **Error Response (400) - Invalid JSON:**
+
 ```json
 {
   "error": "Invalid JSON in request body."
@@ -1528,6 +1698,7 @@ Creates a ticket transcript from raw message data. Accepts a JSON body with `cha
 ```
 
 **Error Response (401):**
+
 ```json
 {
   "error": "Invalid or missing API key."
@@ -1535,6 +1706,7 @@ Creates a ticket transcript from raw message data. Accepts a JSON body with `cha
 ```
 
 **Error Response (405):**
+
 ```json
 {
   "error": "Method not allowed. Use POST."
@@ -1542,6 +1714,7 @@ Creates a ticket transcript from raw message data. Accepts a JSON body with `cha
 ```
 
 **Error Response (500) - Database Connection:**
+
 ```json
 {
   "error": "Database connection failed."
@@ -1560,6 +1733,7 @@ Retrieve a stored transcript as plain text. The URL is returned by the create en
 **URL Format:** `https://cdn.bdtools.xyz/t/a1b2c3d4e5f6g7h8`
 
 **Success Response (200):**
+
 - Content-Type: `text/plain`
 - Body is the full transcript text:
 
@@ -1576,6 +1750,7 @@ John (john): thanks!
 ```
 
 **Error Response (404):**
+
 ```
 Transcript not found.
 ```
@@ -1608,12 +1783,12 @@ Escapes BDFD special characters (`$`, `;`, `]`, `\`) into safe representations u
 
 **Fields:**
 
-| Field | Type | Required | Default | Description |
-|-------|------|----------|---------|-------------|
-| `text` | string | Yes | — | Raw BDScript code to escape |
-| `rules.dollar` | string | No | `"a"` | Escape style for `$`. `"a"` → `$$c[]`, `"b"` → `%{DOL}%` |
-| `rules.semicolon` | string | No | `"a"` | Escape style for `;`. `"a"` → `\;`, `"b"` → `%{-SEMICOL-}%` |
-| `rules.bracket` | string | No | `"a"` | Escape style for `]`. `"a"` → `\]`, `"b"` → `%ESCAPED%` |
+| Field             | Type   | Required | Default | Description                                                 |
+| ----------------- | ------ | -------- | ------- | ----------------------------------------------------------- |
+| `text`            | string | Yes      | —       | Raw BDScript code to escape                                 |
+| `rules.dollar`    | string | No       | `"a"`   | Escape style for `$`. `"a"` → `$$c[]`, `"b"` → `%{DOL}%`    |
+| `rules.semicolon` | string | No       | `"a"`   | Escape style for `;`. `"a"` → `\;`, `"b"` → `%{-SEMICOL-}%` |
+| `rules.bracket`   | string | No       | `"a"`   | Escape style for `]`. `"a"` → `\]`, `"b"` → `%ESCAPED%`     |
 
 Each character can use a different style — mix and match per-rule.
 
@@ -1622,12 +1797,14 @@ Each character can use a different style — mix and match per-rule.
 **Escape Order:**
 
 Characters are escaped in a specific order to prevent conflicts:
+
 1. Backslashes first (`\` → `\\`)
 2. Semicolons (`;` → `\;` or `%{-SEMICOL-}%`)
 3. Closing brackets (`]` → `\]` or `%ESCAPED%`)
 4. Dollar signs last (`$` → `$$c[]` or `%{DOL}%`)
 
 **Success Response (200):**
+
 ```
 Content-Type: text/plain
 
@@ -1637,11 +1814,13 @@ $$c[]hello\; world\] test\\123
 The response is `text/plain` so the output can be used directly in BDFD without JSON unescaping.
 
 **Example Usage:**
+
 ```bdscript
 $httpPost[https://api.bdtools.xyz/character-escape;{"text":"$ping","rules":{"dollar":"a"}}]
 ```
 
 **Error Response (400) - Missing Text:**
+
 ```json
 {
   "error": "Missing or invalid 'text' field."
@@ -1649,6 +1828,7 @@ $httpPost[https://api.bdtools.xyz/character-escape;{"text":"$ping","rules":{"dol
 ```
 
 **Error Response (400) - Invalid JSON:**
+
 ```json
 {
   "error": "Invalid JSON body."
@@ -1656,6 +1836,7 @@ $httpPost[https://api.bdtools.xyz/character-escape;{"text":"$ping","rules":{"dol
 ```
 
 **Error Response (405) - Wrong Method:**
+
 ```json
 {
   "error": "Method not allowed. Use POST."
@@ -1672,6 +1853,7 @@ Reverses the escape operation. Accepts raw plain text (not JSON) — pass the es
 **Rate Limit:** 300 requests per minute per IP
 
 **Request:**
+
 ```
 POST /character-unescape
 Content-Type: text/plain
@@ -1684,15 +1866,16 @@ Just send the raw escaped text as the body. No JSON wrapper needed.
 **Unescape Mappings:**
 
 | Character | Style A Pattern | Style B Pattern |
-|-----------|----------------|-----------------|
-| `$` | `$$c[]` | `%{DOL}%` |
-| `;` | `\;` | `%{-SEMICOL-}%` |
-| `]` | `\]` | `%ESCAPED%` |
-| `\` | `\\` | — |
+| --------- | --------------- | --------------- |
+| `$`       | `$$c[]`         | `%{DOL}%`       |
+| `;`       | `\;`            | `%{-SEMICOL-}%` |
+| `]`       | `\]`            | `%ESCAPED%`     |
+| `\`       | `\\`            | —               |
 
 Mixed-style input is handled fine — style A and style B patterns can appear in the same string.
 
 **Success Response (200):**
+
 ```
 Content-Type: text/plain
 
@@ -1700,11 +1883,13 @@ $hello; world] test$
 ```
 
 **Example Usage:**
+
 ```bdscript
 $httpPost[https://api.bdtools.xyz/character-unescape;$$c[]hello]
 ```
 
 **Error Response (500) - Processing Error:**
+
 ```json
 {
   "error": "Internal server error."
@@ -1730,9 +1915,9 @@ Calculates a Discord permission bitfield from a list of permission names. Uses B
 
 **Fields:**
 
-| Field | Type | Required | Description |
-|-------|------|----------|-------------|
-| `permissions` | array | Yes | Array of permission name strings (case-insensitive) |
+| Field         | Type  | Required | Description                                         |
+| ------------- | ----- | -------- | --------------------------------------------------- |
+| `permissions` | array | Yes      | Array of permission name strings (case-insensitive) |
 
 **Supported Permissions (42 total):**
 
@@ -1749,34 +1934,33 @@ Calculates a Discord permission bitfield from a list of permission names. Uses B
 **Other:** `Manage Emojis and Stickers`, `Manage Events`
 
 **Success Response (200):**
+
 ```json
 {
   "bitfield": "14",
   "hex": "0xE",
   "count": 3,
-  "permissions": [
-    "Administrator",
-    "Kick Members",
-    "Ban Members"
-  ]
+  "permissions": ["Administrator", "Kick Members", "Ban Members"]
 }
 ```
 
 **Response Fields:**
 
-| Field | Type | Description |
-|-------|------|-------------|
-| `bitfield` | string | Decimal representation of the permission bitfield (as string to preserve precision) |
-| `hex` | string | Hexadecimal representation prefixed with `0x` |
-| `count` | number | Number of permissions that matched (unknown names are silently ignored) |
-| `permissions` | array | Resolved permission names with standardised casing |
+| Field         | Type   | Description                                                                         |
+| ------------- | ------ | ----------------------------------------------------------------------------------- |
+| `bitfield`    | string | Decimal representation of the permission bitfield (as string to preserve precision) |
+| `hex`         | string | Hexadecimal representation prefixed with `0x`                                       |
+| `count`       | number | Number of permissions that matched (unknown names are silently ignored)             |
+| `permissions` | array  | Resolved permission names with standardised casing                                  |
 
 **Example Usage:**
+
 ```bdscript
 $httpPost[https://api.bdtools.xyz/permissions/calculate;{"permissions":["Administrator","Ban Members"]}]
 ```
 
 **Error Response (400) - Missing Permissions:**
+
 ```json
 {
   "error": "Missing or empty 'permissions' array."
@@ -1784,6 +1968,7 @@ $httpPost[https://api.bdtools.xyz/permissions/calculate;{"permissions":["Adminis
 ```
 
 **Error Response (400) - Invalid JSON:**
+
 ```json
 {
   "error": "Invalid JSON body."
@@ -1791,6 +1976,7 @@ $httpPost[https://api.bdtools.xyz/permissions/calculate;{"permissions":["Adminis
 ```
 
 **Error Response (404) - Unknown Path:**
+
 ```json
 {
   "error": "Unknown endpoint. Use /permissions/calculate or /permissions/decode"
@@ -1816,30 +2002,29 @@ Performs the reverse operation: given a permission bitfield, returns the list of
 
 **Fields:**
 
-| Field | Type | Required | Description |
-|-------|------|----------|-------------|
-| `bitfield` | string | Yes | Decimal or hex permission integer (BigInt-compatible, pass as string to preserve precision) |
+| Field      | Type   | Required | Description                                                                                 |
+| ---------- | ------ | -------- | ------------------------------------------------------------------------------------------- |
+| `bitfield` | string | Yes      | Decimal or hex permission integer (BigInt-compatible, pass as string to preserve precision) |
 
 **Success Response (200):**
+
 ```json
 {
   "bitfield": "14",
   "hex": "0xE",
   "count": 3,
-  "permissions": [
-    "Administrator",
-    "Kick Members",
-    "Ban Members"
-  ]
+  "permissions": ["Administrator", "Kick Members", "Ban Members"]
 }
 ```
 
 **Example Usage:**
+
 ```bdscript
 $httpPost[https://api.bdtools.xyz/permissions/decode;{"bitfield":"14"}]
 ```
 
 **Error Response (400) - Missing Bitfield:**
+
 ```json
 {
   "error": "Missing 'bitfield' field."
@@ -1847,6 +2032,7 @@ $httpPost[https://api.bdtools.xyz/permissions/decode;{"bitfield":"14"}]
 ```
 
 **Error Response (400) - Invalid Bitfield:**
+
 ```json
 {
   "error": "Invalid bitfield value."
@@ -1854,6 +2040,7 @@ $httpPost[https://api.bdtools.xyz/permissions/decode;{"bitfield":"14"}]
 ```
 
 **Error Response (404) - Unknown Path:**
+
 ```json
 {
   "error": "Unknown endpoint. Use /permissions/calculate or /permissions/decode"
@@ -1876,6 +2063,7 @@ Returns a random 5-letter word from a curated wordlist. Perfect for starting a n
 **Query Parameters:** None
 
 **Success Response (200):**
+
 ```json
 {
   "word": "apple"
@@ -1883,6 +2071,7 @@ Returns a random 5-letter word from a curated wordlist. Perfect for starting a n
 ```
 
 **Error Response (500) - Empty Wordlist:**
+
 ```json
 {
   "error": "Word list is empty"
@@ -1890,6 +2079,7 @@ Returns a random 5-letter word from a curated wordlist. Perfect for starting a n
 ```
 
 **Error Response (500) - File Read:**
+
 ```json
 {
   "error": "Failed to load word list",
@@ -1907,11 +2097,13 @@ Validates whether a 5-letter word is a valid English word. First checks the cura
 **Rate Limit:** 300 requests per minute per IP
 
 **Query Parameters:**
+
 - `word` (string, required) - The 5-letter word to validate. Must contain only letters (a-z, A-Z).
 
 **Example:** `/validate-word?word=apple`
 
 **Success Response (200) - Valid (Wordlist):**
+
 ```json
 {
   "valid": true,
@@ -1921,6 +2113,7 @@ Validates whether a 5-letter word is a valid English word. First checks the cura
 ```
 
 **Success Response (200) - Valid (Dictionary):**
+
 ```json
 {
   "valid": true,
@@ -1930,6 +2123,7 @@ Validates whether a 5-letter word is a valid English word. First checks the cura
 ```
 
 **Success Response (200) - Invalid:**
+
 ```json
 {
   "valid": false,
@@ -1938,6 +2132,7 @@ Validates whether a 5-letter word is a valid English word. First checks the cura
 ```
 
 **Error Response (400) - Missing Parameter:**
+
 ```json
 {
   "error": "Missing ?word= parameter"
@@ -1945,6 +2140,7 @@ Validates whether a 5-letter word is a valid English word. First checks the cura
 ```
 
 **Error Response (400) - Wrong Length:**
+
 ```json
 {
   "error": "Word must be exactly 5 letters"
@@ -1952,6 +2148,7 @@ Validates whether a 5-letter word is a valid English word. First checks the cura
 ```
 
 **Error Response (500):**
+
 ```json
 {
   "error": "Failed to reach dictionary",
@@ -1960,6 +2157,7 @@ Validates whether a 5-letter word is a valid English word. First checks the cura
 ```
 
 **Error Response (502):**
+
 ```json
 {
   "error": "Dictionary error",
@@ -1977,11 +2175,13 @@ Returns a random Pokemon name from all generations (1-9, over 1000 Pokemon). Can
 **Rate Limit:** 300 requests per minute per IP
 
 **Query Parameters:**
+
 - `gen` (integer, optional) - Filter by generation (1-9). Examples: `?gen=1` for Kanto, `?gen=2` for Johto, etc.
 - `image` (string, optional) - Set to `true` to return the Pokemon sprite image instead of JSON
 - `name` (string, optional) - Specify a Pokemon name to get that specific Pokemon (e.g., `?name=pikachu`)
 
 **Success Response (200) - Name Only:**
+
 ```json
 {
   "pokemon": "pikachu"
@@ -1989,30 +2189,122 @@ Returns a random Pokemon name from all generations (1-9, over 1000 Pokemon). Can
 ```
 
 **Success Response (200) - With Image (`?image=true`):**
+
 - Content-Type: `image/png`
 - Returns the Pokemon sprite image (official artwork from PokeAPI)
 - Cached for 24 hours
 
 **Example Usage:**
-```shell
+
+````shell
 <!-- Random Pokemon from all generations -->
 $httpGet[https://api.bdtools.xyz/random-pokemon]
 
+---
+
+### GET /number-shortener
+
+Converts a large number string into a short, human-readable format.
+
+**Use Case**: Displaying large numbers concisely (e.g., 100k, 1M, 1B).
+
+**Auth Required:** No
+**Rate Limit:** 300 requests per minute per IP
+
+**Query Parameters:**
+- `n` (string, required) - The number string to shorten (commas allowed, e.g., `100,000`).
+
+**Example:** `/number-shortener?n=100000`
+
+**Success Response (200):**
+```json
+{
+  "original": "100000",
+  "short": "100k"
+}
+````
+
+**Error Response (400) - Missing Parameter:**
+
+```json
+{
+  "error": "Missing number parameter 'n'."
+}
+```
+
+**Error Response (400) - Invalid Number:**
+
+```json
+{
+  "error": "Invalid number provided."
+}
+```
+
+---
+
+### POST /json-validator
+
+Validates a provided JSON payload. Returns `valid: true` or `valid: false` with specific error details if invalid.
+
+**Auth Required:** No  
+**Rate Limit:** 300 requests per minute per IP
+
+**Request Body:**
+
+```json
+{
+  "test": 123
+}
+```
+
+**Success Response (200):**
+
+```json
+{
+  "valid": true,
+  "message": "JSON is valid."
+}
+```
+
+**Error Response (400) - Invalid JSON:**
+
+```json
+{
+  "valid": false,
+  "error": "Invalid JSON.",
+  "details": "Expected ',' or '}' at position 10"
+}
+```
+
+**Error Response (405) - Wrong Method:**
+
+```json
+{
+  "error": "Method not allowed. Use POST."
+}
+```
+
 <!-- Random Pokemon from Gen 1 (Kanto) -->
+
 $httpGet[https://api.bdtools.xyz/random-pokemon?gen=1]
 
 <!-- Random Pokemon from Gen 2 (Johto) -->
+
 $httpGet[https://api.bdtools.xyz/random-pokemon?gen=2]
 
 <!-- Random Gen 1 Pokemon image -->
+
 $image[https://api.bdtools.xyz/random-pokemon?gen=1&image=true]
 
 <!-- Specific Pokemon name -->
+
 $httpGet[https://api.bdtools.xyz/random-pokemon?name=charizard]
 
 <!-- Specific Pokemon image -->
+
 $image[https://api.bdtools.xyz/random-pokemon?name=pikachu&image=true]
-```
+
+````
 
 **Generations:**
 - Gen 1: Kanto (1-151)
@@ -2030,9 +2322,10 @@ $image[https://api.bdtools.xyz/random-pokemon?name=pikachu&image=true]
 {
   "error": "Invalid generation. Must be between 1 and 9."
 }
-```
+````
 
 **Error Response (404) - Pokemon Not Found:**
+
 ```json
 {
   "error": "Pokemon not found"
@@ -2040,6 +2333,7 @@ $image[https://api.bdtools.xyz/random-pokemon?name=pikachu&image=true]
 ```
 
 **Error Response (404) - Image Not Found:**
+
 ```json
 {
   "error": "Pokemon image not found",
@@ -2048,6 +2342,7 @@ $image[https://api.bdtools.xyz/random-pokemon?name=pikachu&image=true]
 ```
 
 **Error Response (500) - Empty List:**
+
 ```json
 {
   "error": "Pokemon list is empty"
@@ -2055,6 +2350,7 @@ $image[https://api.bdtools.xyz/random-pokemon?name=pikachu&image=true]
 ```
 
 **Error Response (502) - Image Fetch Failed:**
+
 ```json
 {
   "error": "Failed to fetch Pokemon image",
@@ -2067,16 +2363,20 @@ $image[https://api.bdtools.xyz/random-pokemon?name=pikachu&image=true]
 ## Notes
 
 ### Data Freshness
+
 - Node status updates every **2 minutes** via scheduled scraper
 - Guild list data cached until new submission
 
 ### Authentication
+
 JWT tokens for guild list endpoints should be prefixed with `BDTools-` in the Authorization header:
+
 ```
 Authorization: Bearer BDTools-eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...
 ```
 
 **Authentication by endpoint:**
+
 - **Node Status**: No auth required (public)
 - **Bot Guild List**: Auth required
 - **Ticket Transcript**: POST requires auth, GET is public
@@ -2084,6 +2384,7 @@ Authorization: Bearer BDTools-eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...
 - **Other Endpoints**: No auth required (public)
 
 ### Rate Limits
+
 - `/submit-server`: Once every 5 hours per API key
 - Node Status, `/get-servers`, `/function-check`, `/t/{hash}`, `/random-word`, `/validate-word`, `/random-pokemon`, `/character-escape`, `/character-unescape`, `/permissions/*`: 300 requests per minute per IP
 - `/bdscript-checker`: 60 requests per minute per IP
@@ -2091,6 +2392,7 @@ Authorization: Bearer BDTools-eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...
 - `/get-apikey`: 10 requests per 10 minutes per IP
 
 ### Caching
+
 - `/bdfd-functions`: Cached for 1 hour
 - `/get-servers`: Cached in Redis per user, invalidated on new submission
 - `/random-pokemon?image=true`: Cached for 24 hours
@@ -2098,5 +2400,6 @@ Authorization: Bearer BDTools-eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...
 - Other endpoints: No caching
 
 ### Origin Restrictions
+
 - `/get-servers`: Only accessible from https://app.bdtools.xyz/bot-guild-list
 - Other endpoints: No origin restrictions
