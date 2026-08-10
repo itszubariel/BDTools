@@ -12,6 +12,22 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width,initial-scale=1" />
     <title>BDTools | Embed Builder</title>
+    <meta property="og:title" content="BDTools | Embed Builder" />
+    <meta
+      property="og:description"
+      content="Build Discord embeds visually with this simple builder, then generate your BDFD code."
+    />
+    <meta
+      property="og:image"
+      content="https://bdtools.xyz/images/bdtools_logo.png"
+    />
+    <meta property="og:url" content="https://bdtools.xyz" />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="BDTools" />
+    <meta name="theme-color" content="#673ab7" />
+    <meta name="author" content="Zubariel" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
     <link rel="icon" href="https://bdtools.xyz/images/bdtools_logo.png" />
     <link
       href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700;800;900&family=Geist+Mono:wght@400;500&display=swap"
@@ -65,7 +81,6 @@
             </svg>
           </div>
 
-          <!-- Text Content -->
           <div>
             <h1
               class="dark-text text-2xl font-black text-white tracking-tight dt"
@@ -92,9 +107,7 @@
 
     <main>
       <div class="layout">
-        <!-- LEFT: form -->
         <div>
-          <!-- Action bar -->
           <div class="action-bar fu fd1 scroll-fade">
             <button class="btn btn-ghost" id="clear-input">
               <svg
@@ -148,7 +161,6 @@
             Your work is auto-saved locally.
           </p>
 
-          <!-- Author -->
           <div class="card fu fd1">
             <div class="card-hdr">
               <span class="card-hdr-title">Author</span>
@@ -183,7 +195,6 @@
             </div>
           </div>
 
-          <!-- Title + Description -->
           <div class="card fu fd1">
             <div class="card-hdr">
               <span class="card-hdr-title">Content</span>
@@ -219,7 +230,6 @@
             </div>
           </div>
 
-          <!-- Media + Style -->
           <div class="card fu fd1">
             <div class="card-hdr">
               <span class="card-hdr-title">Media &amp; Style</span>
@@ -254,7 +264,6 @@
             </div>
           </div>
 
-          <!-- Footer -->
           <div class="card fu fd1">
             <div class="card-hdr">
               <span class="card-hdr-title">Footer</span>
@@ -288,13 +297,11 @@
             </div>
           </div>
 
-          <!-- Components injected here -->
           <div id="fields-container"></div>
           <div id="buttons-container"></div>
           <div id="selects-container"></div>
           <div id="modals-container"></div>
 
-          <!-- Generate + output -->
           <div class="card fu fd2">
             <div class="card-hdr">
               <span class="card-hdr-title">Output</span>
@@ -386,7 +393,6 @@
         </div>
 
         <div class="right-panel fu fd2">
-          <!-- Preview -->
           <div class="card">
             <div class="card-hdr">
               <span class="card-hdr-title">Live Preview</span>
@@ -408,7 +414,6 @@
               </p>
             </div>
           </div>
-          <!-- Param reference -->
           <div class="card" style="margin-top: 0.875rem">
             <div class="card-hdr">
               <span class="card-hdr-title">Parameter Reference</span>
@@ -776,7 +781,6 @@
       </div>
     </main>
 
-    <!-- Preset Modal -->
     <div class="overlay" id="preset-modal">
       <div class="preset-modal-box" style="width: 500px; max-width: 90%">
         <button class="modal-close" id="close-preset-modal">
@@ -812,7 +816,6 @@
       </div>
     </div>
 
-    <!-- Save Preset Name Modal -->
     <div class="overlay" id="save-preset-modal">
       <div class="preset-modal-box" style="width: 380px">
         <button class="modal-close" id="close-save-preset-modal">
