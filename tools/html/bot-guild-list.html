@@ -12,6 +12,22 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width,initial-scale=1" />
     <title>BDTools | Bot Guild List</title>
+    <meta property="og:title" content="BDTools | Bot Guild List" />
+    <meta
+      property="og:description"
+      content="View and manage the guilds your bot is in with this simple list."
+    />
+    <meta
+      property="og:image"
+      content="https://bdtools.xyz/images/bdtools_logo.png"
+    />
+    <meta property="og:url" content="https://bdtools.xyz" />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="BDTools" />
+    <meta name="theme-color" content="#673ab7" />
+    <meta name="author" content="Zubariel" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
     <link rel="icon" href="https://bdtools.xyz/images/bdtools_logo.png" />
     <link
       href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700;800;900&family=Geist+Mono:wght@400;500&display=swap"
@@ -27,7 +43,6 @@
     </div>
     <div id="toasts"></div>
 
-    <!-- Nav -->
     <nav>
       <a href="/" class="nav-logo">
         <img
@@ -66,7 +81,6 @@
       </div>
     </nav>
 
-    <!-- Hero -->
     <div style="border-bottom: 1px solid var(--border)">
       <div
         style="max-width: 1280px; margin: 0 auto; padding: 2rem 1.5rem 1.5rem"
@@ -140,7 +154,6 @@
           overflow: hidden;
         "
       >
-        <!-- Controls bar -->
         <div
           style="padding: 1rem 1.5rem; border-bottom: 1px solid var(--border)"
         >
@@ -216,12 +229,10 @@
           </div>
         </div>
 
-        <!-- Skeleton grid -->
         <div id="skeletonGrid" style="display: none">
           <div id="skelBody" class="srv-grid"></div>
         </div>
 
-        <!-- Loading spinner -->
         <div
           id="loadingState"
           style="
@@ -246,7 +257,6 @@
           </div>
         </div>
 
-        <!-- Initial empty -->
         <div id="emptyState" class="state-wrap">
           <div class="state-icon">
             <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -265,7 +275,6 @@
           </p>
         </div>
 
-        <!-- Post-fetch empty -->
         <div id="noServersState" style="display: none" class="state-wrap">
           <div class="state-icon">
             <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -281,7 +290,6 @@
           <p>Your bot isn't in any servers yet, or try a different search.</p>
         </div>
 
-        <!-- Live grid -->
         <div id="serversGrid" style="display: none">
           <div id="guildGridBody" class="srv-grid"></div>
           <div class="pg-row">

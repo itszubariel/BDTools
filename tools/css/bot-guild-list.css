@@ -51,7 +51,6 @@ html.light {
   --text3: #a0a0b8;
 }
 
-/* ── Loader ── */
 #ldr {
   position: fixed;
   inset: 0;
@@ -89,7 +88,6 @@ html.light {
   }
 }
 
-/* ── Toast ── */
 #toasts {
   position: fixed;
   top: 1rem;
@@ -161,7 +159,6 @@ html.light {
   }
 }
 
-/* ── Nav ── */
 nav {
   position: sticky;
   top: 0;
@@ -250,7 +247,6 @@ html.light nav {
   transform: translateX(18px);
 }
 
-/* ── Controls ── */
 .ifield {
   padding: 0.5rem 1rem;
   background: var(--bg);
@@ -272,10 +268,8 @@ html.light nav {
   color: var(--text3);
 }
 
-/* ── Server Card ── */
 .srv-grid {
   display: grid;
-  /* 4 cols desktop, responsive down */
   grid-template-columns: repeat(4, 1fr);
   gap: 1rem;
   padding: 1.5rem;
@@ -319,7 +313,6 @@ html.light nav {
   transform: translateY(-2px);
 }
 
-/* top section — fixed height */
 .card-top {
   padding: 1rem 1rem 0.75rem;
   display: flex;
@@ -377,7 +370,6 @@ html.light nav {
   font-style: italic;
 }
 
-/* meta row */
 .card-meta {
   padding: 0 1rem;
   display: flex;
@@ -385,9 +377,7 @@ html.light nav {
   gap: 0.4rem;
   flex-shrink: 0;
   min-width: 0;
-  /* ADD */
   overflow: hidden;
-  /* ADD */
 }
 
 .badge {
@@ -426,12 +416,10 @@ html.light nav {
   }
 }
 
-/* spacer to push footer down */
 .card-spacer {
   flex: 1;
 }
 
-/* bottom section */
 .card-bottom {
   padding: 0.75rem 1rem 1rem;
   border-top: 1px solid var(--border);
@@ -472,7 +460,6 @@ html.light nav {
   border: 1px solid var(--border);
 }
 
-/* ── Pagination ── */
 .pg-row {
   display: flex;
   align-items: center;
@@ -516,7 +503,6 @@ html.light nav {
   font-family: "Geist Mono", monospace;
 }
 
-/* ── Skeletons ── */
 @keyframes shimmer {
   0% {
     background-position: -600px 0;
@@ -539,7 +525,6 @@ html.light nav {
   border-radius: 8px;
 }
 
-/* ── States ── */
 .state-wrap {
   text-align: center;
   padding: 5rem 1.5rem;
@@ -575,7 +560,6 @@ html.light nav {
   font-size: 0.875rem;
 }
 
-/* ── Spinner ── */
 @keyframes spin {
   to {
     transform: rotate(360deg);
@@ -591,7 +575,6 @@ html.light nav {
   animation: spin 1s linear infinite;
 }
 
-/* ── Misc ── */
 @keyframes fadeUp {
   from {
     opacity: 0;
