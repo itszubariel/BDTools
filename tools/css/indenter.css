@@ -125,7 +125,6 @@ html.light .lowerNav {
   position: relative;
   overflow: hidden;
 
-  /* MATCHES YOUR CARD SYSTEM */
   background:
     radial-gradient(
       120% 120% at 0% 0%,
@@ -141,12 +140,10 @@ html.light .lowerNav {
   animation: tin 0.25s ease both;
 }
 
-/* success */
 .toast.s {
   border-left: 3px solid #22c55e;
 }
 
-/* error */
 .toast.e {
   border-left: 3px solid #ef4444;
 }
