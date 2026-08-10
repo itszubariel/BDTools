@@ -4,7 +4,10 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width,initial-scale=1.0" />
     <title>Other Endpoints | Docs</title>
-    <meta property="og:title" content="BDTools API Documentation | Other Endpoints" />
+    <meta
+      property="og:title"
+      content="BDTools API Documentation | Other Endpoints"
+    />
     <meta
       property="og:description"
       content="Useful general-purpose utilities not directly related to BDFD. Generate random words, validate guesses, fetch Pokemon information, shorten numbers, and validate JSON for your Discord bots."
@@ -15,10 +18,7 @@
     />
     <meta property="og:url" content="https://bdtools.xyz" />
     <meta property="og:type" content="website" />
-    <meta
-      property="og:site_name"
-      content="BDTools"
-    />
+    <meta property="og:site_name" content="BDTools" />
     <meta name="theme-color" content="#673ab7" />
     <meta name="author" content="Zubariel" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -972,6 +972,22 @@
                 <pre><span class="kw">{</span> <span class="key">"error"</span><span class="kw">:</span> <span class="str">"Invalid number provided."</span> <span class="kw">}</span></pre>
               </div>
             </div>
+
+            <h3
+              class="text-xs font-mono font-bold text-gray-500 uppercase tracking-widest mb-2 mt-6"
+            >
+              Example Usage
+            </h3>
+            <div class="code-block">
+              <pre><span class="cmt">// Basic shortening</span>
+<span class="fn">$httpGet</span><span class="kw">[</span><span class="str">https://api.bdtools.xyz/number-shortener?n=100000</span><span class="kw">]</span>
+
+<span class="cmt">// Comma-separated input</span>
+<span class="fn">$httpGet</span><span class="kw">[</span><span class="str">https://api.bdtools.xyz/number-shortener?n=1,250,000</span><span class="kw">]</span>
+
+<span class="cmt">// Very large number</span>
+<span class="fn">$httpGet</span><span class="kw">[</span><span class="str">https://api.bdtools.xyz/number-shortener?n=9876543210</span><span class="kw">]</span></pre>
+            </div>
           </section>
 
           <!-- POST /json-validator -->
@@ -1089,6 +1105,30 @@
               <div class="code-block mt-2">
                 <pre><span class="kw">{</span> <span class="key">"error"</span><span class="kw">:</span> <span class="str">"Method not allowed. Use POST."</span> <span class="kw">}</span></pre>
               </div>
+            </div>
+
+            <h3
+              class="text-xs font-mono font-bold text-gray-500 uppercase tracking-widest mb-2 mt-6"
+            >
+              Example Usage
+            </h3>
+            <div class="code-block">
+              <pre><span class="cmt">// Validate a simple JSON object</span>
+<span class="fn">$httpPost</span><span class="kw">[</span><span class="str">https://api.bdtools.xyz/json-validator</span><span class="kw">;</span>
+<span class="kw">{</span>
+<span class="str">"name"</span><span class="kw">:</span><span class="str">"BDTools"</span><span class="kw">,</span>
+<span class="str">"count"</span><span class="kw">:</span><span class="num">3</span>
+<span class="kw">}]</span>
+
+<span class="cmt">// Validate a nested JSON payload</span>
+<span class="fn">$httpPost</span><span class="kw">[</span><span class="str">https://api.bdtools.xyz/json-validator</span><span class="kw">;</span>
+<span class="kw">{</span>
+<span class="str">"user"</span><span class="kw">:</span><span class="kw">{</span>
+ <span class="str">"id"</span><span class="kw">:</span><span class="num">123</span><span class="kw">,</span>
+ <span class="str">"tags"</span><span class="kw">:</span> <span class="kw">[</span><span class="str">"api"</span><span class="kw">,</span><span class="str">"docs"</span><span class="kw">]</span>
+  <span class="kw">},</span>
+<span class="str">"active"</span><span class="kw">:</span><span class="kw">true</span>
+<span class="kw">}]</span></pre>
             </div>
           </section>
 
