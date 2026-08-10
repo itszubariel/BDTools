@@ -1,6 +1,3 @@
-// Section configuration for this page (set by page before including this script)
-// These will be read from window.PAGE_SECTIONS when needed
-
 interface PageSection {
   id: string;
   label: string;
@@ -15,7 +12,6 @@ let SECTIONS: PageSection[] = [];
 let PREV_PAGE: PageLink | null = null;
 let NEXT_PAGE: PageLink | null = null;
 
-/* ── Copy URL helper ── */
 function copyUrl(path: string): void {
   const base = "https://api.bdtools.xyz";
   navigator.clipboard
@@ -23,7 +19,6 @@ function copyUrl(path: string): void {
     .then(() => showToast("URL copied!"));
 }
 
-/* ── Navigate between sections ── */
 function navigateSection(direction: "prev" | "next"): void {
   const currentSection = document.querySelector(
     ".endpoint-section:not(.hidden)",
@@ -48,7 +43,6 @@ function navigateSection(direction: "prev" | "next"): void {
   }
 }
 
-/* ── Update prev/next buttons ── */
 function updateNavButtons(): void {
   const currentSection = document.querySelector(
     ".endpoint-section:not(.hidden)",
@@ -63,7 +57,6 @@ function updateNavButtons(): void {
   const prevText = document.getElementById("prevText");
   const nextText = document.getElementById("nextText");
 
-  // Update prev button
   if (prevBtn && prevText) {
     if (currentIndex > 0) {
       prevText.textContent = SECTIONS[currentIndex - 1].label;
@@ -76,7 +69,6 @@ function updateNavButtons(): void {
     }
   }
 
-  // Update next button
   if (nextBtn && nextText) {
     if (currentIndex < SECTIONS.length - 1) {
       nextText.textContent = SECTIONS[currentIndex + 1].label;
@@ -90,36 +82,36 @@ function updateNavButtons(): void {
   }
 }
 
-// Override showSection to also update nav buttons
 const originalShowSection = (window as any).showSection as
-  | ((sectionId: string) => void)
+  | ((sectionId: string, scrollToTop?: boolean) => void)
   | undefined;
-(window as any).showSection = function (sectionId: string): void {
-  // Call the original showSection (which handles scroll, hiding/showing, etc.)
+(window as any).showSection = function (
+  sectionId: string,
+  scrollToTop = true,
+): void {
   if (typeof originalShowSection === "function") {
-    originalShowSection(sectionId);
+    originalShowSection(sectionId, scrollToTop);
   }
 
-  // Update nav buttons after section changes
   updateNavButtons();
 };
 
-// Initialize on DOMContentLoaded to ensure PAGE_SECTIONS is defined
 document.addEventListener("DOMContentLoaded", function (): void {
-  // Read the configuration from window (set by page-specific script)
   SECTIONS = (window as any).PAGE_SECTIONS || [];
   PREV_PAGE = (window as any).PREV_PAGE || null;
   NEXT_PAGE = (window as any).NEXT_PAGE || null;
 
-  // Only initialize if we have sections configured
   if (SECTIONS.length > 0) {
-    // Show first section
-    if (typeof (window as any).showSection === "function") {
-      (window as any).showSection(SECTIONS[0].id);
-    }
+    const hashSectionId = window.location.hash.slice(1);
+    const hasValidHash = SECTIONS.some((s) => s.id === hashSectionId);
 
-    // Update nav buttons after showing first section
-    // Use setTimeout to ensure DOM updates have completed
+    if (typeof (window as any).showSection === "function") {
+      if (hasValidHash) {
+        (window as any).showSection(hashSectionId, false);
+      } else {
+        (window as any).showSection(SECTIONS[0].id);
+      }
+    }
     setTimeout(() => {
       updateNavButtons();
     }, 0);

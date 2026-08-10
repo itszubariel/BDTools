@@ -1,4 +1,3 @@
-/* ── Theme Toggle ── */
 function toggleTheme(): void {
   const html = document.documentElement;
   const toggle = document.getElementById("themeToggle");
@@ -17,7 +16,6 @@ function toggleTheme(): void {
   localStorage.setItem("theme", isLight ? "dark" : "light");
 }
 
-/* ── Apply saved theme preference on load ── */
 (function (): void {
   const saved = localStorage.getItem("theme");
   if (saved === "light") {
@@ -29,7 +27,6 @@ function toggleTheme(): void {
   }
 })();
 
-/* ── Toast Notification ── */
 let _tt: ReturnType<typeof setTimeout>;
 function showToast(msg: string, color?: string): void {
   const toast = document.getElementById("toast");
@@ -42,19 +39,15 @@ function showToast(msg: string, color?: string): void {
   _tt = setTimeout(() => toast.classList.remove("show"), 2500);
 }
 
-/* ── Section Navigation ── */
 function showSection(sectionId: string, scrollToTop = true): void {
-  // Hide all sections first
   document.querySelectorAll(".endpoint-section").forEach((section) => {
     section.classList.add("hidden");
   });
 
-  // Show the selected section and make it visible immediately
   const targetSection = document.getElementById(sectionId);
   if (targetSection) {
     targetSection.classList.remove("hidden");
 
-    // Force immediate visibility for all scroll-fade elements
     const fadeElements = targetSection.querySelectorAll(".scroll-fade");
     fadeElements.forEach((el) => {
       el.classList.add("visible");
@@ -67,16 +60,12 @@ function showSection(sectionId: string, scrollToTop = true): void {
     }
   }
 
-  // Update URL hash
   history.pushState(null, "", `#${sectionId}`);
 
-  // Update active state in sidebar
   updateSidebarActive(sectionId);
 
-  // Close mobile drawer if open
   closeMobileDrawer();
 
-  // Scroll to top or target section
   requestAnimationFrame(() => {
     if (scrollToTop) {
       window.scrollTo({ top: 0 });
@@ -87,7 +76,6 @@ function showSection(sectionId: string, scrollToTop = true): void {
 }
 
 function updateSidebarActive(sectionId: string): void {
-  // Update left sidebar
   document
     .querySelectorAll(
       ".left-sidebar .sidebar-link, .mobile-drawer .sidebar-link",
@@ -102,7 +90,6 @@ function updateSidebarActive(sectionId: string): void {
     });
 }
 
-/* ── Mobile Drawer ── */
 function toggleMobileDrawer(): void {
   const backdrop = document.getElementById("mobileDrawerBackdrop");
   const drawer = document.getElementById("mobileDrawer");
@@ -127,7 +114,6 @@ function closeMobileDrawer(): void {
   }
 }
 
-/* ── Scroll fade-in observer ── */
 const scrollObserverOptions: IntersectionObserverInit = {
   threshold: 0.1,
   rootMargin: "0px 0px -50px 0px",
@@ -146,7 +132,6 @@ window.addEventListener("load", () => {
   const fadeElements = document.querySelectorAll(".scroll-fade");
   fadeElements.forEach((el) => scrollObserver.observe(el));
 
-  // Restore section from URL hash
   const hash = window.location.hash.slice(1);
   if (hash && document.getElementById(hash)) {
     showSection(hash, false);
