@@ -25,13 +25,11 @@ interface DiscordWebhookPayload {
 export default async function handler(req: VercelRequest, res: VercelResponse) {
   console.log("[contact] 🔔 Handler triggered");
 
-  // --- Method check ---
   if (req.method !== "POST") {
     console.warn(`[contact] ⚠️  Invalid HTTP method: ${req.method}`);
     return res.status(405).json({ error: "Method Not Allowed. Use POST." });
   }
 
-  // --- Env check ---
   const webhookURL = process.env.WEBHOOK_URL;
   if (!webhookURL) {
     console.error("[contact] ❌ Missing WEBHOOK_URL environment variable");
@@ -40,7 +38,6 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       .json({ error: "Server misconfiguration: webhook URL not set." });
   }
 
-  // --- Parse body ---
   let data: unknown;
   try {
     data = typeof req.body === "string" ? JSON.parse(req.body) : req.body;
@@ -52,7 +49,6 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     return res.status(400).json({ error: "Invalid JSON body." });
   }
 
-  // --- Validate required fields ---
   const { discord, email, topic, subject, msg } = data as {
     discord?: string;
     email?: string;
@@ -89,7 +85,6 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     ],
   };
 
-  // --- Send to Discord ---
   console.log("[contact] 🚀 Sending payload to Discord webhook...");
   let response: Response;
   try {
@@ -116,11 +111,9 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     console.error(
       `[contact] ❌ Discord webhook rejected the request (HTTP ${response.status}): ${errorText}`,
     );
-    return res
-      .status(502)
-      .json({
-        error: `Discord webhook failed with status ${response.status}.`,
-      });
+    return res.status(502).json({
+      error: `Discord webhook failed with status ${response.status}.`,
+    });
   }
 
   console.log(
