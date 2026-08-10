@@ -139,6 +139,6 @@ Built and maintained by [Zubariel](https://zubariel.is-a.dev).
 - **Speshy**: Reviewed and ensured accuracy across the HTTP, Components V2, and JSON guides.
 - **Kitten**: Provided insights and reviewed accuracy for the Text Splitting guide.
 
-and also **kyll** and **riv**, for being the goated mates 🍻.
+and also [Kyll](https://kyll.dev/) and [riv](https://riv.2social.top/), for being goated mates 🍻.
 
 Not officially affiliated with Bot Designer for Discord.
