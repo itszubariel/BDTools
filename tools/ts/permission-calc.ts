@@ -1,4 +1,3 @@
-// Loader
 const ldrtxt = document.getElementById("ldrtxt");
 let dc = 0;
 const di = setInterval(() => {
@@ -14,7 +13,6 @@ window.addEventListener("load", () => {
   }, 900);
 });
 
-// Toast
 function toast(msg, type = "s") {
   const box = document.getElementById("toasts");
   const t = document.createElement("div");
@@ -24,7 +22,6 @@ function toast(msg, type = "s") {
   setTimeout(() => t.remove(), 4500);
 }
 
-// Theme toggle — fixed: correct id + adds light class
 function toggleTheme() {
   const h = document.documentElement;
   const t = document.getElementById("themeToggle");
@@ -34,7 +31,6 @@ function toggleTheme() {
   t.classList.toggle("on", dark);
 }
 
-// Sync toggle state on load
 (function () {
   const isDark = document.documentElement.classList.contains("dark");
   document.getElementById("themeToggle").classList.toggle("on", isDark);
@@ -47,7 +43,6 @@ window.addEventListener("load", () => {
   }
 });
 
-// Permission data
 const GROUPS = [
   {
     label: "General Server Permissions",
@@ -235,14 +230,14 @@ function recalc() {
     checked.length === 0
       ? '<p style="font-size:0.75rem;color:var(--text3);font-style:italic;">No permissions selected.</p>'
       : checked
-        .map(
-          (cb) =>
-            `<div style="display:flex;align-items:center;justify-content:space-between;gap:8px;background:var(--bg);border-radius:8px;padding:6px 12px;border:1px solid var(--border);">
+          .map(
+            (cb) =>
+              `<div style="display:flex;align-items:center;justify-content:space-between;gap:8px;background:var(--bg);border-radius:8px;padding:6px 12px;border:1px solid var(--border);">
                 <span style="font-size:0.75rem;color:var(--text);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">${VAL_TO_NAME[cb.dataset.val] ?? "?"}</span>
                 <span style="font-size:10px;font-family:var(--mono);color:var(--text3);flex-shrink:0;">${cb.dataset.val}</span>
               </div>`,
-        )
-        .join("");
+          )
+          .join("");
 }
 
 function enableAll() {
@@ -302,7 +297,6 @@ function copyInvite() {
 buildSections();
 recalc();
 
-// Scroll fade-in observer
 const observer = new IntersectionObserver(
   (entries) => {
     entries.forEach((entry) => {
