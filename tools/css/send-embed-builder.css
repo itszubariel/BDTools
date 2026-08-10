@@ -107,7 +107,7 @@ html.light .lowerNav {
   font-weight: 600;
   color: var(--text);
   position: relative;
-  overflow: hidden; /* MATCHES YOUR CARD SYSTEM */
+  overflow: hidden;
   background:
     radial-gradient(
       120% 120% at 0% 0%,
@@ -118,10 +118,10 @@ html.light .lowerNav {
   border: 1px solid var(--border);
   box-shadow: 0 6px 24px rgba(0, 0, 0, 0.35);
   animation: tin 0.25s ease both;
-} /* success */
+}
 .toast.s {
   border-left: 3px solid #22c55e;
-} /* error */
+}
 .toast.e {
   border-left: 3px solid #ef4444;
 }
@@ -571,8 +571,8 @@ textarea.finput {
   width: 14px;
   height: 14px;
   border-radius: 50%;
-} /* param
-table */
+}
+
 .param-table {
   width: 100%;
   border-collapse: collapse;
