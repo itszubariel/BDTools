@@ -54,13 +54,24 @@ BDTools exposes a serverless API for bot integrations and BDFD tooling.
 | `/bdscript-checker` | `POST` | Comprehensive BDScript/BDFD code validator. Catches syntax errors, validates arguments, checks parent-child relationships, and enforces Components v2 rules. Returns detailed error messages with line numbers. |
 | `/function-check` | `GET` | Fuzzy function name lookup. Finds the closest matching BDFD function from a name or typo. Accepts `$` prefix and brackets. |
 
-### Other Endpoints
+### Ticket Transcript
 
 | Endpoint | Method | Description |
 |----------|--------|-------------|
-| `/random-word` | `GET` | Random 5-letter word for Wordle-style games. Rate limited: 30 req/10s. |
-| `/validate-word` | `GET` | Validate a 5-letter word against wordlist + dictionary. Rate limited: 60 req/10s. |
-| `/random-pokemon` | `GET` | Random Pokemon from all generations (1-9). Supports `?gen=`, `?name=`, and `?image=true`. Rate limited: 30 req/10s. |
+| `/ticket-transcript` | `POST` | Create a ticket transcript. |
+| `/t/:hash` | `GET` | Retrieve a ticket transcript from `cdn.bdtools.xyz`. |
+
+### Tools & Utilities
+
+| Endpoint | Method | Description |
+|----------|--------|-------------|
+| `/character-escape` | `POST` | Escape BDFD special characters. |
+| `/character-unescape` | `POST` | Unescape BDFD special characters. |
+| `/permissions/calculate` | `POST` | Calculate Discord permission bitfields. |
+| `/permissions/decode` | `POST` | Decode Discord permission bitfields. |
+| `/random-word` | `GET` | Random 5-letter word for Wordle-style games. |
+| `/validate-word` | `GET` | Validate a 5-letter word against wordlist + dictionary. |
+| `/random-pokemon` | `GET` | Random Pokemon from all generations (1-9). |
 
 Authentication uses JWT-based API keys generated via Discord OAuth. Guild list and BDScript Checker endpoints require auth. Node status and other utility endpoints are public.
 
@@ -93,6 +104,19 @@ $httpGet[https://api.bdtools.xyz/random-pokemon?gen=1]
 
 ---
 
+## Guides
+
+BDTools provides several guides to help you master Bot Designer for Discord.
+
+| Guide | Description |
+|-------|-------------|
+| [Components V2](https://guides.bdtools.xyz/compv2/) | Learn to use containers, sections, buttons, and select menus. |
+| [HTTP](https://guides.bdtools.xyz/http/) | Master HTTP functions for API integration. |
+| [Text Splitting](https://guides.bdtools.xyz/textsplit/) | Understand text splitting and manipulation. |
+| [JSON](https://guides.bdtools.xyz/json/) | Learn to parse and manipulate JSON data. |
+
+---
+
 ## Stack
 
 - **Frontend**: TypeScript (compiled to ES2020), Tailwind CSS, Geist font
@@ -101,12 +125,6 @@ $httpGet[https://api.bdtools.xyz/random-pokemon?gen=1]
 - **Deployment**: Netlify (continuous deployment from GitHub)
 - **Cron**: cron-job.org (triggers node status scraper every 2 minutes)
 - **Cache**: Upstash Redis (rate limiting + guild list caching)
-
----
-
-## License
-
-All rights reserved. This repository is public for reference only, you may not copy, modify, or redistribute any part of this codebase without explicit permission.
 
 ---
 
