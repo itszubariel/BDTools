@@ -53,14 +53,21 @@ function unescapeText(text) {
   let result = text;
 
   // Unescape $ (reverse order of escape)
-  const dollarRule = document.querySelector('.rule-select[data-from="$"]') as HTMLElement;
+  const dollarRule = document.querySelector(
+    '.rule-select[data-from="$"]',
+  ) as HTMLElement;
   if (dollarRule) {
-    const select = dollarRule.querySelector(".rule-choice") as HTMLSelectElement;
+    const select = dollarRule.querySelector(
+      ".rule-choice",
+    ) as HTMLSelectElement;
     let replacement =
       select.value === "a" ? dollarRule.dataset.a : dollarRule.dataset.b;
 
     // Escape special regex chars in replacement
-    const escapedReplacement = replacement.replace(/[-\/\\^$*+?.()|[\]{}]/g, "\\$&");
+    const escapedReplacement = replacement.replace(
+      /[-\/\\^$*+?.()|[\]{}]/g,
+      "\\$&",
+    );
     result = result.replace(new RegExp(escapedReplacement, "g"), "$");
   }
 
@@ -72,11 +79,15 @@ function unescapeText(text) {
 
     let replacement = !htmlRule.querySelector(".rule-choice")
       ? "\\\\"
-      : (htmlRule.querySelector(".rule-choice") as HTMLSelectElement).value === "a"
+      : (htmlRule.querySelector(".rule-choice") as HTMLSelectElement).value ===
+          "a"
         ? htmlRule.dataset.a
         : htmlRule.dataset.b;
 
-    const escapedReplacement = replacement.replace(/[-\/\\^$*+?.()|[\]{}]/g, "\\$&");
+    const escapedReplacement = replacement.replace(
+      /[-\/\\^$*+?.()|[\]{}]/g,
+      "\\$&",
+    );
 
     // Replace the replacement string back to the 'from' character
     result = result.replace(new RegExp(escapedReplacement, "g"), from);
@@ -103,7 +114,8 @@ function escapeText(text) {
 
     let replacement = !htmlRule.querySelector(".rule-choice")
       ? "\\\\"
-      : (htmlRule.querySelector(".rule-choice") as HTMLSelectElement).value === "a"
+      : (htmlRule.querySelector(".rule-choice") as HTMLSelectElement).value ===
+          "a"
         ? htmlRule.dataset.a
         : htmlRule.dataset.b;
 
@@ -112,9 +124,13 @@ function escapeText(text) {
   });
 
   // Escape $ last
-  const dollarRule = document.querySelector('.rule-select[data-from="$"]') as HTMLElement;
+  const dollarRule = document.querySelector(
+    '.rule-select[data-from="$"]',
+  ) as HTMLElement;
   if (dollarRule) {
-    const select = dollarRule.querySelector(".rule-choice") as HTMLSelectElement;
+    const select = dollarRule.querySelector(
+      ".rule-choice",
+    ) as HTMLSelectElement;
     let replacement =
       select.value === "a" ? dollarRule.dataset.a : dollarRule.dataset.b;
 
