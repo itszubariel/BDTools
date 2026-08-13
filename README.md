@@ -130,7 +130,7 @@ BDTools provides several guides to help you master Bot Designer for Discord.
 
 ## Credits
 
-Built and maintained by [Zubariel](https://zubs.me).
+Built and maintained by [Zubariel](https://linktree.linktree.zubs.me).
 ### Thanks to:
 - **Catearo**: Provided BDFD example codes for the /submit-server and /ticket-transcript endpoints.
 - **Luka**: Tested and reviewed early tools including the Escaper, Indenter, and Highlighter.
